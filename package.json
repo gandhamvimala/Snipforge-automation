@@ -1,0 +1,23 @@
+{
+  "name": "snipforge-automation-framework",
+  "version": "1.0.0",
+  "description": "AI-powered test automation framework for snipforge.video with self-healing and auto-scenario generation",
+  "type": "module",
+  "scripts": {
+    "install:browsers": "npx playwright install chromium",
+    "generate": "node src/agents/scenario-generator.js",
+    "generate:tool": "node src/agents/scenario-generator.js --tool",
+    "write": "node src/agents/script-writer.js",
+    "run": "node src/agents/test-runner.js",
+    "run:regression": "node src/agents/regression-runner.js",
+    "heal": "node src/agents/self-healer.js",
+    "full-cycle": "node scripts/full-cycle.js",
+    "report": "node src/reports/reporter.js",
+    "dashboard": "node src/reports/dashboard.js"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.44.0",
+    "playwright": "^1.44.0"
+  },
+  "devDependencies": {}
+}

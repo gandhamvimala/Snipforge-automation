@@ -1,0 +1,202 @@
+{
+  "trim": {
+    "finalUrl": "https://snipforge.video/tools/trim",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "multi-trim": {
+    "finalUrl": "https://snipforge.video/tools/multi-trim",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "speed": {
+    "finalUrl": "https://snipforge.video/tools/speed",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "split": {
+    "finalUrl": "https://snipforge.video/tools/split",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "rotate-flip": {
+    "finalUrl": "https://snipforge.video/tools/rotate-flip",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "resize": {
+    "finalUrl": "https://snipforge.video/tools/resize",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "watermark": {
+    "finalUrl": "https://snipforge.video/tools/watermark",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "merge": {
+    "finalUrl": "https://snipforge.video/tools/merge",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "convert": {
+    "finalUrl": "https://snipforge.video/tools/convert",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "compress": {
+    "finalUrl": "https://snipforge.video/tools/compress",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "volume": {
+    "finalUrl": "https://snipforge.video/tools/volume",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "noise-removal": {
+    "finalUrl": "https://snipforge.video/tools/noise-removal",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "extract-audio": {
+    "finalUrl": "https://snipforge.video/tools/extract-audio",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "mute": {
+    "finalUrl": "https://snipforge.video/tools/mute",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "video-to-gif": {
+    "finalUrl": "https://snipforge.video/tools/video-to-gif",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "bg-music": {
+    "finalUrl": "https://snipforge.video/tools/bg-music",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "text-overlay": {
+    "finalUrl": "https://snipforge.video/tools/text-overlay",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "blur-region": {
+    "finalUrl": "https://snipforge.video/tools/blur-region",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "brightness": {
+    "finalUrl": "https://snipforge.video/tools/brightness",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "thumbnail": {
+    "finalUrl": "https://snipforge.video/tools/thumbnail",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "ai-shorten": {
+    "finalUrl": "https://snipforge.video/tools/ai-shorten",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "ai-transcribe": {
+    "finalUrl": "https://snipforge.video/tools/ai-transcribe",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "smart-clip": {
+    "finalUrl": "https://snipforge.video/tools/smart-clip",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "ai-chapters": {
+    "finalUrl": "https://snipforge.video/tools/ai-chapters",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  },
+  "auto-captions": {
+    "finalUrl": "https://snipforge.video/tools/auto-captions",
+    "redirected": false,
+    "hasUpload": false,
+    "inputs": [],
+    "buttons": [],
+    "title": "404 Not Found"
+  }
+}

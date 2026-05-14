@@ -1,0 +1,331 @@
+{
+  "bugs": [
+    {
+      "tool": "trim",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "multi-trim",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "speed",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "split",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "rotate-flip",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "resize",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "watermark",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "merge",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "convert",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "compress",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "volume",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "noise-removal",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "extract-audio",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "mute",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "video-to-gif",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "bg-music",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "text-overlay",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "blur-region",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "brightness",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "thumbnail",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "ai-shorten",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "ai-transcribe",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "smart-clip",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "ai-chapters",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    },
+    {
+      "tool": "auto-captions",
+      "bug": "🐛 BUG-404: Page returns 404 even when logged in",
+      "severity": "CRITICAL"
+    }
+  ],
+  "results": {
+    "trim": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "multi-trim": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "speed": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "split": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "rotate-flip": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "resize": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "watermark": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "merge": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "convert": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "compress": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "volume": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "noise-removal": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "extract-audio": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "mute": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "video-to-gif": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "bg-music": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "text-overlay": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "blur-region": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "brightness": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "thumbnail": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "ai-shorten": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "ai-transcribe": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "smart-clip": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "ai-chapters": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    },
+    "auto-captions": {
+      "title": "404 Not Found",
+      "h1": "Not Found",
+      "btns": [],
+      "hasFileInput": false,
+      "hasDropzone": false,
+      "is404": true
+    }
+  }
+}
