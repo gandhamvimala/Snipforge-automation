@@ -120,7 +120,11 @@
     <button class="agent-btn" data-agent="healer" onclick="activateAgent('healer',this)"><div class="dot"></div>🩹 Self Healer</button>
     <button class="agent-btn" data-agent="regress" onclick="activateAgent('regress',this)"><div class="dot"></div>🔁 Regression</button>
   </div>
-  <div class="stats-bar">
+  <button onclick="localStorage.removeItem('sf_api_key');_apiKey='';alert('API key cleared! Enter it again on next message.')" 
+       style="padding:4px 10px;border-radius:5px;border:1px solid var(--border2);background:var(--bg3);color:var(--muted);font-size:.65rem;cursor:pointer;white-space:nowrap">
+       🔑 Set API Key
+    </button>
+    <div class="stats-bar">
     <div class="stat green">✅ <strong id="stat-passed">255</strong> passed</div>
     <div class="stat red">❌ <strong id="stat-failed">0</strong> failed</div>
     <div class="stat">⏭️ <strong id="stat-skipped">7</strong> skipped</div>
