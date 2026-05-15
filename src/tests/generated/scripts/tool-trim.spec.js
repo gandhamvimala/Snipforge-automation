@@ -121,8 +121,8 @@ test.describe("SnipForge - Trim", () => {
     await startInput.fill("-5");
     await page.waitForTimeout(500);
     const value = await startInput.inputValue();
-    // 🐛 BUG-007: input accepts negative values despite min=0
-    console.log("🐛 BUG: Trim accepts negative start time:", value);
-    expect(parseFloat(value)).toBe(-5); // Bug confirmed - should reject negative
+    // ✅ BUG-007 FIXED: input now rejects negative values
+    console.log("✅ FIXED: Trim start time clamped to:", value);
+    expect(parseFloat(value)).toBeGreaterThanOrEqual(0);
   });
 });

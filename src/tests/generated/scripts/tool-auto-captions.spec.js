@@ -139,9 +139,9 @@ test.describe("SnipForge - Auto Captions", () => {
     await page.waitForTimeout(500);
     const value = await fontSizeInput.inputValue();
     const numValue = parseInt(value);
-    // 🐛 BUG: Font size accepts values below min=8
-    console.log("🐛 BUG: Font size accepted value below min:", numValue);
-    expect(numValue).toBe(5); // Bug confirmed - should reject values < 8
+    // ✅ BUG-008 FIXED: font size now rejects values below min=8
+    console.log("✅ FIXED: Font size clamped to:", numValue);
+    expect(numValue).toBeGreaterThanOrEqual(8);
   });
 
   test("auto-captions-015: Upload invalid file type", async ({ page }) => {
