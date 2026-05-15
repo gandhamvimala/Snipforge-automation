@@ -1,0 +1,3084 @@
+{
+  "trim": {
+    "tool": "trim",
+    "panel": "trim",
+    "btnId": "tr-run",
+    "name": "Trim",
+    "scenarios": [
+      {
+        "id": "trim-001",
+        "title": "Page loads with trim panel visible",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-trim",
+        "action": "verify_visible",
+        "value": "",
+        "expectedResult": "Trim panel is visible and controls are rendered"
+      },
+      {
+        "id": "trim-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file_input",
+        "selector": "#panel-trim input[type=file]",
+        "action": "upload",
+        "value": "sample_video.mp4",
+        "expectedResult": "Video file is uploaded and preview is shown"
+      },
+      {
+        "id": "trim-003",
+        "title": "Set trim start time",
+        "priority": "high",
+        "category": "functional",
+        "control": "tr-start",
+        "selector": "#tr-start",
+        "action": "input",
+        "value": "5.5",
+        "expectedResult": "Start time is set to 5.5 seconds"
+      },
+      {
+        "id": "trim-004",
+        "title": "Set trim end time",
+        "priority": "high",
+        "category": "functional",
+        "control": "tr-end",
+        "selector": "#tr-end",
+        "action": "input",
+        "value": "15.8",
+        "expectedResult": "End time is set to 15.8 seconds"
+      },
+      {
+        "id": "trim-005",
+        "title": "Process trim with valid range",
+        "priority": "critical",
+        "category": "functional",
+        "control": "tr-run",
+        "selector": "#tr-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video is trimmed and download is available"
+      },
+      {
+        "id": "trim-006",
+        "title": "Start time equals zero",
+        "priority": "medium",
+        "category": "edge",
+        "control": "tr-start",
+        "selector": "#tr-start",
+        "action": "input",
+        "value": "0",
+        "expectedResult": "Accepts zero as valid start time"
+      },
+      {
+        "id": "trim-007",
+        "title": "End time before start time",
+        "priority": "high",
+        "category": "negative",
+        "control": "tr-end",
+        "selector": "#tr-end",
+        "action": "input",
+        "value": "2",
+        "expectedResult": "Shows error when end time < start time (if start > 2)"
+      },
+      {
+        "id": "trim-008",
+        "title": "Negative start time",
+        "priority": "medium",
+        "category": "negative",
+        "control": "tr-start",
+        "selector": "#tr-start",
+        "action": "input",
+        "value": "-5",
+        "expectedResult": "Rejects or resets negative value due to min=0 constraint"
+      }
+    ]
+  },
+  "speed": {
+    "tool": "speed",
+    "panel": "speed",
+    "btnId": "sp-run",
+    "name": "Speed Control",
+    "scenarios": [
+      {
+        "id": "speed-001",
+        "title": "Speed control panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-speed",
+        "action": "verify element exists and is visible",
+        "value": "",
+        "expectedResult": "Speed control panel is displayed with all controls"
+      },
+      {
+        "id": "speed-002",
+        "title": "Upload video file via file input",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-speed input[type=file]",
+        "action": "upload file",
+        "value": "sample-video.mp4",
+        "expectedResult": "Video file is accepted and loaded for processing"
+      },
+      {
+        "id": "speed-003",
+        "title": "Adjust speed using range slider to custom value",
+        "priority": "high",
+        "category": "functional",
+        "control": "speed range slider",
+        "selector": "#sp-speed",
+        "action": "set slider value",
+        "value": "2.5",
+        "expectedResult": "Speed slider updates to 2.5x"
+      },
+      {
+        "id": "speed-004",
+        "title": "Apply 0.5x Slow Mo preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('0.5×')",
+        "action": "click preset",
+        "value": "0.5",
+        "expectedResult": "Speed is set to 0.5x slow motion"
+      },
+      {
+        "id": "speed-005",
+        "title": "Apply 0.75x Slower preset",
+        "priority": "medium",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('0.75×')",
+        "action": "click preset",
+        "value": "0.75",
+        "expectedResult": "Speed is set to 0.75x"
+      },
+      {
+        "id": "speed-006",
+        "title": "Apply 1.5x Fast preset",
+        "priority": "medium",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('1.5×')",
+        "action": "click preset",
+        "value": "1.5",
+        "expectedResult": "Speed is set to 1.5x fast"
+      },
+      {
+        "id": "speed-007",
+        "title": "Apply 2x Double preset",
+        "priority": "medium",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('2×')",
+        "action": "click preset",
+        "value": "2.0",
+        "expectedResult": "Speed is set to 2x double speed"
+      },
+      {
+        "id": "speed-008",
+        "title": "Apply 3x Triple preset",
+        "priority": "medium",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('3×')",
+        "action": "click preset",
+        "value": "3.0",
+        "expectedResult": "Speed is set to 3x triple speed"
+      },
+      {
+        "id": "speed-009",
+        "title": "Process video with selected speed",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#sp-run",
+        "action": "click button",
+        "value": "",
+        "expectedResult": "Video processing starts and completes successfully"
+      },
+      {
+        "id": "speed-010",
+        "title": "Set speed to minimum boundary value",
+        "priority": "high",
+        "category": "edge",
+        "control": "speed range slider",
+        "selector": "#sp-speed",
+        "action": "set slider value",
+        "value": "0.25",
+        "expectedResult": "Speed is set to minimum 0.25x"
+      },
+      {
+        "id": "speed-011",
+        "title": "Set speed to maximum boundary value",
+        "priority": "high",
+        "category": "edge",
+        "control": "speed range slider",
+        "selector": "#sp-speed",
+        "action": "set slider value",
+        "value": "4.0",
+        "expectedResult": "Speed is set to maximum 4.0x"
+      },
+      {
+        "id": "speed-012",
+        "title": "Click process without uploading video",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#sp-run",
+        "action": "click button without file",
+        "value": "",
+        "expectedResult": "Error message displayed requesting video upload"
+      },
+      {
+        "id": "speed-013",
+        "title": "Upload invalid file format",
+        "priority": "medium",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-speed input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed indicating invalid file format"
+      }
+    ]
+  },
+  "convert": {
+    "tool": "convert",
+    "panel": "convert",
+    "btnId": "cv-run",
+    "name": "Convert",
+    "scenarios": [
+      {
+        "id": "convert-001",
+        "title": "Page loads with convert panel visible",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-convert",
+        "action": "verify visible",
+        "value": "",
+        "expectedResult": "Convert panel is displayed with file drop area and format options"
+      },
+      {
+        "id": "convert-002",
+        "title": "Upload video file via file input",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-convert input[type=file]",
+        "action": "upload file",
+        "value": "sample.mp4",
+        "expectedResult": "File is accepted and displayed in the interface"
+      },
+      {
+        "id": "convert-003",
+        "title": "Convert to MP4 format",
+        "priority": "high",
+        "category": "functional",
+        "control": "format preset",
+        "selector": "[data-format='mp4']",
+        "action": "click preset",
+        "value": "mp4",
+        "expectedResult": "MP4 format is selected, cv-fmt hidden input value is 'mp4'"
+      },
+      {
+        "id": "convert-004",
+        "title": "Convert to MOV format",
+        "priority": "high",
+        "category": "functional",
+        "control": "format preset",
+        "selector": "[data-format='mov']",
+        "action": "click preset",
+        "value": "mov",
+        "expectedResult": "MOV format is selected, cv-fmt hidden input value is 'mov'"
+      },
+      {
+        "id": "convert-005",
+        "title": "Convert to WebM format",
+        "priority": "high",
+        "category": "functional",
+        "control": "format preset",
+        "selector": "[data-format='webm']",
+        "action": "click preset",
+        "value": "webm",
+        "expectedResult": "WebM format is selected, cv-fmt hidden input value is 'webm'"
+      },
+      {
+        "id": "convert-006",
+        "title": "Convert to GIF format",
+        "priority": "high",
+        "category": "functional",
+        "control": "format preset",
+        "selector": "[data-format='gif']",
+        "action": "click preset",
+        "value": "gif",
+        "expectedResult": "GIF format is selected, cv-fmt hidden input value is 'gif'"
+      },
+      {
+        "id": "convert-007",
+        "title": "Convert to MP3 audio only",
+        "priority": "high",
+        "category": "functional",
+        "control": "format preset",
+        "selector": "[data-format='mp3']",
+        "action": "click preset",
+        "value": "mp3",
+        "expectedResult": "MP3 format is selected, cv-fmt hidden input value is 'mp3'"
+      },
+      {
+        "id": "convert-008",
+        "title": "Convert to WAV lossless audio",
+        "priority": "high",
+        "category": "functional",
+        "control": "format preset",
+        "selector": "[data-format='wav']",
+        "action": "click preset",
+        "value": "wav",
+        "expectedResult": "WAV format is selected, cv-fmt hidden input value is 'wav'"
+      },
+      {
+        "id": "convert-009",
+        "title": "Click process button with file uploaded",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#cv-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Conversion process starts, progress indicator shown"
+      },
+      {
+        "id": "convert-010",
+        "title": "Change file after initial upload",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": ".file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File input is re-enabled, allows selecting a different file"
+      },
+      {
+        "id": "convert-011",
+        "title": "Upload extremely large file",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-convert input[type=file]",
+        "action": "upload file",
+        "value": "large_5gb.mp4",
+        "expectedResult": "File size warning displayed or upload rejected gracefully"
+      },
+      {
+        "id": "convert-012",
+        "title": "Upload unsupported file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-convert input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed indicating unsupported file type"
+      },
+      {
+        "id": "convert-013",
+        "title": "Click process without uploading file",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#cv-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Error message displayed requiring file upload first"
+      }
+    ]
+  },
+  "compress": {
+    "tool": "compress",
+    "panel": "compress",
+    "btnId": "cm-run",
+    "name": "Compress",
+    "scenarios": [
+      {
+        "id": "compress-001",
+        "title": "Panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-compress",
+        "action": "verify visible",
+        "value": "",
+        "expectedResult": "Compress panel is visible and displays file drop area"
+      },
+      {
+        "id": "compress-002",
+        "title": "Upload valid video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-compress input[type=file]",
+        "action": "upload file",
+        "value": "sample.mp4",
+        "expectedResult": "File is accepted and preview/name displayed"
+      },
+      {
+        "id": "compress-003",
+        "title": "Select Light compression preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "quality preset",
+        "selector": "#cm-quality",
+        "action": "select preset",
+        "value": "light",
+        "expectedResult": "Light preset selected, quality value set to 'light'"
+      },
+      {
+        "id": "compress-004",
+        "title": "Select Medium compression preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "quality preset",
+        "selector": "#cm-quality",
+        "action": "select preset",
+        "value": "medium",
+        "expectedResult": "Medium preset selected, quality value set to 'medium'"
+      },
+      {
+        "id": "compress-005",
+        "title": "Select Heavy compression preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "quality preset",
+        "selector": "#cm-quality",
+        "action": "select preset",
+        "value": "heavy",
+        "expectedResult": "Heavy preset selected, quality value set to 'heavy'"
+      },
+      {
+        "id": "compress-006",
+        "title": "Process compression with valid file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#cm-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Compression starts, progress shown, compressed file generated"
+      },
+      {
+        "id": "compress-007",
+        "title": "Change uploaded file",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": "button.file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File input reopens to allow selecting different file"
+      },
+      {
+        "id": "compress-008",
+        "title": "Upload extremely large video file",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-compress input[type=file]",
+        "action": "upload file",
+        "value": "large_5gb.mp4",
+        "expectedResult": "File size validation triggers or handles gracefully with appropriate message"
+      },
+      {
+        "id": "compress-009",
+        "title": "Upload non-video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-compress input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed: 'Invalid file type' or file rejected"
+      },
+      {
+        "id": "compress-010",
+        "title": "Click process without uploading file",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#cm-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Error message displayed or button disabled until file uploaded"
+      }
+    ]
+  },
+  "watermark": {
+    "tool": "watermark",
+    "panel": "watermark",
+    "btnId": "wm-run",
+    "name": "Watermark",
+    "scenarios": [
+      {
+        "id": "watermark-001",
+        "title": "Watermark tool panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-watermark",
+        "action": "verify panel visibility",
+        "value": "",
+        "expectedResult": "Panel is visible and all controls are rendered"
+      },
+      {
+        "id": "watermark-002",
+        "title": "Upload video file for watermarking",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-watermark input[type=file]",
+        "action": "upload file",
+        "value": "sample.mp4",
+        "expectedResult": "Video file is accepted and preview shows"
+      },
+      {
+        "id": "watermark-003",
+        "title": "Enter watermark text",
+        "priority": "high",
+        "category": "functional",
+        "control": "wm-text",
+        "selector": "#wm-text",
+        "action": "input text",
+        "value": "© MyBrand 2024",
+        "expectedResult": "Text is entered and preview updates"
+      },
+      {
+        "id": "watermark-004",
+        "title": "Adjust font size slider",
+        "priority": "high",
+        "category": "functional",
+        "control": "wm-fontsize",
+        "selector": "#wm-fontsize",
+        "action": "set range value",
+        "value": "15",
+        "expectedResult": "Font size changes to 15 and preview updates"
+      },
+      {
+        "id": "watermark-005",
+        "title": "Adjust opacity slider",
+        "priority": "high",
+        "category": "functional",
+        "control": "wm-opacity",
+        "selector": "#wm-opacity",
+        "action": "set range value",
+        "value": "50",
+        "expectedResult": "Opacity changes to 50% and watermark becomes more transparent"
+      },
+      {
+        "id": "watermark-006",
+        "title": "Change watermark position to center",
+        "priority": "high",
+        "category": "functional",
+        "control": "wm-position",
+        "selector": "#wm-position",
+        "action": "select option",
+        "value": "center",
+        "expectedResult": "Watermark moves to center of video"
+      },
+      {
+        "id": "watermark-007",
+        "title": "Change watermark position to top-left",
+        "priority": "medium",
+        "category": "functional",
+        "control": "wm-position",
+        "selector": "#wm-position",
+        "action": "select option",
+        "value": "top-left",
+        "expectedResult": "Watermark moves to top-left corner"
+      },
+      {
+        "id": "watermark-008",
+        "title": "Process watermark with valid inputs",
+        "priority": "critical",
+        "category": "functional",
+        "control": "wm-run",
+        "selector": "#wm-run",
+        "action": "click button",
+        "value": "",
+        "expectedResult": "Video processes successfully with watermark applied"
+      },
+      {
+        "id": "watermark-009",
+        "title": "Set font size to maximum boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "wm-fontsize",
+        "selector": "#wm-fontsize",
+        "action": "set range value",
+        "value": "25",
+        "expectedResult": "Font size set to maximum (25) and watermark scales appropriately"
+      },
+      {
+        "id": "watermark-010",
+        "title": "Set opacity to minimum boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "wm-opacity",
+        "selector": "#wm-opacity",
+        "action": "set range value",
+        "value": "10",
+        "expectedResult": "Opacity set to minimum (10%) and watermark is barely visible"
+      },
+      {
+        "id": "watermark-011",
+        "title": "Attempt to process without uploading video",
+        "priority": "high",
+        "category": "negative",
+        "control": "wm-run",
+        "selector": "#wm-run",
+        "action": "click button",
+        "value": "",
+        "expectedResult": "Error message displayed requesting video upload"
+      },
+      {
+        "id": "watermark-012",
+        "title": "Process with empty watermark text",
+        "priority": "medium",
+        "category": "negative",
+        "control": "wm-text",
+        "selector": "#wm-text",
+        "action": "clear input and process",
+        "value": "",
+        "expectedResult": "Error message or warning about empty watermark text"
+      }
+    ]
+  },
+  "volume": {
+    "tool": "volume",
+    "panel": "volume",
+    "btnId": "vl-run",
+    "name": "Volume",
+    "scenarios": [
+      {
+        "id": "volume-001",
+        "title": "Panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-volume",
+        "action": "verify visible",
+        "value": "",
+        "expectedResult": "Volume panel is displayed with all controls"
+      },
+      {
+        "id": "volume-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-volume input[type=file]",
+        "action": "upload file",
+        "value": "sample-video.mp4",
+        "expectedResult": "Video file is accepted and preview shown"
+      },
+      {
+        "id": "volume-003",
+        "title": "Adjust volume slider to custom value",
+        "priority": "high",
+        "category": "functional",
+        "control": "volume slider",
+        "selector": "#vl-volume-slider",
+        "action": "set slider",
+        "value": "2.5",
+        "expectedResult": "Slider moves to 2.5x and hidden input updates"
+      },
+      {
+        "id": "volume-004",
+        "title": "Select 25% preset (Very quiet)",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('25%')",
+        "action": "click preset",
+        "value": "0.25",
+        "expectedResult": "Volume set to 0.25 (25%)"
+      },
+      {
+        "id": "volume-005",
+        "title": "Select 50% preset (Half)",
+        "priority": "medium",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('50%')",
+        "action": "click preset",
+        "value": "0.5",
+        "expectedResult": "Volume set to 0.5 (50%)"
+      },
+      {
+        "id": "volume-006",
+        "title": "Select 150% preset (Boost)",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('150%')",
+        "action": "click preset",
+        "value": "1.5",
+        "expectedResult": "Volume set to 1.5 (150%)"
+      },
+      {
+        "id": "volume-007",
+        "title": "Select 200% preset (Double)",
+        "priority": "medium",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('200%')",
+        "action": "click preset",
+        "value": "2.0",
+        "expectedResult": "Volume set to 2.0 (200%)"
+      },
+      {
+        "id": "volume-008",
+        "title": "Select 300% preset (Triple)",
+        "priority": "medium",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('300%')",
+        "action": "click preset",
+        "value": "3.0",
+        "expectedResult": "Volume set to 3.0 (300%)"
+      },
+      {
+        "id": "volume-009",
+        "title": "Change file after upload",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": ".file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File input resets, allows new file selection"
+      },
+      {
+        "id": "volume-010",
+        "title": "Process video with volume change",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#vl-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video processing starts, output generated with modified volume"
+      },
+      {
+        "id": "volume-011",
+        "title": "Set volume to minimum boundary (0.1)",
+        "priority": "high",
+        "category": "edge",
+        "control": "volume slider",
+        "selector": "#vl-volume-slider",
+        "action": "set slider",
+        "value": "0.1",
+        "expectedResult": "Slider accepts minimum value 0.1, volume nearly muted"
+      },
+      {
+        "id": "volume-012",
+        "title": "Set volume to maximum boundary (4.0)",
+        "priority": "high",
+        "category": "edge",
+        "control": "volume slider",
+        "selector": "#vl-volume-slider",
+        "action": "set slider",
+        "value": "4.0",
+        "expectedResult": "Slider accepts maximum value 4.0, volume quadrupled"
+      },
+      {
+        "id": "volume-013",
+        "title": "Upload non-video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-volume input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message shown, invalid file rejected"
+      },
+      {
+        "id": "volume-014",
+        "title": "Process without uploading file",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#vl-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Error message shown, prompts to upload video first"
+      }
+    ]
+  },
+  "rotate-flip": {
+    "tool": "rotate-flip",
+    "panel": "rotate",
+    "btnId": "ro-run",
+    "name": "Rotate Flip",
+    "scenarios": [
+      {
+        "id": "rotate-flip-001",
+        "title": "Page loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-rotate",
+        "action": "verify visible",
+        "value": "",
+        "expectedResult": "Rotate panel is visible and all controls are rendered"
+      },
+      {
+        "id": "rotate-flip-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-rotate input[type=file]",
+        "action": "upload file",
+        "value": "valid_video.mp4",
+        "expectedResult": "Video file is accepted and preview shown"
+      },
+      {
+        "id": "rotate-flip-003",
+        "title": "Rotate 90° clockwise",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('↻ 90°')",
+        "action": "click preset",
+        "value": "90",
+        "expectedResult": "Transform value set to 90, video rotated clockwise"
+      },
+      {
+        "id": "rotate-flip-004",
+        "title": "Rotate 180° upside down",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('↻ 180°')",
+        "action": "click preset",
+        "value": "180",
+        "expectedResult": "Transform value set to 180, video flipped upside down"
+      },
+      {
+        "id": "rotate-flip-005",
+        "title": "Rotate 90° counter-clockwise",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('↺ 90°')",
+        "action": "click preset",
+        "value": "-90",
+        "expectedResult": "Transform value set to -90, video rotated counter-clockwise"
+      },
+      {
+        "id": "rotate-flip-006",
+        "title": "Flip horizontal",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('↔ Flip')",
+        "action": "click preset",
+        "value": "hflip",
+        "expectedResult": "Video flipped horizontally (mirrored)"
+      },
+      {
+        "id": "rotate-flip-007",
+        "title": "Flip vertical",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset button",
+        "selector": "button:contains('↕ Flip')",
+        "action": "click preset",
+        "value": "vflip",
+        "expectedResult": "Video flipped vertically"
+      },
+      {
+        "id": "rotate-flip-008",
+        "title": "Process rotation",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#ro-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video processing starts and transformed video is generated"
+      },
+      {
+        "id": "rotate-flip-009",
+        "title": "Change file after upload",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": "button.file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File input reopened to select different video"
+      },
+      {
+        "id": "rotate-flip-010",
+        "title": "Process without file",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#ro-run",
+        "action": "click without upload",
+        "value": "",
+        "expectedResult": "Error message shown: no file selected"
+      },
+      {
+        "id": "rotate-flip-011",
+        "title": "Upload unsupported file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-rotate input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message shown: invalid file type"
+      },
+      {
+        "id": "rotate-flip-012",
+        "title": "Multiple transformations sequence",
+        "priority": "medium",
+        "category": "edge",
+        "control": "preset buttons",
+        "selector": "button:contains('↻ 90°')",
+        "action": "click multiple presets",
+        "value": "90,90,90,90",
+        "expectedResult": "Last selected transformation applied (360° = original)"
+      }
+    ]
+  },
+  "resize": {
+    "tool": "resize",
+    "panel": "crop",
+    "btnId": "cr-run",
+    "name": "Resize for Social",
+    "scenarios": [
+      {
+        "id": "resize-001",
+        "title": "Panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-crop",
+        "action": "check visibility",
+        "value": "",
+        "expectedResult": "Panel is visible and all controls are rendered"
+      },
+      {
+        "id": "resize-002",
+        "title": "Select YouTube preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset",
+        "selector": ".preset-button:contains('YT')",
+        "action": "click",
+        "value": "youtube",
+        "expectedResult": "Platform set to YouTube (1920×1080 · 16:9) and cr-platform value updated to 'youtube'"
+      },
+      {
+        "id": "resize-003",
+        "title": "Select Instagram preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset",
+        "selector": ".preset-button:contains('IG')",
+        "action": "click",
+        "value": "instagram",
+        "expectedResult": "Platform set to Instagram (1080×1080 · 1:1)"
+      },
+      {
+        "id": "resize-004",
+        "title": "Select TikTok preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset",
+        "selector": ".preset-button:contains('TT')",
+        "action": "click",
+        "value": "tiktok",
+        "expectedResult": "Platform set to TikTok (1080×1920 · 9:16)"
+      },
+      {
+        "id": "resize-005",
+        "title": "Select LinkedIn preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset",
+        "selector": ".preset-button:contains('LI')",
+        "action": "click",
+        "value": "linkedin",
+        "expectedResult": "Platform set to LinkedIn (1280×720 · 16:9)"
+      },
+      {
+        "id": "resize-006",
+        "title": "Select Twitter preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset",
+        "selector": ".preset-button:contains('TW')",
+        "action": "click",
+        "value": "twitter",
+        "expectedResult": "Platform set to Twitter (1280×720 · 16:9)"
+      },
+      {
+        "id": "resize-007",
+        "title": "Select Square preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "preset",
+        "selector": ".preset-button:contains('SQ')",
+        "action": "click",
+        "value": "square",
+        "expectedResult": "Platform set to Square (1080×1080 · 1:1)"
+      },
+      {
+        "id": "resize-008",
+        "title": "Upload valid video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-crop input[type=file]",
+        "action": "upload file",
+        "value": "valid_video.mp4",
+        "expectedResult": "Video file is accepted and preview shown"
+      },
+      {
+        "id": "resize-009",
+        "title": "Process resize with YouTube preset",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#cr-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video is processed and resized to 1920×1080"
+      },
+      {
+        "id": "resize-010",
+        "title": "Change video file after upload",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": "button.file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File input is reset and allows new file selection"
+      },
+      {
+        "id": "resize-011",
+        "title": "Upload extremely large video file",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-crop input[type=file]",
+        "action": "upload file",
+        "value": "large_video_5gb.mp4",
+        "expectedResult": "Error message displayed about file size limit or processing handles gracefully"
+      },
+      {
+        "id": "resize-012",
+        "title": "Upload non-video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-crop input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed: 'Invalid file type. Please upload a video file'"
+      },
+      {
+        "id": "resize-013",
+        "title": "Click process without uploading video",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#cr-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Error message displayed: 'Please upload a video file first'"
+      }
+    ]
+  },
+  "ai-shorten": {
+    "tool": "ai-shorten",
+    "panel": "shorten",
+    "btnId": "sz-run",
+    "name": "AI Shorten",
+    "scenarios": [
+      {
+        "id": "ai-shorten-001",
+        "title": "Panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-shorten",
+        "action": "verify element exists and is visible",
+        "value": "",
+        "expectedResult": "Panel is displayed with all controls"
+      },
+      {
+        "id": "ai-shorten-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-shorten input[type=file]",
+        "action": "upload file",
+        "value": "valid_video.mp4",
+        "expectedResult": "File is accepted and displayed"
+      },
+      {
+        "id": "ai-shorten-003",
+        "title": "Adjust speed slider to minimum",
+        "priority": "high",
+        "category": "functional",
+        "control": "speed slider",
+        "selector": "#sz-speed",
+        "action": "set value",
+        "value": "0.5",
+        "expectedResult": "Speed set to 0.5x"
+      },
+      {
+        "id": "ai-shorten-004",
+        "title": "Adjust speed slider to maximum",
+        "priority": "high",
+        "category": "functional",
+        "control": "speed slider",
+        "selector": "#sz-speed",
+        "action": "set value",
+        "value": "3.0",
+        "expectedResult": "Speed set to 3.0x"
+      },
+      {
+        "id": "ai-shorten-005",
+        "title": "Select 1.25× Slight preset",
+        "priority": "medium",
+        "category": "functional",
+        "control": "preset button",
+        "selector": ".preset-button",
+        "action": "click preset",
+        "value": "1.25",
+        "expectedResult": "Speed slider updates to 1.25x"
+      },
+      {
+        "id": "ai-shorten-006",
+        "title": "Select 2× Double preset",
+        "priority": "medium",
+        "category": "functional",
+        "control": "preset button",
+        "selector": ".preset-button",
+        "action": "click preset",
+        "value": "2",
+        "expectedResult": "Speed slider updates to 2x"
+      },
+      {
+        "id": "ai-shorten-007",
+        "title": "Adjust threshold slider",
+        "priority": "high",
+        "category": "functional",
+        "control": "threshold slider",
+        "selector": "#sz-thresh",
+        "action": "set value",
+        "value": "-50",
+        "expectedResult": "Threshold set to -50dB"
+      },
+      {
+        "id": "ai-shorten-008",
+        "title": "Adjust min silence duration",
+        "priority": "high",
+        "category": "functional",
+        "control": "min silence slider",
+        "selector": "#sz-minsilence",
+        "action": "set value",
+        "value": "500",
+        "expectedResult": "Min silence set to 500ms"
+      },
+      {
+        "id": "ai-shorten-009",
+        "title": "Adjust padding slider",
+        "priority": "medium",
+        "category": "functional",
+        "control": "padding slider",
+        "selector": "#sz-pad",
+        "action": "set value",
+        "value": "150",
+        "expectedResult": "Padding set to 150ms"
+      },
+      {
+        "id": "ai-shorten-010",
+        "title": "Run process with valid file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#sz-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video processing starts successfully"
+      },
+      {
+        "id": "ai-shorten-011",
+        "title": "Threshold at maximum boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "threshold slider",
+        "selector": "#sz-thresh",
+        "action": "set value",
+        "value": "-20",
+        "expectedResult": "Threshold accepts maximum value -20dB"
+      },
+      {
+        "id": "ai-shorten-012",
+        "title": "Min silence at minimum boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "min silence slider",
+        "selector": "#sz-minsilence",
+        "action": "set value",
+        "value": "100",
+        "expectedResult": "Min silence accepts minimum value 100ms"
+      },
+      {
+        "id": "ai-shorten-013",
+        "title": "Run without file uploaded",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#sz-run",
+        "action": "click without file",
+        "value": "",
+        "expectedResult": "Error message displayed requiring file upload"
+      },
+      {
+        "id": "ai-shorten-014",
+        "title": "Upload invalid file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-shorten input[type=file]",
+        "action": "upload file",
+        "value": "invalid.txt",
+        "expectedResult": "Error message for unsupported file type"
+      }
+    ]
+  },
+  "ai-transcribe": {
+    "tool": "ai-transcribe",
+    "panel": "transcribe",
+    "btnId": "tc-run",
+    "name": "AI Transcribe",
+    "scenarios": [
+      {
+        "id": "ai-transcribe-001",
+        "title": "Page and panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-transcribe",
+        "action": "verify visibility",
+        "value": "",
+        "expectedResult": "Panel is visible and all controls are rendered"
+      },
+      {
+        "id": "ai-transcribe-002",
+        "title": "Upload valid video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-transcribe input[type=file]",
+        "action": "upload file",
+        "value": "sample.mp4",
+        "expectedResult": "File is accepted and ready for processing"
+      },
+      {
+        "id": "ai-transcribe-003",
+        "title": "Select auto-detect language",
+        "priority": "high",
+        "category": "functional",
+        "control": "language selector",
+        "selector": "#tc-language",
+        "action": "select option",
+        "value": "auto",
+        "expectedResult": "Auto-detect language is selected"
+      },
+      {
+        "id": "ai-transcribe-004",
+        "title": "Select Spanish language",
+        "priority": "medium",
+        "category": "functional",
+        "control": "language selector",
+        "selector": "#tc-language",
+        "action": "select option",
+        "value": "es",
+        "expectedResult": "Spanish language is selected"
+      },
+      {
+        "id": "ai-transcribe-005",
+        "title": "Select English translation",
+        "priority": "high",
+        "category": "functional",
+        "control": "translation selector",
+        "selector": "#tc-translate",
+        "action": "select option",
+        "value": "English",
+        "expectedResult": "English translation is selected"
+      },
+      {
+        "id": "ai-transcribe-006",
+        "title": "Select no translation",
+        "priority": "medium",
+        "category": "functional",
+        "control": "translation selector",
+        "selector": "#tc-translate",
+        "action": "select option",
+        "value": "none",
+        "expectedResult": "No translation is selected"
+      },
+      {
+        "id": "ai-transcribe-007",
+        "title": "Process transcription",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#tc-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Transcription process starts successfully"
+      },
+      {
+        "id": "ai-transcribe-008",
+        "title": "Click process without file",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#tc-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Error message displayed: file required"
+      },
+      {
+        "id": "ai-transcribe-009",
+        "title": "Upload unsupported file format",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-transcribe input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message: unsupported file format"
+      },
+      {
+        "id": "ai-transcribe-010",
+        "title": "Upload extremely large file",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-transcribe input[type=file]",
+        "action": "upload file",
+        "value": "large_video_5gb.mp4",
+        "expectedResult": "Error or warning about file size limit"
+      },
+      {
+        "id": "ai-transcribe-011",
+        "title": "Select all language options sequentially",
+        "priority": "low",
+        "category": "functional",
+        "control": "language selector",
+        "selector": "#tc-language",
+        "action": "iterate all options",
+        "value": "all",
+        "expectedResult": "All 20 language options are selectable"
+      },
+      {
+        "id": "ai-transcribe-012",
+        "title": "Copy transcription result",
+        "priority": "medium",
+        "category": "functional",
+        "control": "copy button",
+        "selector": "button:contains('Copy')",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Transcription copied to clipboard"
+      }
+    ]
+  },
+  "smart-clip": {
+    "tool": "smart-clip",
+    "panel": "smartclip",
+    "btnId": "sc-run",
+    "name": "Smart Clip",
+    "scenarios": [
+      {
+        "id": "smart-clip-001",
+        "title": "Smart Clip panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-smartclip",
+        "action": "verify panel is visible",
+        "value": "",
+        "expectedResult": "Smart Clip panel is displayed with file input area"
+      },
+      {
+        "id": "smart-clip-002",
+        "title": "Upload video file via file input",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-smartclip input[type=file]",
+        "action": "upload file",
+        "value": "valid_video.mp4",
+        "expectedResult": "Video file is accepted and ready for processing"
+      },
+      {
+        "id": "smart-clip-003",
+        "title": "Process video with Smart Clip",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#sc-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video processing starts and completes successfully"
+      },
+      {
+        "id": "smart-clip-004",
+        "title": "Change uploaded file",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": ".file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File input is reset and allows selecting a different file"
+      },
+      {
+        "id": "smart-clip-005",
+        "title": "Upload extremely large video file",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-smartclip input[type=file]",
+        "action": "upload file",
+        "value": "large_video_5gb.mp4",
+        "expectedResult": "System handles large file gracefully with appropriate feedback or size limit message"
+      },
+      {
+        "id": "smart-clip-006",
+        "title": "Upload invalid file format",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-smartclip input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed indicating invalid file type, only video formats accepted"
+      }
+    ]
+  },
+  "auto-captions": {
+    "tool": "auto-captions",
+    "panel": "autocaptions",
+    "btnId": "cap-run",
+    "name": "Auto Captions",
+    "scenarios": [
+      {
+        "id": "auto-captions-001",
+        "title": "Auto Captions panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-autocaptions",
+        "action": "verify panel is visible",
+        "value": "",
+        "expectedResult": "Panel is displayed and all controls are present"
+      },
+      {
+        "id": "auto-captions-002",
+        "title": "Upload video file for auto captioning",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-autocaptions input[type=file]",
+        "action": "upload file",
+        "value": "sample.mp4",
+        "expectedResult": "Video file is uploaded and ready for processing"
+      },
+      {
+        "id": "auto-captions-003",
+        "title": "Set font size to 24",
+        "priority": "high",
+        "category": "functional",
+        "control": "font size",
+        "selector": "#cap-fontsize",
+        "action": "set value",
+        "value": "24",
+        "expectedResult": "Font size is set to 24"
+      },
+      {
+        "id": "auto-captions-004",
+        "title": "Select English language",
+        "priority": "high",
+        "category": "functional",
+        "control": "language",
+        "selector": "#cap-language",
+        "action": "select option",
+        "value": "en",
+        "expectedResult": "English language is selected"
+      },
+      {
+        "id": "auto-captions-005",
+        "title": "Select Spanish language",
+        "priority": "medium",
+        "category": "functional",
+        "control": "language",
+        "selector": "#cap-language",
+        "action": "select option",
+        "value": "es",
+        "expectedResult": "Spanish language is selected"
+      },
+      {
+        "id": "auto-captions-006",
+        "title": "Select Bold caption style",
+        "priority": "high",
+        "category": "functional",
+        "control": "style",
+        "selector": "#cap-style",
+        "action": "select option",
+        "value": "bold",
+        "expectedResult": "Bold style is selected"
+      },
+      {
+        "id": "auto-captions-007",
+        "title": "Select TikTok caption style",
+        "priority": "medium",
+        "category": "functional",
+        "control": "style",
+        "selector": "#cap-style",
+        "action": "select option",
+        "value": "tiktok",
+        "expectedResult": "TikTok style is selected"
+      },
+      {
+        "id": "auto-captions-008",
+        "title": "Set caption position to top",
+        "priority": "medium",
+        "category": "functional",
+        "control": "position",
+        "selector": "#cap-position",
+        "action": "select option",
+        "value": "top",
+        "expectedResult": "Caption position is set to top"
+      },
+      {
+        "id": "auto-captions-009",
+        "title": "Set font color to yellow",
+        "priority": "medium",
+        "category": "functional",
+        "control": "font color",
+        "selector": "#cap-fontcolor",
+        "action": "select option",
+        "value": "yellow",
+        "expectedResult": "Font color is set to yellow"
+      },
+      {
+        "id": "auto-captions-010",
+        "title": "Set outline color to red",
+        "priority": "medium",
+        "category": "functional",
+        "control": "outline color",
+        "selector": "#cap-outlinecolor",
+        "action": "select option",
+        "value": "red",
+        "expectedResult": "Outline color is set to red"
+      },
+      {
+        "id": "auto-captions-011",
+        "title": "Set font size to minimum boundary (8)",
+        "priority": "high",
+        "category": "edge",
+        "control": "font size",
+        "selector": "#cap-fontsize",
+        "action": "set value",
+        "value": "8",
+        "expectedResult": "Font size is set to minimum value 8"
+      },
+      {
+        "id": "auto-captions-012",
+        "title": "Set font size to maximum boundary (72)",
+        "priority": "high",
+        "category": "edge",
+        "control": "font size",
+        "selector": "#cap-fontsize",
+        "action": "set value",
+        "value": "72",
+        "expectedResult": "Font size is set to maximum value 72"
+      },
+      {
+        "id": "auto-captions-013",
+        "title": "Attempt to process without uploading video",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#cap-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Error message displayed indicating no video uploaded"
+      },
+      {
+        "id": "auto-captions-014",
+        "title": "Set font size below minimum (5)",
+        "priority": "medium",
+        "category": "negative",
+        "control": "font size",
+        "selector": "#cap-fontsize",
+        "action": "set value",
+        "value": "5",
+        "expectedResult": "Value is rejected or set to minimum (8)"
+      },
+      {
+        "id": "auto-captions-015",
+        "title": "Upload invalid file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-autocaptions input[type=file]",
+        "action": "upload file",
+        "value": "document.txt",
+        "expectedResult": "Error message displayed indicating invalid file type"
+      }
+    ]
+  },
+  "blur-region": {
+    "tool": "blur-region",
+    "panel": "blur",
+    "btnId": "bl-run",
+    "name": "Blur Region",
+    "scenarios": [
+      {
+        "id": "blur-region-001",
+        "title": "Panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-blur",
+        "action": "verify visible",
+        "value": "",
+        "expectedResult": "Panel and controls are visible"
+      },
+      {
+        "id": "blur-region-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-blur input[type=file]",
+        "action": "upload file",
+        "value": "sample.mp4",
+        "expectedResult": "Video loads in preview"
+      },
+      {
+        "id": "blur-region-003",
+        "title": "Adjust blur X position",
+        "priority": "high",
+        "category": "functional",
+        "control": "blur-x",
+        "selector": "#blur-x",
+        "action": "set range",
+        "value": "40",
+        "expectedResult": "Blur region moves horizontally"
+      },
+      {
+        "id": "blur-region-004",
+        "title": "Adjust blur Y position",
+        "priority": "high",
+        "category": "functional",
+        "control": "blur-y",
+        "selector": "#blur-y",
+        "action": "set range",
+        "value": "60",
+        "expectedResult": "Blur region moves vertically"
+      },
+      {
+        "id": "blur-region-005",
+        "title": "Adjust blur width",
+        "priority": "high",
+        "category": "functional",
+        "control": "blur-w",
+        "selector": "#blur-w",
+        "action": "set range",
+        "value": "75",
+        "expectedResult": "Blur region width increases"
+      },
+      {
+        "id": "blur-region-006",
+        "title": "Adjust blur height",
+        "priority": "high",
+        "category": "functional",
+        "control": "blur-h",
+        "selector": "#blur-h",
+        "action": "set range",
+        "value": "80",
+        "expectedResult": "Blur region height increases"
+      },
+      {
+        "id": "blur-region-007",
+        "title": "Select rectangle shape",
+        "priority": "high",
+        "category": "functional",
+        "control": "shape button",
+        "selector": ".blur-shape-btn:nth-of-type(1)",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Rectangle shape applied"
+      },
+      {
+        "id": "blur-region-008",
+        "title": "Select rounded shape",
+        "priority": "high",
+        "category": "functional",
+        "control": "shape button",
+        "selector": ".blur-shape-btn:nth-of-type(2)",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Rounded rectangle shape applied"
+      },
+      {
+        "id": "blur-region-009",
+        "title": "Select circle shape",
+        "priority": "high",
+        "category": "functional",
+        "control": "shape button",
+        "selector": ".blur-shape-btn:nth-of-type(3)",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Circle shape applied"
+      },
+      {
+        "id": "blur-region-010",
+        "title": "Select blur style",
+        "priority": "high",
+        "category": "functional",
+        "control": "style button",
+        "selector": ".blur-style-btn:nth-of-type(1)",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Blur effect applied"
+      },
+      {
+        "id": "blur-region-011",
+        "title": "Select black style",
+        "priority": "high",
+        "category": "functional",
+        "control": "style button",
+        "selector": ".blur-style-btn:nth-of-type(2)",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Black box applied"
+      },
+      {
+        "id": "blur-region-012",
+        "title": "Select transparent style",
+        "priority": "high",
+        "category": "functional",
+        "control": "style button",
+        "selector": ".blur-style-btn:nth-of-type(3)",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Transparent box applied"
+      },
+      {
+        "id": "blur-region-013",
+        "title": "Process video with blur",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#bl-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video processes and downloads"
+      },
+      {
+        "id": "blur-region-014",
+        "title": "Set width to minimum boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "blur-w",
+        "selector": "#blur-w",
+        "action": "set range",
+        "value": "5",
+        "expectedResult": "Minimum width applied correctly"
+      },
+      {
+        "id": "blur-region-015",
+        "title": "Set height to maximum boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "blur-h",
+        "selector": "#blur-h",
+        "action": "set range",
+        "value": "100",
+        "expectedResult": "Maximum height applied correctly"
+      },
+      {
+        "id": "blur-region-016",
+        "title": "Process without uploading video",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#bl-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Error message or disabled button"
+      },
+      {
+        "id": "blur-region-017",
+        "title": "Upload invalid file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-blur input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message for invalid file"
+      }
+    ]
+  },
+  "brightness": {
+    "tool": "brightness",
+    "panel": "colorgrade",
+    "btnId": "cg-run",
+    "name": "Brightness Contrast",
+    "scenarios": [
+      {
+        "id": "brightness-001",
+        "title": "Page and panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-colorgrade",
+        "action": "verify panel is visible",
+        "value": "",
+        "expectedResult": "Color grade panel loads and is visible with all controls present"
+      },
+      {
+        "id": "brightness-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-colorgrade input[type=file]",
+        "action": "upload file",
+        "value": "valid_video.mp4",
+        "expectedResult": "Video file uploads successfully and preview displays"
+      },
+      {
+        "id": "brightness-003",
+        "title": "Adjust brightness to positive value",
+        "priority": "high",
+        "category": "functional",
+        "control": "brightness",
+        "selector": "#bg-brightness",
+        "action": "set slider value",
+        "value": "0.3",
+        "expectedResult": "Brightness slider moves to 0.3 and preview shows brighter video"
+      },
+      {
+        "id": "brightness-004",
+        "title": "Adjust brightness to negative value",
+        "priority": "high",
+        "category": "functional",
+        "control": "brightness",
+        "selector": "#bg-brightness",
+        "action": "set slider value",
+        "value": "-0.3",
+        "expectedResult": "Brightness slider moves to -0.3 and preview shows darker video"
+      },
+      {
+        "id": "brightness-005",
+        "title": "Adjust contrast to maximum",
+        "priority": "high",
+        "category": "functional",
+        "control": "contrast",
+        "selector": "#bg-contrast",
+        "action": "set slider value",
+        "value": "2.0",
+        "expectedResult": "Contrast slider moves to 2.0 and preview shows high contrast video"
+      },
+      {
+        "id": "brightness-006",
+        "title": "Adjust contrast to minimum",
+        "priority": "high",
+        "category": "functional",
+        "control": "contrast",
+        "selector": "#bg-contrast",
+        "action": "set slider value",
+        "value": "0.5",
+        "expectedResult": "Contrast slider moves to 0.5 and preview shows low contrast video"
+      },
+      {
+        "id": "brightness-007",
+        "title": "Adjust saturation to desaturate",
+        "priority": "high",
+        "category": "functional",
+        "control": "saturation",
+        "selector": "#bg-saturation",
+        "action": "set slider value",
+        "value": "0",
+        "expectedResult": "Saturation slider moves to 0 and preview shows grayscale video"
+      },
+      {
+        "id": "brightness-008",
+        "title": "Adjust saturation to oversaturate",
+        "priority": "high",
+        "category": "functional",
+        "control": "saturation",
+        "selector": "#bg-saturation",
+        "action": "set slider value",
+        "value": "2.0",
+        "expectedResult": "Saturation slider moves to 2.0 and preview shows highly saturated video"
+      },
+      {
+        "id": "brightness-009",
+        "title": "Process video with adjusted settings",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#cg-run",
+        "action": "click button",
+        "value": "",
+        "expectedResult": "Video processes successfully with color grade adjustments applied"
+      },
+      {
+        "id": "brightness-010",
+        "title": "Brightness at maximum boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "brightness",
+        "selector": "#bg-brightness",
+        "action": "set slider value",
+        "value": "0.5",
+        "expectedResult": "Brightness slider accepts max value 0.5 and video shows maximum brightness"
+      },
+      {
+        "id": "brightness-011",
+        "title": "Brightness at minimum boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "brightness",
+        "selector": "#bg-brightness",
+        "action": "set slider value",
+        "value": "-0.5",
+        "expectedResult": "Brightness slider accepts min value -0.5 and video shows maximum darkness"
+      },
+      {
+        "id": "brightness-012",
+        "title": "Process without uploading video",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#cg-run",
+        "action": "click button without file",
+        "value": "",
+        "expectedResult": "Error message displayed indicating video file is required"
+      },
+      {
+        "id": "brightness-013",
+        "title": "Upload invalid file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-colorgrade input[type=file]",
+        "action": "upload file",
+        "value": "invalid_file.txt",
+        "expectedResult": "Error message displayed indicating invalid file format"
+      }
+    ]
+  },
+  "text-overlay": {
+    "tool": "text-overlay",
+    "panel": "textoverlay",
+    "btnId": "to-run",
+    "name": "Text Overlay",
+    "scenarios": [
+      {
+        "id": "text-overlay-001",
+        "title": "Panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-textoverlay",
+        "action": "verify visible",
+        "value": "",
+        "expectedResult": "Text overlay panel is visible and all controls are present"
+      },
+      {
+        "id": "text-overlay-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-textoverlay input[type=file]",
+        "action": "upload file",
+        "value": "sample_video.mp4",
+        "expectedResult": "Video file uploads successfully and preview displays"
+      },
+      {
+        "id": "text-overlay-003",
+        "title": "Enter text overlay",
+        "priority": "high",
+        "category": "functional",
+        "control": "text input",
+        "selector": "#to-text",
+        "action": "type text",
+        "value": "Sample Text",
+        "expectedResult": "Text is entered and displayed in preview"
+      },
+      {
+        "id": "text-overlay-004",
+        "title": "Adjust text size",
+        "priority": "high",
+        "category": "functional",
+        "control": "size range",
+        "selector": "#to-size",
+        "action": "set range value",
+        "value": "15",
+        "expectedResult": "Text size changes to medium size in preview"
+      },
+      {
+        "id": "text-overlay-005",
+        "title": "Change X position",
+        "priority": "high",
+        "category": "functional",
+        "control": "x position range",
+        "selector": "#to-x",
+        "action": "set range value",
+        "value": "25",
+        "expectedResult": "Text moves horizontally to left side of video"
+      },
+      {
+        "id": "text-overlay-006",
+        "title": "Change Y position",
+        "priority": "high",
+        "category": "functional",
+        "control": "y position range",
+        "selector": "#to-y",
+        "action": "set range value",
+        "value": "10",
+        "expectedResult": "Text moves vertically to top of video"
+      },
+      {
+        "id": "text-overlay-007",
+        "title": "Adjust opacity",
+        "priority": "high",
+        "category": "functional",
+        "control": "opacity range",
+        "selector": "#to-opacity",
+        "action": "set range value",
+        "value": "50",
+        "expectedResult": "Text becomes semi-transparent"
+      },
+      {
+        "id": "text-overlay-008",
+        "title": "Select text color",
+        "priority": "high",
+        "category": "functional",
+        "control": "color select",
+        "selector": "#to-color",
+        "action": "select option",
+        "value": "red",
+        "expectedResult": "Text color changes to red"
+      },
+      {
+        "id": "text-overlay-009",
+        "title": "Process video with text overlay",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#to-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video processing starts and completes with text overlay applied"
+      },
+      {
+        "id": "text-overlay-010",
+        "title": "Maximum text size boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "size range",
+        "selector": "#to-size",
+        "action": "set range value",
+        "value": "25",
+        "expectedResult": "Text displays at maximum size without overflow or errors"
+      },
+      {
+        "id": "text-overlay-011",
+        "title": "Minimum opacity boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "opacity range",
+        "selector": "#to-opacity",
+        "action": "set range value",
+        "value": "10",
+        "expectedResult": "Text displays at minimum opacity, barely visible but not invisible"
+      },
+      {
+        "id": "text-overlay-012",
+        "title": "Process without video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#to-run",
+        "action": "click without file",
+        "value": "",
+        "expectedResult": "Error message displayed indicating video file is required"
+      },
+      {
+        "id": "text-overlay-013",
+        "title": "Process with empty text",
+        "priority": "medium",
+        "category": "negative",
+        "control": "text input",
+        "selector": "#to-text",
+        "action": "leave empty and process",
+        "value": "",
+        "expectedResult": "Error message or warning displayed indicating text is required"
+      }
+    ]
+  },
+  "thumbnail": {
+    "tool": "thumbnail",
+    "panel": "thumbnail",
+    "btnId": "th-run",
+    "name": "Thumbnail",
+    "scenarios": [
+      {
+        "id": "thumbnail-001",
+        "title": "Page loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-thumbnail",
+        "action": "verify visible",
+        "value": "",
+        "expectedResult": "Thumbnail panel is visible and controls are rendered"
+      },
+      {
+        "id": "thumbnail-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-thumbnail input[type=file]",
+        "action": "upload file",
+        "value": "sample-video.mp4",
+        "expectedResult": "Video file is accepted and loaded for processing"
+      },
+      {
+        "id": "thumbnail-003",
+        "title": "Select 1 thumbnail option",
+        "priority": "high",
+        "category": "functional",
+        "control": "th-count radio",
+        "selector": "input[name='th-count'][value='1']",
+        "action": "click radio",
+        "value": "1",
+        "expectedResult": "1 (best) option is selected"
+      },
+      {
+        "id": "thumbnail-004",
+        "title": "Select 3 thumbnails option",
+        "priority": "high",
+        "category": "functional",
+        "control": "th-count radio",
+        "selector": "input[name='th-count'][value='3']",
+        "action": "click radio",
+        "value": "3",
+        "expectedResult": "3 thumbnails option is selected (default)"
+      },
+      {
+        "id": "thumbnail-005",
+        "title": "Select 5 thumbnails option",
+        "priority": "high",
+        "category": "functional",
+        "control": "th-count radio",
+        "selector": "input[name='th-count'][value='5']",
+        "action": "click radio",
+        "value": "5",
+        "expectedResult": "5 thumbnails option is selected"
+      },
+      {
+        "id": "thumbnail-006",
+        "title": "Select 10 thumbnails option",
+        "priority": "high",
+        "category": "functional",
+        "control": "th-count radio",
+        "selector": "input[name='th-count'][value='10']",
+        "action": "click radio",
+        "value": "10",
+        "expectedResult": "10 thumbnails option is selected"
+      },
+      {
+        "id": "thumbnail-007",
+        "title": "Generate thumbnails with valid video",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#th-run",
+        "action": "click button",
+        "value": "",
+        "expectedResult": "Thumbnails are generated successfully"
+      },
+      {
+        "id": "thumbnail-008",
+        "title": "Change file button",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": ".file-change",
+        "action": "click button",
+        "value": "",
+        "expectedResult": "File selector reopens to allow choosing different file"
+      },
+      {
+        "id": "thumbnail-009",
+        "title": "Maximum thumbnail count boundary",
+        "priority": "medium",
+        "category": "edge",
+        "control": "th-count radio",
+        "selector": "input[name='th-count'][value='10']",
+        "action": "select and process",
+        "value": "10",
+        "expectedResult": "Generates 10 thumbnails without errors"
+      },
+      {
+        "id": "thumbnail-010",
+        "title": "Upload invalid file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-thumbnail input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed indicating invalid file type"
+      },
+      {
+        "id": "thumbnail-011",
+        "title": "Process without file uploaded",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#th-run",
+        "action": "click button",
+        "value": "",
+        "expectedResult": "Error message or disabled state prevents processing"
+      }
+    ]
+  },
+  "mute": {
+    "tool": "mute",
+    "panel": "mute",
+    "btnId": "mu-run",
+    "name": "Mute",
+    "scenarios": [
+      {
+        "id": "mute-001",
+        "title": "Mute tool page loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "page",
+        "selector": "#panel-mute",
+        "action": "verify element exists",
+        "value": "",
+        "expectedResult": "Mute panel is visible and loaded"
+      },
+      {
+        "id": "mute-002",
+        "title": "Upload video file via file input",
+        "priority": "high",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-mute input[type=file]",
+        "action": "upload file",
+        "value": "sample-video.mp4",
+        "expectedResult": "Video file is accepted and loaded"
+      },
+      {
+        "id": "mute-003",
+        "title": "Process button mutes video audio",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#mu-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video is processed and audio is removed"
+      },
+      {
+        "id": "mute-004",
+        "title": "Change button allows file replacement",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": ".file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File input is reopened to select different file"
+      },
+      {
+        "id": "mute-005",
+        "title": "Process very large video file",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-mute input[type=file]",
+        "action": "upload file",
+        "value": "large-video-2gb.mp4",
+        "expectedResult": "Large file is handled appropriately with feedback or size limit warning"
+      },
+      {
+        "id": "mute-006",
+        "title": "Upload invalid file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-mute input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed indicating invalid file format"
+      }
+    ]
+  },
+  "extract-audio": {
+    "tool": "extract-audio",
+    "panel": "audio",
+    "btnId": "au-run",
+    "name": "Extract Audio",
+    "scenarios": [
+      {
+        "id": "extract-audio-001",
+        "title": "Audio extraction panel loads",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-audio",
+        "action": "verify panel exists and is visible",
+        "value": "",
+        "expectedResult": "Panel loads successfully with file input area"
+      },
+      {
+        "id": "extract-audio-002",
+        "title": "Upload video file for audio extraction",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-audio input[type=file]",
+        "action": "upload file",
+        "value": "sample-video.mp4",
+        "expectedResult": "Video file is accepted and ready for processing"
+      },
+      {
+        "id": "extract-audio-003",
+        "title": "Extract audio from video",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#au-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Audio is extracted and available for download"
+      },
+      {
+        "id": "extract-audio-004",
+        "title": "Change uploaded file",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": ".file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File selection resets allowing new file upload"
+      },
+      {
+        "id": "extract-audio-005",
+        "title": "Extract audio from very large video",
+        "priority": "high",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-audio input[type=file]",
+        "action": "upload file",
+        "value": "large-video-2gb.mp4",
+        "expectedResult": "Large file handled gracefully with progress indication or size warning"
+      },
+      {
+        "id": "extract-audio-006",
+        "title": "Upload non-video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-audio input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message shown rejecting non-video file format"
+      }
+    ]
+  },
+  "video-to-gif": {
+    "tool": "video-to-gif",
+    "panel": "gif",
+    "btnId": "gif-run",
+    "name": "Video to GIF",
+    "scenarios": [
+      {
+        "id": "video-to-gif-001",
+        "title": "Page loads with GIF panel visible",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-gif",
+        "action": "verify panel is visible",
+        "value": "",
+        "expectedResult": "GIF panel is displayed with all controls"
+      },
+      {
+        "id": "video-to-gif-002",
+        "title": "Upload valid video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-gif input[type=file]",
+        "action": "upload file",
+        "value": "valid_video.mp4",
+        "expectedResult": "Video is loaded and ready for conversion"
+      },
+      {
+        "id": "video-to-gif-003",
+        "title": "Adjust FPS slider to middle value",
+        "priority": "high",
+        "category": "functional",
+        "control": "gif-fps",
+        "selector": "#gif-fps",
+        "action": "set range value",
+        "value": "15",
+        "expectedResult": "FPS is set to 15"
+      },
+      {
+        "id": "video-to-gif-004",
+        "title": "Adjust width slider to custom value",
+        "priority": "high",
+        "category": "functional",
+        "control": "gif-width",
+        "selector": "#gif-width",
+        "action": "set range value",
+        "value": "640",
+        "expectedResult": "Width is set to 640px"
+      },
+      {
+        "id": "video-to-gif-005",
+        "title": "Process video to GIF with default settings",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#gif-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video is converted to GIF successfully"
+      },
+      {
+        "id": "video-to-gif-006",
+        "title": "Set FPS to maximum boundary value",
+        "priority": "medium",
+        "category": "edge",
+        "control": "gif-fps",
+        "selector": "#gif-fps",
+        "action": "set range value",
+        "value": "25",
+        "expectedResult": "FPS is set to 25 and GIF processes correctly"
+      },
+      {
+        "id": "video-to-gif-007",
+        "title": "Set width to minimum boundary value",
+        "priority": "medium",
+        "category": "edge",
+        "control": "gif-width",
+        "selector": "#gif-width",
+        "action": "set range value",
+        "value": "200",
+        "expectedResult": "Width is set to 200px and GIF processes correctly"
+      },
+      {
+        "id": "video-to-gif-008",
+        "title": "Upload non-video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-gif input[type=file]",
+        "action": "upload file",
+        "value": "invalid_file.txt",
+        "expectedResult": "Error message displayed for invalid file type"
+      },
+      {
+        "id": "video-to-gif-009",
+        "title": "Click process without uploading video",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#gif-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Error message or disabled state prevents processing"
+      }
+    ]
+  },
+  "bg-music": {
+    "tool": "bg-music",
+    "panel": "bgmusic",
+    "btnId": "bm-run",
+    "name": "Background Music",
+    "scenarios": [
+      {
+        "id": "bg-music-001",
+        "title": "Panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-bgmusic",
+        "action": "verify panel is visible",
+        "value": "",
+        "expectedResult": "Background Music panel loads and is visible with all controls"
+      },
+      {
+        "id": "bg-music-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-bgmusic input[type=file]",
+        "action": "upload video file",
+        "value": "sample.mp4",
+        "expectedResult": "Video file uploads successfully and preview appears"
+      },
+      {
+        "id": "bg-music-003",
+        "title": "Adjust music volume slider",
+        "priority": "high",
+        "category": "functional",
+        "control": "music volume",
+        "selector": "#bgm-mvol",
+        "action": "set range value",
+        "value": "75",
+        "expectedResult": "Music volume adjusts to 75%"
+      },
+      {
+        "id": "bg-music-004",
+        "title": "Adjust video volume slider",
+        "priority": "high",
+        "category": "functional",
+        "control": "video volume",
+        "selector": "#bgm-vvol",
+        "action": "set range value",
+        "value": "60",
+        "expectedResult": "Video volume adjusts to 60%"
+      },
+      {
+        "id": "bg-music-005",
+        "title": "Click process button",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#bm-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Processing starts and combines video with background music"
+      },
+      {
+        "id": "bg-music-006",
+        "title": "Set music volume to minimum",
+        "priority": "medium",
+        "category": "edge",
+        "control": "music volume",
+        "selector": "#bgm-mvol",
+        "action": "set range value",
+        "value": "0",
+        "expectedResult": "Music volume set to 0%, music is muted"
+      },
+      {
+        "id": "bg-music-007",
+        "title": "Set music volume to maximum",
+        "priority": "medium",
+        "category": "edge",
+        "control": "music volume",
+        "selector": "#bgm-mvol",
+        "action": "set range value",
+        "value": "100",
+        "expectedResult": "Music volume set to 100%, full volume"
+      },
+      {
+        "id": "bg-music-008",
+        "title": "Process without video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#bm-run",
+        "action": "click without uploading file",
+        "value": "",
+        "expectedResult": "Error message displayed: video file required"
+      },
+      {
+        "id": "bg-music-009",
+        "title": "Upload invalid file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-bgmusic input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed: invalid file type"
+      }
+    ]
+  },
+  "merge": {
+    "tool": "merge",
+    "panel": "merge",
+    "btnId": "mg-run",
+    "name": "Merge Videos",
+    "scenarios": [
+      {
+        "id": "merge-001",
+        "title": "Panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "merge panel",
+        "selector": "#panel-merge",
+        "action": "verify panel is visible",
+        "value": "",
+        "expectedResult": "Merge panel displays with file input and heading"
+      },
+      {
+        "id": "merge-002",
+        "title": "Select multiple video files to merge",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-merge input[type=file]",
+        "action": "upload multiple video files",
+        "value": "2 valid MP4 files",
+        "expectedResult": "Files are loaded and ready to merge"
+      },
+      {
+        "id": "merge-003",
+        "title": "Click process button to merge videos",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#mg-run",
+        "action": "click process button",
+        "value": "",
+        "expectedResult": "Videos are merged and output is generated"
+      },
+      {
+        "id": "merge-004",
+        "title": "Merge single video file only",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-merge input[type=file]",
+        "action": "upload single video file",
+        "value": "1 MP4 file",
+        "expectedResult": "Error message or warning about needing multiple files"
+      },
+      {
+        "id": "merge-005",
+        "title": "Upload non-video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-merge input[type=file]",
+        "action": "upload invalid file type",
+        "value": "image.jpg",
+        "expectedResult": "Error message indicating invalid file type"
+      }
+    ]
+  },
+  "split": {
+    "tool": "split",
+    "panel": "split",
+    "btnId": "sp2-run",
+    "name": "Split",
+    "scenarios": [
+      {
+        "id": "split-001",
+        "title": "Split tool panel loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-split",
+        "action": "verify element exists and is visible",
+        "value": "",
+        "expectedResult": "Split panel is displayed with file drop area"
+      },
+      {
+        "id": "split-002",
+        "title": "Upload video file for splitting",
+        "priority": "high",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-split input[type=file]",
+        "action": "upload file",
+        "value": "sample-video.mp4",
+        "expectedResult": "Video file is accepted and loaded for splitting"
+      },
+      {
+        "id": "split-003",
+        "title": "Change file button works",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": ".file-change",
+        "action": "click button",
+        "value": "",
+        "expectedResult": "File selection dialog opens or current file is cleared"
+      },
+      {
+        "id": "split-004",
+        "title": "Run split process",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#sp2-run",
+        "action": "click button after file upload",
+        "value": "",
+        "expectedResult": "Video splitting process starts and completes successfully"
+      },
+      {
+        "id": "split-005",
+        "title": "Upload very large video file",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-split input[type=file]",
+        "action": "upload file",
+        "value": "large-video-2gb.mp4",
+        "expectedResult": "System handles large file appropriately with progress indicator or size warning"
+      },
+      {
+        "id": "split-006",
+        "title": "Upload invalid file type",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-split input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed indicating invalid file type, file is rejected"
+      }
+    ]
+  },
+  "multi-trim": {
+    "tool": "multi-trim",
+    "panel": "multitrim",
+    "btnId": "mt-run",
+    "name": "Multi Trim",
+    "scenarios": [
+      {
+        "id": "multi-trim-001",
+        "title": "Page loads and panel is visible",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-multitrim",
+        "action": "check visibility",
+        "value": "",
+        "expectedResult": "Multi-trim panel is visible and displays drop zone"
+      },
+      {
+        "id": "multi-trim-002",
+        "title": "Upload valid video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-multitrim input[type=file]",
+        "action": "upload file",
+        "value": "valid_video.mp4",
+        "expectedResult": "Video is loaded and preview is shown"
+      },
+      {
+        "id": "multi-trim-003",
+        "title": "Add new segment",
+        "priority": "high",
+        "category": "functional",
+        "control": "add segment button",
+        "selector": ".add-seg-btn",
+        "action": "click",
+        "value": "",
+        "expectedResult": "New segment row is added to segments list"
+      },
+      {
+        "id": "multi-trim-004",
+        "title": "Change uploaded video",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": ".file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File picker opens to select different video"
+      },
+      {
+        "id": "multi-trim-005",
+        "title": "Process multi-trim with segments",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#mt-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video is processed and trimmed output is generated"
+      },
+      {
+        "id": "multi-trim-006",
+        "title": "Process without adding any segments",
+        "priority": "high",
+        "category": "edge",
+        "control": "process button",
+        "selector": "#mt-run",
+        "action": "click after upload without segments",
+        "value": "",
+        "expectedResult": "Error message or validation warning shown"
+      },
+      {
+        "id": "multi-trim-007",
+        "title": "Upload non-video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-multitrim input[type=file]",
+        "action": "upload file",
+        "value": "invalid.txt",
+        "expectedResult": "Error message displayed indicating invalid file type"
+      }
+    ]
+  },
+  "noise-removal": {
+    "tool": "noise-removal",
+    "panel": "denoise",
+    "btnId": "dn-run",
+    "name": "Noise Removal",
+    "scenarios": [
+      {
+        "id": "noise-removal-001",
+        "title": "Page loads successfully",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-denoise",
+        "action": "verify visibility",
+        "value": "",
+        "expectedResult": "Denoise panel is visible and controls are rendered"
+      },
+      {
+        "id": "noise-removal-002",
+        "title": "Upload video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-denoise input[type=file]",
+        "action": "upload file",
+        "value": "valid_video.mp4",
+        "expectedResult": "Video file is accepted and preview shows"
+      },
+      {
+        "id": "noise-removal-003",
+        "title": "Select Light strength preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "strength preset",
+        "selector": "#dn-strength",
+        "action": "select preset",
+        "value": "light",
+        "expectedResult": "Light strength is selected, hidden input value updates"
+      },
+      {
+        "id": "noise-removal-004",
+        "title": "Select Medium strength preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "strength preset",
+        "selector": "#dn-strength",
+        "action": "select preset",
+        "value": "medium",
+        "expectedResult": "Medium strength is selected (default recommended)"
+      },
+      {
+        "id": "noise-removal-005",
+        "title": "Select Heavy strength preset",
+        "priority": "high",
+        "category": "functional",
+        "control": "strength preset",
+        "selector": "#dn-strength",
+        "action": "select preset",
+        "value": "heavy",
+        "expectedResult": "Heavy strength is selected for max noise removal"
+      },
+      {
+        "id": "noise-removal-006",
+        "title": "Process video with denoise",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#dn-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Video processing starts, progress indicator shows"
+      },
+      {
+        "id": "noise-removal-007",
+        "title": "Change uploaded file",
+        "priority": "medium",
+        "category": "functional",
+        "control": "change button",
+        "selector": ".file-change",
+        "action": "click",
+        "value": "",
+        "expectedResult": "File input reopens to select different video"
+      },
+      {
+        "id": "noise-removal-008",
+        "title": "Upload extremely large video file",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-denoise input[type=file]",
+        "action": "upload file",
+        "value": "large_video_5gb.mp4",
+        "expectedResult": "Error message about file size limit or processing handles gracefully"
+      },
+      {
+        "id": "noise-removal-009",
+        "title": "Upload non-video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-denoise input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Error message displayed indicating invalid file type"
+      },
+      {
+        "id": "noise-removal-010",
+        "title": "Process without uploading file",
+        "priority": "high",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#dn-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Error message or button disabled until file uploaded"
+      }
+    ]
+  },
+  "ai-chapters": {
+    "tool": "ai-chapters",
+    "panel": "aianalyze",
+    "btnId": "aa-run",
+    "name": "AI Chapters",
+    "scenarios": [
+      {
+        "id": "ai-chapters-001",
+        "title": "Panel loads with default checkboxes checked",
+        "priority": "critical",
+        "category": "smoke",
+        "control": "panel",
+        "selector": "#panel-aianalyze",
+        "action": "verify visible",
+        "value": "",
+        "expectedResult": "Panel is visible and both checkboxes are checked by default"
+      },
+      {
+        "id": "ai-chapters-002",
+        "title": "Upload valid video file",
+        "priority": "critical",
+        "category": "functional",
+        "control": "file input",
+        "selector": "#panel-aianalyze input[type=file]",
+        "action": "upload file",
+        "value": "sample.mp4",
+        "expectedResult": "File is accepted and process button becomes enabled"
+      },
+      {
+        "id": "ai-chapters-003",
+        "title": "Toggle chapter markers checkbox off",
+        "priority": "high",
+        "category": "functional",
+        "control": "aa-do-chapters",
+        "selector": "#aa-do-chapters",
+        "action": "uncheck",
+        "value": "off",
+        "expectedResult": "Checkbox is unchecked, only metadata generation will be processed"
+      },
+      {
+        "id": "ai-chapters-004",
+        "title": "Toggle title & description & tags checkbox off",
+        "priority": "high",
+        "category": "functional",
+        "control": "aa-do-meta",
+        "selector": "#aa-do-meta",
+        "action": "uncheck",
+        "value": "off",
+        "expectedResult": "Checkbox is unchecked, only chapter markers will be processed"
+      },
+      {
+        "id": "ai-chapters-005",
+        "title": "Process with both options enabled",
+        "priority": "critical",
+        "category": "functional",
+        "control": "process button",
+        "selector": "#aa-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Processing starts and generates both chapters and metadata"
+      },
+      {
+        "id": "ai-chapters-006",
+        "title": "Upload extremely large video file",
+        "priority": "medium",
+        "category": "edge",
+        "control": "file input",
+        "selector": "#panel-aianalyze input[type=file]",
+        "action": "upload file",
+        "value": "large_10gb.mp4",
+        "expectedResult": "Shows file size error or handles gracefully with warning message"
+      },
+      {
+        "id": "ai-chapters-007",
+        "title": "Upload non-video file",
+        "priority": "high",
+        "category": "negative",
+        "control": "file input",
+        "selector": "#panel-aianalyze input[type=file]",
+        "action": "upload file",
+        "value": "document.pdf",
+        "expectedResult": "Shows error message about invalid file type"
+      },
+      {
+        "id": "ai-chapters-008",
+        "title": "Process with both checkboxes disabled",
+        "priority": "medium",
+        "category": "negative",
+        "control": "process button",
+        "selector": "#aa-run",
+        "action": "click",
+        "value": "",
+        "expectedResult": "Process button is disabled or shows error that at least one option must be selected"
+      }
+    ]
+  }
+}
