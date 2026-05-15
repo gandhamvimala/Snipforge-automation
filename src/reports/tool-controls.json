@@ -1,0 +1,1458 @@
+{
+  "trim": {
+    "inputs": [
+      {
+        "type": "number",
+        "id": "tr-start",
+        "name": "",
+        "placeholder": "",
+        "value": "0",
+        "min": "0",
+        "max": "",
+        "step": "0.1",
+        "label": ""
+      },
+      {
+        "type": "number",
+        "id": "tr-end",
+        "name": "",
+        "placeholder": "",
+        "value": "0",
+        "min": "0",
+        "max": "",
+        "step": "0.1",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "TRIM POINTS"
+    ],
+    "presets": []
+  },
+  "speed": {
+    "inputs": [
+      {
+        "type": "range",
+        "id": "sp-speed",
+        "name": "",
+        "placeholder": "",
+        "value": "1.5",
+        "min": "0.25",
+        "max": "4.0",
+        "step": "0.05",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "SPEED"
+    ],
+    "presets": [
+      "0.5×\nSlow Mo",
+      "0.75×\nSlower",
+      "1.5×\nFast",
+      "2×\nDouble",
+      "3×\nTriple"
+    ]
+  },
+  "convert": {
+    "inputs": [
+      {
+        "type": "hidden",
+        "id": "cv-fmt",
+        "name": "",
+        "placeholder": "",
+        "value": "mp4",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your file here",
+      "OUTPUT FORMAT"
+    ],
+    "presets": [
+      "MP4\nMost compatible\nMOV\nApple / FCP\nWebM\nWeb / Chrome\nGIF\nAnimated\nMP3\nAudio only\nWAV\nLossless audio",
+      "MP4\nMost compatible",
+      "MP4",
+      "Most compatible",
+      "MOV\nApple / FCP",
+      "MOV",
+      "Apple / FCP",
+      "WebM\nWeb / Chrome",
+      "WebM",
+      "Web / Chrome",
+      "GIF\nAnimated",
+      "GIF",
+      "Animated",
+      "MP3\nAudio only",
+      "MP3",
+      "Audio only",
+      "WAV\nLossless audio",
+      "WAV",
+      "Lossless audio"
+    ]
+  },
+  "compress": {
+    "inputs": [
+      {
+        "type": "hidden",
+        "id": "cm-quality",
+        "name": "",
+        "placeholder": "",
+        "value": "medium",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "COMPRESSION LEVEL"
+    ],
+    "presets": [
+      "Light\n~30% smaller\nMedium\n~50% smaller\nHeavy\n~70% smaller",
+      "Light\n~30% smaller",
+      "Light",
+      "~30% smaller",
+      "Medium\n~50% smaller",
+      "Medium",
+      "~50% smaller",
+      "Heavy\n~70% smaller",
+      "Heavy",
+      "~70% smaller"
+    ]
+  },
+  "watermark": {
+    "inputs": [
+      {
+        "type": "text",
+        "id": "wm-text",
+        "name": "",
+        "placeholder": "e.g. © MyBrand · @handle · Confidential",
+        "value": "",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "wm-fontsize",
+        "name": "",
+        "placeholder": "",
+        "value": "8",
+        "min": "3",
+        "max": "25",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "wm-opacity",
+        "name": "",
+        "placeholder": "",
+        "value": "80",
+        "min": "10",
+        "max": "100",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [
+      {
+        "id": "wm-position",
+        "name": "",
+        "options": [
+          {
+            "value": "bottom-right",
+            "text": "↘ Bottom Right"
+          },
+          {
+            "value": "bottom-left",
+            "text": "↙ Bottom Left"
+          },
+          {
+            "value": "top-right",
+            "text": "↗ Top Right"
+          },
+          {
+            "value": "top-left",
+            "text": "↖ Top Left"
+          },
+          {
+            "value": "center",
+            "text": "⊕ Center"
+          }
+        ],
+        "label": ""
+      }
+    ],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "WATERMARK TEXT"
+    ],
+    "presets": []
+  },
+  "volume": {
+    "inputs": [
+      {
+        "type": "hidden",
+        "id": "vl-vol",
+        "name": "",
+        "placeholder": "",
+        "value": "1.5",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "vl-volume-slider",
+        "name": "",
+        "placeholder": "",
+        "value": "1.5",
+        "min": "0.1",
+        "max": "4.0",
+        "step": "0.1",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "VOLUME LEVEL"
+    ],
+    "presets": [
+      "25%\nVery quiet\n50%\nHalf\n150%\nBoost\n200%\nDouble\n300%\nTriple",
+      "25%\nVery quiet",
+      "25%",
+      "Very quiet",
+      "50%\nHalf",
+      "50%",
+      "Half",
+      "150%\nBoost",
+      "150%",
+      "Boost",
+      "200%\nDouble",
+      "200%",
+      "Double",
+      "300%\nTriple",
+      "300%",
+      "Triple"
+    ]
+  },
+  "rotate-flip": {
+    "inputs": [
+      {
+        "type": "hidden",
+        "id": "ro-transform",
+        "name": "",
+        "placeholder": "",
+        "value": "90",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "TRANSFORM"
+    ],
+    "presets": [
+      "↻ 90°\nClockwise\n↻ 180°\nUpside down\n↺ 90°\nCounter-CW\n↔ Flip\nHorizontal\n↕ Flip\nVertical",
+      "↻ 90°\nClockwise",
+      "↻ 90°",
+      "Clockwise",
+      "↻ 180°\nUpside down",
+      "↻ 180°",
+      "Upside down",
+      "↺ 90°\nCounter-CW",
+      "↺ 90°",
+      "Counter-CW",
+      "↔ Flip\nHorizontal",
+      "↔ Flip",
+      "Horizontal",
+      "↕ Flip\nVertical",
+      "↕ Flip",
+      "Vertical"
+    ]
+  },
+  "resize": {
+    "inputs": [
+      {
+        "type": "hidden",
+        "id": "cr-platform",
+        "name": "",
+        "placeholder": "",
+        "value": "youtube",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "PLATFORM"
+    ],
+    "presets": [
+      "▶ YT\n1920×1080 · 16:9\n📸 IG\n1080×1080 · 1:1\n♪ TT\n1080×1920 · 9:16\nin LI\n1280×720 · 16:9\n𝕏 TW\n1280×720 · 16:9\n⬛ SQ\n1080×1080 · 1:1",
+      "▶ YT\n1920×1080 · 16:9",
+      "▶ YT",
+      "1920×1080 · 16:9",
+      "📸 IG\n1080×1080 · 1:1",
+      "📸 IG",
+      "1080×1080 · 1:1",
+      "♪ TT\n1080×1920 · 9:16",
+      "♪ TT",
+      "1080×1920 · 9:16",
+      "in LI\n1280×720 · 16:9",
+      "in LI",
+      "1280×720 · 16:9",
+      "𝕏 TW\n1280×720 · 16:9",
+      "𝕏 TW",
+      "1280×720 · 16:9",
+      "⬛ SQ\n1080×1080 · 1:1",
+      "⬛ SQ",
+      "1080×1080 · 1:1"
+    ]
+  },
+  "ai-shorten": {
+    "inputs": [
+      {
+        "type": "range",
+        "id": "sz-speed",
+        "name": "",
+        "placeholder": "",
+        "value": "1.25",
+        "min": "0.5",
+        "max": "3.0",
+        "step": "0.05",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "sz-thresh",
+        "name": "",
+        "placeholder": "",
+        "value": "-40",
+        "min": "-60",
+        "max": "-20",
+        "step": "1",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "sz-minsilence",
+        "name": "",
+        "placeholder": "",
+        "value": "300",
+        "min": "100",
+        "max": "1500",
+        "step": "50",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "sz-pad",
+        "name": "",
+        "placeholder": "",
+        "value": "80",
+        "min": "0",
+        "max": "300",
+        "step": "10",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "SPEED"
+    ],
+    "presets": [
+      "1×\nNormal",
+      "1.25×\nSlight",
+      "1.5×\nBrisk",
+      "1.75×\nFast",
+      "2×\nDouble"
+    ]
+  },
+  "ai-transcribe": {
+    "inputs": [],
+    "selects": [
+      {
+        "id": "tc-language",
+        "name": "",
+        "options": [
+          {
+            "value": "auto",
+            "text": "🌐 Auto-detect"
+          },
+          {
+            "value": "en",
+            "text": "🇺🇸 English"
+          },
+          {
+            "value": "es",
+            "text": "🇪🇸 Spanish"
+          },
+          {
+            "value": "fr",
+            "text": "🇫🇷 French"
+          },
+          {
+            "value": "de",
+            "text": "🇩🇪 German"
+          },
+          {
+            "value": "it",
+            "text": "🇮🇹 Italian"
+          },
+          {
+            "value": "pt",
+            "text": "🇧🇷 Portuguese"
+          },
+          {
+            "value": "nl",
+            "text": "🇳🇱 Dutch"
+          },
+          {
+            "value": "ru",
+            "text": "🇷🇺 Russian"
+          },
+          {
+            "value": "ja",
+            "text": "🇯🇵 Japanese"
+          },
+          {
+            "value": "ko",
+            "text": "🇰🇷 Korean"
+          },
+          {
+            "value": "zh",
+            "text": "🇨🇳 Chinese"
+          },
+          {
+            "value": "ar",
+            "text": "🇸🇦 Arabic"
+          },
+          {
+            "value": "hi",
+            "text": "🇮🇳 Hindi"
+          },
+          {
+            "value": "tr",
+            "text": "🇹🇷 Turkish"
+          },
+          {
+            "value": "vi",
+            "text": "🇻🇳 Vietnamese"
+          },
+          {
+            "value": "th",
+            "text": "🇹🇭 Thai"
+          },
+          {
+            "value": "id",
+            "text": "🇮🇩 Indonesian"
+          },
+          {
+            "value": "sv",
+            "text": "🇸🇪 Swedish"
+          },
+          {
+            "value": "uk",
+            "text": "🇺🇦 Ukrainian"
+          }
+        ],
+        "label": ""
+      },
+      {
+        "id": "tc-translate",
+        "name": "",
+        "options": [
+          {
+            "value": "none",
+            "text": "— No translation —"
+          },
+          {
+            "value": "English",
+            "text": "🇺🇸 English"
+          },
+          {
+            "value": "Spanish",
+            "text": "🇪🇸 Spanish"
+          },
+          {
+            "value": "French",
+            "text": "🇫🇷 French"
+          },
+          {
+            "value": "German",
+            "text": "🇩🇪 German"
+          },
+          {
+            "value": "Italian",
+            "text": "🇮🇹 Italian"
+          },
+          {
+            "value": "Portuguese",
+            "text": "🇧🇷 Portuguese"
+          },
+          {
+            "value": "Dutch",
+            "text": "🇳🇱 Dutch"
+          },
+          {
+            "value": "Russian",
+            "text": "🇷🇺 Russian"
+          },
+          {
+            "value": "Japanese",
+            "text": "🇯🇵 Japanese"
+          },
+          {
+            "value": "Korean",
+            "text": "🇰🇷 Korean"
+          },
+          {
+            "value": "Chinese",
+            "text": "🇨🇳 Chinese (Simplified)"
+          },
+          {
+            "value": "Arabic",
+            "text": "🇸🇦 Arabic"
+          },
+          {
+            "value": "Hindi",
+            "text": "🇮🇳 Hindi"
+          },
+          {
+            "value": "Turkish",
+            "text": "🇹🇷 Turkish"
+          },
+          {
+            "value": "Vietnamese",
+            "text": "🇻🇳 Vietnamese"
+          },
+          {
+            "value": "Thai",
+            "text": "🇹🇭 Thai"
+          },
+          {
+            "value": "Indonesian",
+            "text": "🇮🇩 Indonesian"
+          },
+          {
+            "value": "Swedish",
+            "text": "🇸🇪 Swedish"
+          },
+          {
+            "value": "Ukrainian",
+            "text": "🇺🇦 Ukrainian"
+          },
+          {
+            "value": "Polish",
+            "text": "🇵🇱 Polish"
+          }
+        ],
+        "label": ""
+      }
+    ],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      },
+      {
+        "id": "",
+        "text": "Copy",
+        "className": ""
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video or audio here"
+    ],
+    "presets": []
+  },
+  "smart-clip": {
+    "inputs": [],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here"
+    ],
+    "presets": []
+  },
+  "auto-captions": {
+    "inputs": [
+      {
+        "type": "number",
+        "id": "cap-fontsize",
+        "name": "",
+        "placeholder": "",
+        "value": "18",
+        "min": "8",
+        "max": "72",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [
+      {
+        "id": "cap-language",
+        "name": "",
+        "options": [
+          {
+            "value": "auto",
+            "text": "🌐 Auto-detect"
+          },
+          {
+            "value": "en",
+            "text": "🇺🇸 English"
+          },
+          {
+            "value": "es",
+            "text": "🇪🇸 Spanish"
+          },
+          {
+            "value": "fr",
+            "text": "🇫🇷 French"
+          },
+          {
+            "value": "de",
+            "text": "🇩🇪 German"
+          },
+          {
+            "value": "it",
+            "text": "🇮🇹 Italian"
+          },
+          {
+            "value": "pt",
+            "text": "🇧🇷 Portuguese"
+          },
+          {
+            "value": "ja",
+            "text": "🇯🇵 Japanese"
+          },
+          {
+            "value": "ko",
+            "text": "🇰🇷 Korean"
+          },
+          {
+            "value": "zh",
+            "text": "🇨🇳 Chinese"
+          },
+          {
+            "value": "ar",
+            "text": "🇸🇦 Arabic"
+          },
+          {
+            "value": "hi",
+            "text": "🇮🇳 Hindi"
+          }
+        ],
+        "label": ""
+      },
+      {
+        "id": "cap-style",
+        "name": "",
+        "options": [
+          {
+            "value": "default",
+            "text": "Default"
+          },
+          {
+            "value": "bold",
+            "text": "Bold"
+          },
+          {
+            "value": "box",
+            "text": "Box Background"
+          },
+          {
+            "value": "tiktok",
+            "text": "TikTok Style"
+          }
+        ],
+        "label": ""
+      },
+      {
+        "id": "cap-position",
+        "name": "",
+        "options": [
+          {
+            "value": "bottom",
+            "text": "Bottom"
+          },
+          {
+            "value": "top",
+            "text": "Top"
+          },
+          {
+            "value": "center",
+            "text": "Center"
+          }
+        ],
+        "label": ""
+      },
+      {
+        "id": "cap-fontcolor",
+        "name": "",
+        "options": [
+          {
+            "value": "white",
+            "text": "White"
+          },
+          {
+            "value": "yellow",
+            "text": "Yellow"
+          },
+          {
+            "value": "cyan",
+            "text": "Cyan"
+          },
+          {
+            "value": "black",
+            "text": "Black"
+          }
+        ],
+        "label": ""
+      },
+      {
+        "id": "cap-outlinecolor",
+        "name": "",
+        "options": [
+          {
+            "value": "black",
+            "text": "Black"
+          },
+          {
+            "value": "white",
+            "text": "White"
+          },
+          {
+            "value": "red",
+            "text": "Red"
+          },
+          {
+            "value": "blue",
+            "text": "Blue"
+          }
+        ],
+        "label": ""
+      }
+    ],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here"
+    ],
+    "presets": []
+  },
+  "blur-region": {
+    "inputs": [
+      {
+        "type": "range",
+        "id": "blur-x",
+        "name": "",
+        "placeholder": "",
+        "value": "25",
+        "min": "0",
+        "max": "80",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "blur-y",
+        "name": "",
+        "placeholder": "",
+        "value": "25",
+        "min": "0",
+        "max": "80",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "blur-w",
+        "name": "",
+        "placeholder": "",
+        "value": "50",
+        "min": "5",
+        "max": "100",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "blur-h",
+        "name": "",
+        "placeholder": "",
+        "value": "50",
+        "min": "5",
+        "max": "100",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      },
+      {
+        "id": "",
+        "text": "▭ Rectangle",
+        "className": "blur-shape-btn active"
+      },
+      {
+        "id": "",
+        "text": "▢ Rounded",
+        "className": "blur-shape-btn"
+      },
+      {
+        "id": "",
+        "text": "○ Circle",
+        "className": "blur-shape-btn"
+      },
+      {
+        "id": "",
+        "text": "⬡ Blur",
+        "className": "blur-style-btn active"
+      },
+      {
+        "id": "",
+        "text": "■ Black",
+        "className": "blur-style-btn"
+      },
+      {
+        "id": "",
+        "text": "□ Transparent",
+        "className": "blur-style-btn"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "BLUR REGION"
+    ],
+    "presets": []
+  },
+  "brightness": {
+    "inputs": [
+      {
+        "type": "range",
+        "id": "bg-brightness",
+        "name": "",
+        "placeholder": "",
+        "value": "0",
+        "min": "-0.5",
+        "max": "0.5",
+        "step": "0.05",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "bg-contrast",
+        "name": "",
+        "placeholder": "",
+        "value": "1",
+        "min": "0.5",
+        "max": "2.0",
+        "step": "0.05",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "bg-saturation",
+        "name": "",
+        "placeholder": "",
+        "value": "1",
+        "min": "0",
+        "max": "2.0",
+        "step": "0.05",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here"
+    ],
+    "presets": []
+  },
+  "text-overlay": {
+    "inputs": [
+      {
+        "type": "text",
+        "id": "to-text",
+        "name": "",
+        "placeholder": "Enter your text here",
+        "value": "",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "to-size",
+        "name": "",
+        "placeholder": "",
+        "value": "8",
+        "min": "3",
+        "max": "25",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "to-x",
+        "name": "",
+        "placeholder": "",
+        "value": "50",
+        "min": "0",
+        "max": "100",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "to-y",
+        "name": "",
+        "placeholder": "",
+        "value": "90",
+        "min": "0",
+        "max": "100",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "to-opacity",
+        "name": "",
+        "placeholder": "",
+        "value": "100",
+        "min": "10",
+        "max": "100",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [
+      {
+        "id": "to-color",
+        "name": "",
+        "options": [
+          {
+            "value": "white",
+            "text": "White"
+          },
+          {
+            "value": "black",
+            "text": "Black"
+          },
+          {
+            "value": "yellow",
+            "text": "Yellow"
+          },
+          {
+            "value": "red",
+            "text": "Red"
+          },
+          {
+            "value": "blue",
+            "text": "Blue"
+          },
+          {
+            "value": "green",
+            "text": "Green"
+          }
+        ],
+        "label": ""
+      }
+    ],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "TEXT SETTINGS"
+    ],
+    "presets": []
+  },
+  "thumbnail": {
+    "inputs": [
+      {
+        "type": "radio",
+        "id": "",
+        "name": "th-count",
+        "placeholder": "",
+        "value": "1",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": "1 (best)"
+      },
+      {
+        "type": "radio",
+        "id": "",
+        "name": "th-count",
+        "placeholder": "",
+        "value": "3",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": "3"
+      },
+      {
+        "type": "radio",
+        "id": "",
+        "name": "th-count",
+        "placeholder": "",
+        "value": "5",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": "5"
+      },
+      {
+        "type": "radio",
+        "id": "",
+        "name": "th-count",
+        "placeholder": "",
+        "value": "10",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": "10"
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [
+      {
+        "type": "radio",
+        "id": "",
+        "checked": false,
+        "label": "1 (best)"
+      },
+      {
+        "type": "radio",
+        "id": "",
+        "checked": true,
+        "label": "3"
+      },
+      {
+        "type": "radio",
+        "id": "",
+        "checked": false,
+        "label": "5"
+      },
+      {
+        "type": "radio",
+        "id": "",
+        "checked": false,
+        "label": "10"
+      }
+    ],
+    "headings": [
+      "Drop your video here"
+    ],
+    "presets": []
+  },
+  "mute": {
+    "inputs": [],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here"
+    ],
+    "presets": []
+  },
+  "extract-audio": {
+    "inputs": [],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here"
+    ],
+    "presets": []
+  },
+  "video-to-gif": {
+    "inputs": [
+      {
+        "type": "range",
+        "id": "gif-fps",
+        "name": "",
+        "placeholder": "",
+        "value": "10",
+        "min": "5",
+        "max": "25",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "gif-width",
+        "name": "",
+        "placeholder": "",
+        "value": "480",
+        "min": "200",
+        "max": "800",
+        "step": "40",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "GIF SETTINGS"
+    ],
+    "presets": []
+  },
+  "bg-music": {
+    "inputs": [
+      {
+        "type": "range",
+        "id": "bgm-mvol",
+        "name": "",
+        "placeholder": "",
+        "value": "50",
+        "min": "0",
+        "max": "100",
+        "step": "",
+        "label": ""
+      },
+      {
+        "type": "range",
+        "id": "bgm-vvol",
+        "name": "",
+        "placeholder": "",
+        "value": "100",
+        "min": "0",
+        "max": "100",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "MUSIC FILE"
+    ],
+    "presets": []
+  },
+  "merge": {
+    "inputs": [],
+    "selects": [],
+    "buttons": [],
+    "checkboxes": [],
+    "headings": [
+      "VIDEOS TO MERGE"
+    ],
+    "presets": []
+  },
+  "split": {
+    "inputs": [],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here"
+    ],
+    "presets": []
+  },
+  "multi-trim": {
+    "inputs": [],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      },
+      {
+        "id": "",
+        "text": "+ Add Segment",
+        "className": "add-seg-btn"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "SEGMENTS TO KEEP"
+    ],
+    "presets": []
+  },
+  "noise-removal": {
+    "inputs": [
+      {
+        "type": "hidden",
+        "id": "dn-strength",
+        "name": "",
+        "placeholder": "",
+        "value": "medium",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": ""
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      }
+    ],
+    "checkboxes": [],
+    "headings": [
+      "Drop your video here",
+      "NOISE REDUCTION STRENGTH"
+    ],
+    "presets": [
+      "🌿 Light\nSubtle, preserves tone\n⚡ Medium\nRecommended\n💪 Heavy\nMax noise removal",
+      "🌿 Light\nSubtle, preserves tone",
+      "🌿 Light",
+      "Subtle, preserves tone",
+      "⚡ Medium\nRecommended",
+      "⚡ Medium",
+      "Recommended",
+      "💪 Heavy\nMax noise removal",
+      "💪 Heavy",
+      "Max noise removal"
+    ]
+  },
+  "ai-chapters": {
+    "inputs": [
+      {
+        "type": "checkbox",
+        "id": "aa-do-chapters",
+        "name": "",
+        "placeholder": "",
+        "value": "on",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": "Chapter markers"
+      },
+      {
+        "type": "checkbox",
+        "id": "aa-do-meta",
+        "name": "",
+        "placeholder": "",
+        "value": "on",
+        "min": "",
+        "max": "",
+        "step": "",
+        "label": "Title & description & tags"
+      }
+    ],
+    "selects": [],
+    "buttons": [
+      {
+        "id": "",
+        "text": "Change",
+        "className": "file-change"
+      },
+      {
+        "id": "",
+        "text": "Copy",
+        "className": ""
+      },
+      {
+        "id": "",
+        "text": "Copy",
+        "className": ""
+      },
+      {
+        "id": "",
+        "text": "Copy",
+        "className": ""
+      },
+      {
+        "id": "",
+        "text": "Copy",
+        "className": ""
+      }
+    ],
+    "checkboxes": [
+      {
+        "type": "checkbox",
+        "id": "aa-do-chapters",
+        "checked": true,
+        "label": "Chapter markers"
+      },
+      {
+        "type": "checkbox",
+        "id": "aa-do-meta",
+        "checked": true,
+        "label": "Title & description & tags"
+      }
+    ],
+    "headings": [
+      "Drop your video here"
+    ],
+    "presets": []
+  }
+}

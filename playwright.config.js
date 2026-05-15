@@ -12,6 +12,9 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     actionTimeout: 15000,
     navigationTimeout: 30000,
+    launchOptions: {
+      slowMo: 500,
+    },
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } }

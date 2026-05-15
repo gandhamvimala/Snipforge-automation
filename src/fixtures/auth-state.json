@@ -1,0 +1,15 @@
+{
+  "cookies": [
+    {
+      "name": "session",
+      "value": ".eJw1yjsOgCAMANC7dLYDUKR4GdMPjYmJLjoZ7-7km98Dcl_bep37OGCBEuYiWXFQbkjMHUVzQapN6tBgkxkm-Huac7JQxcIWSF4YlXrC0TWStXD3Du8H580dQA.agahbg.KdwtujZS4dDia5LoMeJ1YQIpVmM",
+      "domain": "snipforge.video",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

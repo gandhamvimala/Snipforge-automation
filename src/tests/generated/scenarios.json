@@ -1,33 +1,32 @@
 {
-  "generated": "2026-05-14T19:40:18.071Z",
+  "generated": "2026-05-15T04:08:47.695Z",
   "pages": {
     "home": {
       "page": "Home Page - https://snipforge.video",
       "scenarios": [
         {
           "id": "HOME_001",
-          "title": "Verify home page loads successfully and displays all key elements",
+          "title": "Verify home page loads successfully and displays main elements",
           "priority": "critical",
           "category": "smoke",
           "tags": [
-            "home",
-            "page-load",
-            "ui"
+            "homepage",
+            "ui",
+            "smoke"
           ],
           "steps": [
             "Navigate to https://snipforge.video",
             "Wait for page to fully load",
             "Verify page title contains 'SnipForge' or 'AI Video Toolkit'",
-            "Check that main navigation menu is visible",
-            "Verify hero section with main headline is displayed",
-            "Confirm CTA buttons are visible",
-            "Verify pricing information is accessible"
+            "Check that main heading is visible",
+            "Verify navigation menu is present",
+            "Confirm CTA buttons are displayed"
           ],
-          "expectedResult": "Home page loads within 3 seconds, all key elements (navigation, hero section, CTA buttons, pricing) are visible and properly rendered"
+          "expectedResult": "Home page loads successfully within 3 seconds, all main elements (header, navigation, hero section, CTA buttons) are visible and properly rendered"
         },
         {
           "id": "HOME_002",
-          "title": "Verify 25 AI video tools are displayed and accessible from home page",
+          "title": "Verify all 25 AI tools are listed and accessible from home page",
           "priority": "high",
           "category": "functional",
           "tags": [
@@ -37,18 +36,19 @@
           ],
           "steps": [
             "Navigate to https://snipforge.video",
-            "Locate the tools/features section on the home page",
-            "Count the number of tools displayed or linked",
-            "Verify that 25 tools are mentioned or shown",
-            "Click on at least 3 different tool links/cards",
-            "Verify each click navigates to the respective tool page or opens tool interface"
+            "Scroll through the page to locate tools section",
+            "Count the number of tools displayed",
+            "Verify each tool has a name/title",
+            "Verify each tool has a description or icon",
+            "Click on at least 3 different tool cards/links",
+            "Verify navigation to tool-specific pages works"
           ],
-          "expectedResult": "All 25 AI video tools are visible or referenced on home page, tools are clickable and navigate to correct destinations"
+          "expectedResult": "All 25 AI video tools are displayed on the home page with proper labels, descriptions, and clickable links that navigate to respective tool pages"
         },
         {
           "id": "HOME_003",
-          "title": "Verify Free plan details are correctly displayed (3 videos/month, max 5 minutes)",
-          "priority": "critical",
+          "title": "Verify Free Plan details are correctly displayed",
+          "priority": "high",
           "category": "functional",
           "tags": [
             "pricing",
@@ -57,19 +57,19 @@
           ],
           "steps": [
             "Navigate to https://snipforge.video",
-            "Scroll to the pricing section",
-            "Locate the Free plan card/section",
-            "Verify '3 videos per month' limit is clearly stated",
-            "Verify 'maximum 5 minutes per video' limit is displayed",
-            "Check if any other Free plan features or restrictions are listed",
-            "Verify there is a sign-up or 'Get Started' button for Free plan"
+            "Locate the pricing section on the home page",
+            "Find the Free Plan card/section",
+            "Verify '3 videos/month' limit is displayed",
+            "Verify 'max 5 minutes' duration limit is displayed",
+            "Check that the plan is marked as 'Free' or '$0'",
+            "Verify sign-up or get-started button for Free Plan exists"
           ],
-          "expectedResult": "Free plan displays '3 videos/month' and '5 minutes max' limitations clearly, along with a sign-up CTA button"
+          "expectedResult": "Free Plan displays correct information: 3 videos per month limit, 5 minutes maximum duration, $0 cost, and includes a call-to-action button"
         },
         {
           "id": "HOME_004",
-          "title": "Verify Pro plan details are correctly displayed ($5/month, unlimited videos)",
-          "priority": "critical",
+          "title": "Verify Pro Plan details and pricing are correctly displayed",
+          "priority": "high",
           "category": "functional",
           "tags": [
             "pricing",
@@ -78,58 +78,59 @@
           ],
           "steps": [
             "Navigate to https://snipforge.video",
-            "Scroll to the pricing section",
-            "Locate the Pro plan card/section",
-            "Verify price is displayed as '$5/month' or '$5 per month'",
-            "Verify 'unlimited videos' or 'unlimited' feature is clearly stated",
-            "Check for any additional Pro plan benefits listed",
-            "Verify there is a subscription or 'Upgrade' button for Pro plan"
+            "Locate the pricing section on the home page",
+            "Find the Pro Plan card/section",
+            "Verify '$5/month' or '$5 per month' pricing is displayed",
+            "Verify 'unlimited' videos feature is mentioned",
+            "Check for any additional Pro Plan benefits listed",
+            "Verify upgrade or subscribe button for Pro Plan exists"
           ],
-          "expectedResult": "Pro plan displays '$5/month' pricing and 'unlimited videos' feature clearly, with an upgrade/subscribe CTA button"
+          "expectedResult": "Pro Plan displays correct pricing of $5/month, unlimited videos feature, and includes a clear call-to-action button for subscription"
         },
         {
           "id": "HOME_005",
-          "title": "Verify primary CTA buttons functionality and user journey initiation",
-          "priority": "high",
-          "category": "functional",
-          "tags": [
-            "cta",
-            "navigation",
-            "user-flow"
-          ],
-          "steps": [
-            "Navigate to https://snipforge.video",
-            "Identify primary CTA button in hero section (e.g., 'Get Started', 'Try Free', 'Sign Up')",
-            "Click on the primary CTA button",
-            "Verify redirection to sign-up/registration page or tool selection page",
-            "Go back to home page",
-            "Locate and click secondary CTA if present (e.g., 'View Tools', 'Learn More')",
-            "Verify appropriate navigation occurs"
-          ],
-          "expectedResult": "Primary CTA redirects users to sign-up or onboarding flow, secondary CTAs navigate to relevant pages, all buttons are functional"
-        },
-        {
-          "id": "HOME_006",
-          "title": "Verify responsive design and mobile compatibility of home page",
+          "title": "Verify home page responsiveness on mobile viewport",
           "priority": "medium",
           "category": "regression",
           "tags": [
             "responsive",
             "mobile",
-            "ui",
-            "cross-browser"
+            "ui"
           ],
           "steps": [
-            "Open https://snipforge.video in Chrome browser",
-            "Open developer tools and toggle device toolbar",
-            "Test page in mobile view (375x667 - iPhone SE)",
-            "Verify navigation menu adapts to mobile (hamburger menu or similar)",
-            "Check that pricing cards stack vertically and remain readable",
-            "Verify CTA buttons are easily tappable (min 44x44px)",
-            "Test in tablet view (768x1024 - iPad)",
-            "Verify all content is accessible without horizontal scrolling"
+            "Navigate to https://snipforge.video",
+            "Open browser developer tools",
+            "Switch to mobile device emulation (iPhone 12 or similar)",
+            "Verify page layout adjusts to mobile viewport",
+            "Check that navigation menu shows hamburger icon or mobile menu",
+            "Verify all text is readable without horizontal scrolling",
+            "Test that pricing cards stack vertically",
+            "Verify all buttons are tappable with adequate spacing"
           ],
-          "expectedResult": "Home page is fully responsive, all elements adapt appropriately to mobile and tablet viewports, content remains readable and interactive"
+          "expectedResult": "Home page is fully responsive, all elements adapt to mobile viewport, navigation becomes mobile-friendly, and all interactive elements are easily accessible on mobile devices"
+        },
+        {
+          "id": "HOME_006",
+          "title": "Verify behavior when accessing home page without authentication",
+          "priority": "medium",
+          "category": "edge",
+          "tags": [
+            "authentication",
+            "guest-access",
+            "edge-case"
+          ],
+          "steps": [
+            "Clear all browser cookies and cache",
+            "Navigate to https://snipforge.video in incognito/private mode",
+            "Verify page loads without requiring login",
+            "Check that pricing information is visible to unauthenticated users",
+            "Verify tools list/overview is accessible",
+            "Click on 'Sign Up' or 'Get Started' button",
+            "Verify user is directed to registration/sign-up flow",
+            "Attempt to click on a tool without logging in",
+            "Verify appropriate behavior (redirect to login or guest preview)"
+          ],
+          "expectedResult": "Home page is fully accessible without authentication, displays all public information (tools, pricing), and provides clear sign-up prompts when user attempts to access features requiring authentication"
         }
       ]
     },
@@ -142,122 +143,118 @@
           "priority": "critical",
           "category": "smoke",
           "tags": [
+            "pricing",
             "free-plan",
-            "plan-details",
-            "limits"
+            "limitations"
           ],
           "steps": [
             "Navigate to https://snipforge.video/pricing",
             "Locate the Free plan section",
-            "Verify the monthly video limit is displayed as 3 videos/month",
+            "Verify the monthly video limit is displayed as 3 videos",
             "Verify the maximum video duration is displayed as 5 minutes",
-            "Verify all 25 tools are listed or indicated as available"
+            "Verify access to 25 AI tools is mentioned"
           ],
-          "expectedResult": "Free plan correctly displays 3 videos/month limit, 5 minutes maximum duration, and access to 25 AI tools"
+          "expectedResult": "Free plan displays 3 videos/month limit, 5 minutes max duration, and access to 25 tools"
         },
         {
           "id": "PRC-002",
-          "title": "Verify Pro Plan displays correct features and pricing",
+          "title": "Verify Pro Plan displays correct pricing and features",
           "priority": "critical",
           "category": "smoke",
           "tags": [
-            "pro-plan",
             "pricing",
-            "plan-details"
+            "pro-plan",
+            "subscription"
           ],
           "steps": [
             "Navigate to https://snipforge.video/pricing",
             "Locate the Pro plan section",
             "Verify the price is displayed as $5/month",
             "Verify unlimited videos feature is displayed",
-            "Verify all 25 tools are listed or indicated as available",
-            "Check for any additional Pro-only features"
+            "Verify access to 25 AI tools is mentioned"
           ],
-          "expectedResult": "Pro plan correctly displays $5/month pricing, unlimited videos, and access to all 25 AI tools"
+          "expectedResult": "Pro plan displays $5/month pricing with unlimited videos and access to all 25 tools"
         },
         {
           "id": "PRC-003",
-          "title": "Verify Free plan signup or selection process",
-          "priority": "high",
-          "category": "functional",
-          "tags": [
-            "signup",
-            "free-plan",
-            "cta"
-          ],
-          "steps": [
-            "Navigate to https://snipforge.video/pricing",
-            "Locate the Free plan Call-to-Action button",
-            "Click on the Free plan signup/selection button",
-            "Verify redirection to appropriate signup or dashboard page",
-            "Verify Free plan is selected or indicated in user account"
-          ],
-          "expectedResult": "User can successfully select or signup for Free plan and is redirected to appropriate page with Free plan activated"
-        },
-        {
-          "id": "PRC-004",
-          "title": "Verify Pro plan upgrade flow initiation",
+          "title": "Verify Free to Pro plan upgrade flow initiation",
           "priority": "high",
           "category": "functional",
           "tags": [
             "upgrade",
-            "pro-plan",
-            "payment",
+            "conversion",
             "cta"
           ],
           "steps": [
             "Navigate to https://snipforge.video/pricing",
-            "Locate the Pro plan Call-to-Action button",
-            "Click on the Pro plan upgrade/purchase button",
-            "Verify redirection to payment or checkout page",
-            "Verify Pro plan details and $5/month price are displayed on checkout"
+            "Locate the Pro plan CTA button",
+            "Click on the upgrade/subscribe button for Pro plan",
+            "Verify redirect to payment or signup page occurs",
+            "Verify Pro plan details are pre-selected"
           ],
-          "expectedResult": "User is redirected to payment/checkout page with correct Pro plan pricing of $5/month displayed"
+          "expectedResult": "User is redirected to payment/signup page with Pro plan selected"
         },
         {
-          "id": "PRC-005",
-          "title": "Verify pricing comparison between Free and Pro plans",
+          "id": "PRC-004",
+          "title": "Verify pricing page displays all 25 tools information",
           "priority": "medium",
           "category": "functional",
           "tags": [
-            "comparison",
-            "ui",
-            "plan-features"
+            "features",
+            "tools-list",
+            "comparison"
           ],
           "steps": [
             "Navigate to https://snipforge.video/pricing",
-            "Locate plan comparison section or table",
-            "Compare video limits: Free (3/month) vs Pro (unlimited)",
-            "Compare video duration: Free (5 min max) vs Pro",
-            "Verify both plans show access to 25 AI tools",
-            "Check for visual differentiation highlighting Pro advantages"
+            "Scroll through the pricing page",
+            "Look for tools/features list or comparison section",
+            "Verify mention of 25 AI tools is present",
+            "Check if tool categories or names are listed"
           ],
-          "expectedResult": "Clear visual comparison shows Free plan with 3 videos/month and 5 min limit versus Pro plan with unlimited videos, both offering 25 tools"
+          "expectedResult": "Pricing page clearly indicates access to 25 AI video tools across all plans"
+        },
+        {
+          "id": "PRC-005",
+          "title": "Verify pricing page handles missing payment method gracefully",
+          "priority": "medium",
+          "category": "edge",
+          "tags": [
+            "payment",
+            "error-handling",
+            "validation"
+          ],
+          "steps": [
+            "Navigate to https://snipforge.video/pricing",
+            "Click on Pro plan subscribe button",
+            "If payment form appears, attempt to submit without entering payment details",
+            "Observe validation messages",
+            "Verify user remains on appropriate page"
+          ],
+          "expectedResult": "Appropriate validation errors displayed, user cannot proceed without valid payment method"
         },
         {
           "id": "PRC-006",
-          "title": "Verify pricing page behavior with invalid currency or locale",
+          "title": "Verify annual vs monthly pricing toggle if available",
           "priority": "low",
-          "category": "edge",
+          "category": "functional",
           "tags": [
-            "internationalization",
-            "currency",
-            "edge-case"
+            "billing-cycle",
+            "pricing-options",
+            "ui"
           ],
           "steps": [
             "Navigate to https://snipforge.video/pricing",
-            "Check current currency display for Pro plan ($5/month)",
-            "If currency selector exists, attempt to change to different currencies",
-            "Verify price converts correctly or remains in USD",
-            "Test with different browser locales if applicable",
-            "Verify page doesn't break with unsupported currency/locale"
+            "Look for billing cycle toggle (Monthly/Annual)",
+            "If toggle exists, switch between monthly and annual billing",
+            "Verify pricing updates accordingly",
+            "Verify any discount or savings are displayed for annual plan"
           ],
-          "expectedResult": "Pricing page handles currency display gracefully, either converting correctly or maintaining USD pricing without errors"
+          "expectedResult": "If billing toggle exists, pricing updates correctly showing monthly at $5 and annual with appropriate calculation or discount"
         }
       ]
     },
     "login": {
-      "page": "Login Page - https://snipforge.video",
+      "page": "https://snipforge.video/login",
       "scenarios": [
         {
           "id": "LOGIN_001",
@@ -266,106 +263,106 @@
           "category": "smoke",
           "tags": [
             "authentication",
-            "happy-path",
+            "positive-test",
             "login"
           ],
           "steps": [
             "Navigate to https://snipforge.video/login",
-            "Enter valid registered email address",
-            "Enter correct password",
-            "Click 'Login' button"
+            "Enter valid email address in the email field",
+            "Enter correct password in the password field",
+            "Click the 'Login' or 'Sign In' button"
           ],
           "expectedResult": "User is successfully authenticated and redirected to the dashboard with access to 25 AI video tools"
         },
         {
           "id": "LOGIN_002",
-          "title": "Login failure with invalid credentials",
-          "priority": "critical",
+          "title": "Login attempt with invalid credentials",
+          "priority": "high",
           "category": "functional",
           "tags": [
             "authentication",
             "negative-test",
-            "error-handling"
+            "security"
           ],
           "steps": [
             "Navigate to https://snipforge.video/login",
-            "Enter valid email format but unregistered email",
-            "Enter any password",
-            "Click 'Login' button"
+            "Enter valid email address in the email field",
+            "Enter incorrect password in the password field",
+            "Click the 'Login' or 'Sign In' button"
           ],
-          "expectedResult": "Error message is displayed indicating invalid credentials, user remains on login page"
+          "expectedResult": "Error message is displayed indicating invalid credentials and user remains on login page without authentication"
         },
         {
           "id": "LOGIN_003",
-          "title": "Login with empty required fields",
+          "title": "Login with empty email and password fields",
           "priority": "high",
           "category": "functional",
           "tags": [
             "validation",
-            "required-fields",
-            "negative-test"
+            "negative-test",
+            "required-fields"
           ],
           "steps": [
             "Navigate to https://snipforge.video/login",
             "Leave email field empty",
             "Leave password field empty",
-            "Click 'Login' button"
+            "Click the 'Login' or 'Sign In' button"
           ],
-          "expectedResult": "Validation errors are displayed for both empty fields, login is prevented"
+          "expectedResult": "Validation error messages appear indicating that email and password fields are required, login is prevented"
         },
         {
           "id": "LOGIN_004",
-          "title": "Login with special characters in email field",
-          "priority": "medium",
-          "category": "edge",
-          "tags": [
-            "input-validation",
-            "edge-case",
-            "email-format"
-          ],
-          "steps": [
-            "Navigate to https://snipforge.video/login",
-            "Enter email with special characters: test+user@email.com",
-            "Enter valid password",
-            "Click 'Login' button"
-          ],
-          "expectedResult": "System accepts valid email format with special characters and processes login attempt correctly"
-        },
-        {
-          "id": "LOGIN_005",
-          "title": "Free plan user login and verify video limits",
+          "title": "Verify free plan user login and access limitations",
           "priority": "high",
           "category": "functional",
           "tags": [
             "free-plan",
-            "business-logic",
-            "quota-verification"
-          ],
-          "steps": [
-            "Login with valid free plan user credentials",
-            "Navigate to dashboard after successful login",
-            "Check available video creation quota",
-            "Verify video duration limit display"
-          ],
-          "expectedResult": "Free plan user can login successfully and dashboard displays 3 videos/month limit with max 5 minutes duration restriction"
-        },
-        {
-          "id": "LOGIN_006",
-          "title": "Session persistence after login",
-          "priority": "medium",
-          "category": "regression",
-          "tags": [
-            "session-management",
-            "authentication",
-            "persistence"
+            "access-control",
+            "business-logic"
           ],
           "steps": [
             "Navigate to https://snipforge.video/login",
-            "Enter valid credentials and login successfully",
-            "Close the browser completely",
-            "Reopen browser and navigate to https://snipforge.video"
+            "Login with credentials of a user on the free plan",
+            "Navigate to the dashboard after successful login",
+            "Check displayed plan information and usage limits"
           ],
-          "expectedResult": "User session is maintained and user remains logged in, or is redirected to login page if session expired (based on remember me setting)"
+          "expectedResult": "User successfully logs in and dashboard shows Free plan with 3 videos/month limit and max 5 minutes per video restriction"
+        },
+        {
+          "id": "LOGIN_005",
+          "title": "Verify pro plan user login and unlimited access",
+          "priority": "medium",
+          "category": "functional",
+          "tags": [
+            "pro-plan",
+            "access-control",
+            "business-logic"
+          ],
+          "steps": [
+            "Navigate to https://snipforge.video/login",
+            "Login with credentials of a user on the Pro plan ($5/month)",
+            "Navigate to the dashboard after successful login",
+            "Check displayed plan information and usage limits"
+          ],
+          "expectedResult": "User successfully logs in and dashboard shows Pro plan status with unlimited videos access and all 25 tools available"
+        },
+        {
+          "id": "LOGIN_006",
+          "title": "SQL injection attempt in login form",
+          "priority": "critical",
+          "category": "edge",
+          "tags": [
+            "security",
+            "sql-injection",
+            "vulnerability-test"
+          ],
+          "steps": [
+            "Navigate to https://snipforge.video/login",
+            "Enter SQL injection payload in email field: ' OR '1'='1' --",
+            "Enter any text in password field",
+            "Click the 'Login' or 'Sign In' button"
+          ],
+          "expectedResult": "Login attempt is rejected with appropriate error message, no unauthorized access granted, application remains secure"
         }
       ]
     },
@@ -373,115 +370,122 @@
       "page": "Register Page",
       "scenarios": [
         {
-          "id": "REG_001",
+          "id": "REG-001",
           "title": "Successful user registration with valid email and password",
           "priority": "critical",
           "category": "smoke",
           "tags": [
-            "registration",
             "authentication",
-            "happy-path"
+            "registration",
+            "positive"
           ],
           "steps": [
             "Navigate to https://snipforge.video/register",
             "Enter a valid email address in the email field",
-            "Enter a strong password meeting requirements in the password field",
-            "Confirm password in the confirm password field",
-            "Click on the 'Register' or 'Sign Up' button"
+            "Enter a strong password (minimum 8 characters) in the password field",
+            "Enter the same password in the confirm password field",
+            "Click the 'Register' or 'Sign Up' button",
+            "Verify email confirmation is sent if applicable"
           ],
           "expectedResult": "User account is created successfully, user is redirected to dashboard or onboarding page, and free plan (3 videos/month, max 5 minutes) is automatically assigned"
         },
         {
-          "id": "REG_002",
+          "id": "REG-002",
           "title": "Registration fails with already registered email",
           "priority": "high",
           "category": "functional",
           "tags": [
+            "authentication",
             "registration",
             "validation",
-            "duplicate-email"
+            "negative"
           ],
           "steps": [
             "Navigate to https://snipforge.video/register",
             "Enter an email address that is already registered in the system",
             "Enter a valid password in the password field",
-            "Confirm password in the confirm password field",
-            "Click on the 'Register' or 'Sign Up' button"
+            "Enter the same password in the confirm password field",
+            "Click the 'Register' or 'Sign Up' button"
           ],
-          "expectedResult": "Registration fails with an error message indicating the email is already registered, suggesting to login or use a different email"
+          "expectedResult": "Registration fails with an error message indicating 'Email already exists' or 'Account already registered', user remains on registration page"
         },
         {
-          "id": "REG_003",
-          "title": "Registration validation for invalid email formats",
+          "id": "REG-003",
+          "title": "Registration validation with mismatched passwords",
           "priority": "high",
           "category": "functional",
           "tags": [
-            "registration",
             "validation",
-            "email-format"
+            "registration",
+            "negative"
           ],
           "steps": [
             "Navigate to https://snipforge.video/register",
-            "Enter invalid email formats (e.g., 'test@', 'test.com', '@domain.com', 'test @domain.com')",
-            "Enter a valid password in the password field",
-            "Attempt to submit the registration form"
+            "Enter a valid email address in the email field",
+            "Enter a password in the password field",
+            "Enter a different password in the confirm password field",
+            "Click the 'Register' or 'Sign Up' button"
           ],
-          "expectedResult": "Registration is blocked with appropriate validation error messages for invalid email format before form submission"
+          "expectedResult": "Registration fails with an error message 'Passwords do not match', user remains on registration page with form data preserved"
         },
         {
-          "id": "REG_004",
-          "title": "Password strength validation during registration",
+          "id": "REG-004",
+          "title": "Registration with invalid email format",
           "priority": "medium",
           "category": "functional",
           "tags": [
+            "validation",
+            "registration",
+            "negative",
+            "email"
+          ],
+          "steps": [
+            "Navigate to https://snipforge.video/register",
+            "Enter an invalid email format (e.g., 'testuser@', 'test@.com', 'plaintext')",
+            "Enter a valid password in the password field",
+            "Enter the same password in the confirm password field",
+            "Click the 'Register' or 'Sign Up' button"
+          ],
+          "expectedResult": "Registration fails with validation error message 'Invalid email format' or similar, submit button may be disabled, user remains on registration page"
+        },
+        {
+          "id": "REG-005",
+          "title": "Registration with weak password validation",
+          "priority": "medium",
+          "category": "functional",
+          "tags": [
+            "validation",
             "registration",
             "security",
-            "password-validation"
+            "negative"
           ],
           "steps": [
             "Navigate to https://snipforge.video/register",
-            "Enter a valid email address",
-            "Enter a weak password (e.g., '123', 'pass', short password)",
-            "Attempt to submit the registration form"
+            "Enter a valid email address in the email field",
+            "Enter a weak password (e.g., '123', 'pass', less than minimum required characters)",
+            "Enter the same weak password in the confirm password field",
+            "Click the 'Register' or 'Sign Up' button"
           ],
-          "expectedResult": "Registration is blocked with error message indicating password requirements (minimum length, complexity requirements if any), preventing weak password usage"
+          "expectedResult": "Registration fails with error message indicating password requirements (e.g., 'Password must be at least 8 characters'), user remains on registration page"
         },
         {
-          "id": "REG_005",
-          "title": "Password mismatch validation between password and confirm password fields",
+          "id": "REG-006",
+          "title": "Registration form validation with empty required fields",
           "priority": "high",
           "category": "functional",
           "tags": [
-            "registration",
             "validation",
-            "password-mismatch"
+            "registration",
+            "negative",
+            "edge"
           ],
           "steps": [
             "Navigate to https://snipforge.video/register",
-            "Enter a valid email address",
-            "Enter a valid password in the password field",
-            "Enter a different password in the confirm password field",
-            "Click on the 'Register' or 'Sign Up' button"
+            "Leave all required fields empty (email, password, confirm password)",
+            "Click the 'Register' or 'Sign Up' button",
+            "Alternatively, fill only one field and leave others empty"
           ],
-          "expectedResult": "Registration is blocked with an error message indicating passwords do not match, prompting user to re-enter matching passwords"
-        },
-        {
-          "id": "REG_006",
-          "title": "Registration with empty required fields",
-          "priority": "medium",
-          "category": "edge",
-          "tags": [
-            "registration",
-            "validation",
-            "empty-fields"
-          ],
-          "steps": [
-            "Navigate to https://snipforge.video/register",
-            "Leave all required fields (email, password) empty",
-            "Click on the 'Register' or 'Sign Up' button",
-            "Alternatively test with only one field filled at a time"
-          ],
-          "expectedResult": "Registration is prevented with validation error messages indicating which required fields are missing, no account creation occurs"
+          "expectedResult": "Registration fails with validation error messages for each empty required field (e.g., 'Email is required', 'Password is required'), submit button may be disabled, user remains on registration page"
         }
       ]
     }
