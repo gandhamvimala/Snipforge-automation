@@ -472,19 +472,19 @@
       },
       {
         "id": "rotate-flip-003",
-        "title": "Rotate 90° clockwise",
+        "title": "Rotate 90\u00b0 clockwise",
         "priority": "high",
         "category": "functional"
       },
       {
         "id": "rotate-flip-004",
-        "title": "Rotate 180° upside down",
+        "title": "Rotate 180\u00b0 upside down",
         "priority": "high",
         "category": "functional"
       },
       {
         "id": "rotate-flip-005",
-        "title": "Rotate 90° counter-clockwise",
+        "title": "Rotate 90\u00b0 counter-clockwise",
         "priority": "high",
         "category": "functional"
       },
@@ -644,13 +644,13 @@
       },
       {
         "id": "ai-shorten-005",
-        "title": "Select 1.25× Slight preset",
+        "title": "Select 1.25\u00d7 Slight preset",
         "priority": "medium",
         "category": "functional"
       },
       {
         "id": "ai-shorten-006",
-        "title": "Select 2× Double preset",
+        "title": "Select 2\u00d7 Double preset",
         "priority": "medium",
         "category": "functional"
       },
@@ -1493,6 +1493,16 @@
         "title": "Upload non-video file",
         "priority": "high",
         "category": "negative"
+      },
+      {
+        "id": "merge-006",
+        "title": "Merge list shows added videos",
+        "priority": "medium",
+        "category": "functional",
+        "control": "#merge-list",
+        "action": "verify_content",
+        "value": "",
+        "expectedResult": "Merge list displays added video files"
       }
     ]
   },
