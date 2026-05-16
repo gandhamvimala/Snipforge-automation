@@ -105,7 +105,7 @@ app.post('/api/scenarios/generate', async (req, res) => {
           content: `Generate 5 NEW test scenarios for the "${tool}" tool on snipforge.video.
 Controls: ${JSON.stringify(controls).slice(0,500)}
 Existing scenario count: ${existingCount}
-Start new IDs from: ${tool}-${String(lastId+1).padStart(3,'0')}
+IMPORTANT: Start IDs from ${tool}-${String(lastId+1).padStart(3,'0')}. Do NOT use IDs ${tool}-001 through ${tool}-${String(lastId).padStart(3,'0')} as they already exist!
 
 User request: ${prompt || 'Create more comprehensive scenarios'}
 
@@ -131,7 +131,7 @@ Return ONLY a JSON array:
     if (!existing[tool]) existing[tool] = { tool, scenarios: [] };
     existing[tool].scenarios = merged;
     const { writeFileSync } = await import('fs');
-    writeFileSync(scenariosPath, JSON.stringify(existing, null, 2));
+    // writeFileSync disabled - use Save button instead
 
     console.log(`   Added ${newScenarios.length} new scenarios. Total: ${merged.length}`);
 
@@ -182,14 +182,16 @@ app.post('/api/scripts/write', async (req, res) => {
     const allScenarios = existsSync(scenariosPath)
       ? JSON.parse(readFileSync(scenariosPath, 'utf-8'))
       : {};
-    const toolScenarios = allScenarios[tool]?.scenarios || [];
+    // Use scenarios from request (in-memory) or fall back to file
+    const toolScenarios = req.body.scenarios?.length ? req.body.scenarios : (allScenarios[tool]?.scenarios || []);
+    console.log('   Using', toolScenarios.length, 'scenarios for script writing');
 
     // Load existing spec file
     const scriptPath = `src/tests/generated/scripts/tool-${tool}.spec.js`;
     const existingScript = existsSync(scriptPath) ? readFileSync(scriptPath, 'utf-8') : '';
 
     // Find which scenarios don't have tests yet
-    const existingIds = [...existingScript.matchAll(/["'](${tool}-\d+)["']/g)].map(m=>m[1]);
+    const existingIds = [...existingScript.matchAll(new RegExp('["\'](' + tool + '-\\d+)["\']', 'g'))].map(m=>m[1]);
     const newScenarios = toolScenarios.filter(s => !existingIds.includes(s.id));
 
     if (newScenarios.length === 0) {
@@ -251,15 +253,10 @@ IMPORTANT - Use ONLY these proven selectors:
     const { writeFileSync } = await import('fs');
     if (existingScript && newCode) {
       // Insert before closing }); of describe block
-      const updated = existingScript.replace(/\}\);(\s*)$/, 
-        `
-
-// ── Auto-generated: ${new Date().toISOString()} ──
-${newCode}
-});
-`
-      );
-      writeFileSync(scriptPath, updated);
+      // Write ONLY to new file - NEVER touch original spec
+      const newPath = scriptPath.replace('.spec.js', '-new.spec.js');
+      const clean = newCode.split('\n').filter(l=>!l.trim().startsWith('```')).join('\n').trim();
+      writeFileSync(newPath, 'import { test, expect } from "@playwright/test";\ntest.use({ baseURL: "https://snipforge.video", storageState: "/workspaces/Snipforge-automation/src/fixtures/auth-state.json" });\nasync function goToTool(page) { await page.goto("/?tool=' + tool + '"); await page.waitForLoadState("networkidle"); }\ntest.describe("SnipForge - ' + tool + ' new", () => {\n' + clean + '\n});\n');
     }
 
     res.json({
@@ -279,8 +276,13 @@ app.post('/api/tests/run', async (req, res) => {
   try {
     const { tool } = req.body;
     console.log(`▶️  Running tests for: ${tool}`);
+    // Extract specific test ID from prompt if mentioned
+    const testMatch = (req.body.prompt || '').match(/(trim|speed|convert|compress|watermark|volume|rotate-flip|resize|ai-shorten|ai-transcribe|smart-clip|auto-captions|blur-region|brightness|text-overlay|thumbnail|mute|extract-audio|video-to-gif|bg-music|merge|split|multi-trim|noise-removal|ai-chapters)-\d+/);
+    const grepFlag = testMatch ? `--grep "${testMatch[0]}"` : '';
+    // Clean spec
+    try { let s=readFileSync(`src/tests/generated/scripts/tool-${tool}.spec.js`,'utf-8'); let c=s.indexOf('// ── Auto-generated:'); if(c>0){let cl=s.slice(0,c).trimEnd();if(!cl.endsWith('});'))cl+='\n});';const {writeFileSync:w}=await import('fs');w(`src/tests/generated/scripts/tool-${tool}.spec.js`,cl+'\n');}} catch(_){}
     const { stdout, stderr } = await execAsync(
-      `npx playwright test src/tests/generated/scripts/tool-${tool}.spec.js --project=chromium --reporter=list --timeout=60000`,
+      `npx playwright test src/tests/generated/scripts/tool-${tool}.spec.js --project=chromium --reporter=list --timeout=60000 ${grepFlag}`,
       { cwd: '/workspaces/Snipforge-automation', env: process.env, timeout: 120000 }
     );
     // Parse results

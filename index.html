@@ -355,7 +355,15 @@ async function sendMessage(){
     const endpoint=endpoints[agentId];
     console.log('Calling real endpoint:', endpoint, 'agent:', agentId, 'tool:', tool.id);
     const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({tool:tool.id,prompt:text})});
+      body:JSON.stringify({tool:tool.id,prompt:text,scenarios:(()=>{
+        const all = scenarios[tool.id]||[];
+        const seed = SEED[tool.id]||[];
+        // Only send scenarios that are NEW (not in seed)
+        const seedIds = seed.map(s=>s.id);
+        const newOnly = all.filter(s=>!seedIds.includes(s.id));
+        console.log('Sending to script writer:', newOnly.map(s=>s.id).join(', '));
+        return newOnly.length > 0 ? newOnly : all;
+      })()})});
     if(!res.ok) throw new Error('Server error '+res.status);
     const data=await res.json();
     removeTyping(typingId);
