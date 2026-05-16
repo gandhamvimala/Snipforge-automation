@@ -379,7 +379,7 @@ async function sendMessage(){
   const tool=TOOLS.find(t=>t.id===selectedTool);
   try{
     // Always call real backend endpoint
-    const endpoints={scenario:'/api/scenarios/generate',script:'/api/scripts/write',runner:'/api/tests/run',healer:'/api/heal',regress:'/api/tests/run'};
+    const endpoints={scenario:'/api/scenarios/generate',script:'/api/scripts/write',runner:'/api/tests/run',healer:'/api/heal',regress:'/api/regression'};
     const endpoint=endpoints[agentId];
     console.log('Calling real endpoint:', endpoint, 'agent:', agentId, 'tool:', tool.id);
     const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},
