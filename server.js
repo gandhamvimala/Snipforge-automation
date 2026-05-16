@@ -7,10 +7,12 @@ import path from 'path';
 
 const execAsync = promisify(exec);
 const app = express();
+const regressionHistory = [];
 const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => { res.setTimeout(600000); next(); });
 app.use(express.static('.'));  // Serve index.html
 
 // ── Smart Chat Router - routes to real agents ──────────────────────────────
@@ -469,20 +471,15 @@ app.post('/api/regression', async (req, res) => {
       }
     }
 
-    const cmd = 'npx playwright test src/tests/generated/scripts/tool-*.spec.js --project=chromium --reporter=list --timeout=60000 ' + grepFlag + ' > /tmp/regression-output.txt 2>&1';
+    const cmd = 'npx playwright test src/tests/generated/scripts/tool-*.spec.js --project=chromium --reporter=list --timeout=60000 ' + grepFlag;
     console.log('CMD:', cmd.slice(0,100));
 
-    // Return immediately - run in background
-    res.json({ success: true, output: '🔁 Regression started in background!\n\nCheck results with: Run regression status\n\nMatched ' + (grepFlag ? 'filtered' : 'all') + ' scenarios across 25 tools.', passed: 0, failed: 0, skipped: 0 });
-    
-    // Run in background
-    exec(cmd, { cwd: '/workspaces/Snipforge-automation', env: process.env }, (err, stdout, stderr) => {
-      const out = readFileSync('/tmp/regression-output.txt', 'utf-8');
-      const passed = (out.match(/✓/g)||[]).length;
-      const failed = (out.match(/✘/g)||[]).length;
-      runHistory.unshift({ title: 'Regression Run', time: new Date().toLocaleTimeString(), passed, failed, skipped: 0 });
-      console.log(`🔁 Regression done: ${passed} passed, ${failed} failed`);
-    });
+    const { stdout } = await execAsync(cmd, { cwd: '/workspaces/Snipforge-automation', env: process.env, timeout: 600000 });
+    const passed = (stdout.match(/✓/g)||[]).length;
+    const failed = (stdout.match(/✘/g)||[]).length;
+    const skipped = (stdout.match(/- /g)||[]).length;
+    regressionHistory.unshift({ title: 'Regression Run', time: new Date().toLocaleTimeString(), passed, failed, skipped });
+    console.log(`🔁 Regression done: ${passed} passed, ${failed} failed`);
   } catch(e) {
     res.json({ success: true, output: 'Regression started! Check terminal for results.', passed:0, failed:0, skipped:0 });
   }
