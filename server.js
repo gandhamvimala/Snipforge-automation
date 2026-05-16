@@ -227,6 +227,7 @@ New scenarios to write:
 ${JSON.stringify(newScenarios, null, 2)}
 
 Return ONLY the new test() functions (no imports, no describe wrapper).
+CRITICAL: NEVER call test.use() inside a test() function. NEVER use page.goto('/') - always use goToTool(page) which is already defined.
 These will be appended inside the existing describe block.
 Use exact IDs provided above.
 
@@ -256,7 +257,21 @@ IMPORTANT - Use ONLY these proven selectors:
       // Write ONLY to new file - NEVER touch original spec
       const newPath = scriptPath.replace('.spec.js', '-new.spec.js');
       const clean = newCode.split('\n').filter(l=>!l.trim().startsWith('```')).join('\n').trim();
-      writeFileSync(newPath, 'import { test, expect } from "@playwright/test";\ntest.use({ baseURL: "https://snipforge.video", storageState: "/workspaces/Snipforge-automation/src/fixtures/auth-state.json" });\nasync function goToTool(page) { await page.goto("/?tool=' + tool + '"); await page.waitForLoadState("networkidle"); }\ntest.describe("SnipForge - ' + tool + ' new", () => {\n' + clean + '\n});\n');
+      // Clean the generated code
+      const finalClean = clean
+        .replace(/test\.use\([^)]+\);?/g, '')  // remove any test.use() inside tests
+        .replace(/await page\.goto\('\/'\);/g, 'await goToTool(page);')  // fix goto
+        .replace(/await page\.goto\("\/"\);/g, 'await goToTool(page);')  // fix goto
+        .replace(/await page\.locator\('#panel-[^']+\'\)\.click\(\);/g, '')  // remove panel clicks
+        .replace(/await page\.waitForLoadState\('networkidle'\);\n\s*await goToTool/g, 'await goToTool');
+      
+      writeFileSync(newPath, `import { test, expect } from "@playwright/test";
+test.use({ baseURL: "https://snipforge.video", storageState: "/workspaces/Snipforge-automation/src/fixtures/auth-state.json" });
+async function goToTool(page) { await page.goto("/?tool=${tool}"); await page.waitForLoadState("networkidle"); await page.waitForTimeout(500); }
+test.describe("SnipForge - ${tool} new", () => {
+${finalClean}
+});
+`);
     }
 
     res.json({
@@ -282,7 +297,12 @@ app.post('/api/tests/run', async (req, res) => {
     // Clean spec
     try { let s=readFileSync(`src/tests/generated/scripts/tool-${tool}.spec.js`,'utf-8'); let c=s.indexOf('// ── Auto-generated:'); if(c>0){let cl=s.slice(0,c).trimEnd();if(!cl.endsWith('});'))cl+='\n});';const {writeFileSync:w}=await import('fs');w(`src/tests/generated/scripts/tool-${tool}.spec.js`,cl+'\n');}} catch(_){}
     const { stdout, stderr } = await execAsync(
-      `npx playwright test src/tests/generated/scripts/tool-${tool}.spec.js --project=chromium --reporter=list --timeout=60000 ${grepFlag}`,
+      (() => {
+      const mainSpec = `src/tests/generated/scripts/tool-${tool}.spec.js`;
+      const newSpec = `src/tests/generated/scripts/tool-${tool}-new.spec.js`;
+      const specs = [mainSpec, existsSync(newSpec) ? newSpec : ''].filter(Boolean).join(' ');
+      return `npx playwright test ${specs} --project=chromium --reporter=list --timeout=60000 ${grepFlag}`;
+    })(),
       { cwd: '/workspaces/Snipforge-automation', env: process.env, timeout: 120000 }
     );
     // Parse results
