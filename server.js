@@ -477,7 +477,7 @@ app.post('/api/regression', async (req, res) => {
     
     // Run in background
     exec(cmd, { cwd: '/workspaces/Snipforge-automation', env: process.env }, (err, stdout, stderr) => {
-      const out = require('fs').readFileSync('/tmp/regression-output.txt', 'utf-8').catch ? '' : require('fs').readFileSync('/tmp/regression-output.txt', 'utf-8');
+      const out = readFileSync('/tmp/regression-output.txt', 'utf-8');
       const passed = (out.match(/✓/g)||[]).length;
       const failed = (out.match(/✘/g)||[]).length;
       runHistory.unshift({ title: 'Regression Run', time: new Date().toLocaleTimeString(), passed, failed, skipped: 0 });
