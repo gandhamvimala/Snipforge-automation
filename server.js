@@ -290,7 +290,12 @@ ${finalClean}
 app.post('/api/tests/run', async (req, res) => {
   try {
     const { tool } = req.body;
-    console.log(`▶️  Running tests for: ${tool}`);
+    const prompt = req.body.prompt || '';
+    const TOOLS_LIST = ['smart-clip','rotate-flip','ai-shorten','ai-transcribe','auto-captions','blur-region','text-overlay','video-to-gif','bg-music','multi-trim','noise-removal','ai-chapters','trim','speed','convert','compress','watermark','volume','resize','thumbnail','mute','extract-audio','merge','split','brightness'];
+    const promptLower = prompt.toLowerCase().replace(/\s+/g,'-');
+    const foundTools = TOOLS_LIST.filter(t => promptLower.includes(t) || prompt.toLowerCase().includes(t.replace(/-/g,' ')));
+    const activeTools = foundTools.length > 0 ? foundTools : [tool];
+    console.log(`▶️  Running tests for: ${activeTools.join(', ')}`);
     // Extract specific test ID from prompt if mentioned
     const testMatch = (req.body.prompt || '').match(/(trim|speed|convert|compress|watermark|volume|rotate-flip|resize|ai-shorten|ai-transcribe|smart-clip|auto-captions|blur-region|brightness|text-overlay|thumbnail|mute|extract-audio|video-to-gif|bg-music|merge|split|multi-trim|noise-removal|ai-chapters)-\d+/);
     const grepFlag = testMatch ? `--grep "${testMatch[0]}"` : '';
@@ -298,9 +303,11 @@ app.post('/api/tests/run', async (req, res) => {
     try { let s=readFileSync(`src/tests/generated/scripts/tool-${tool}.spec.js`,'utf-8'); let c=s.indexOf('// ── Auto-generated:'); if(c>0){let cl=s.slice(0,c).trimEnd();if(!cl.endsWith('});'))cl+='\n});';const {writeFileSync:w}=await import('fs');w(`src/tests/generated/scripts/tool-${tool}.spec.js`,cl+'\n');}} catch(_){}
     const { stdout, stderr } = await execAsync(
       (() => {
-      const mainSpec = `src/tests/generated/scripts/tool-${tool}.spec.js`;
-      const newSpec = `src/tests/generated/scripts/tool-${tool}-new.spec.js`;
-      const specs = [mainSpec, existsSync(newSpec) ? newSpec : ''].filter(Boolean).join(' ');
+      const specs = activeTools.flatMap(t => {
+        const ms = `src/tests/generated/scripts/tool-${t}.spec.js`;
+        const ns = `src/tests/generated/scripts/tool-${t}-new.spec.js`;
+        return [ms, existsSync(ns) ? ns : ''].filter(Boolean);
+      }).join(' ');
       return `npx playwright test ${specs} --project=chromium --reporter=list --timeout=60000 ${grepFlag}`;
     })(),
       { cwd: '/workspaces/Snipforge-automation', env: process.env, timeout: 120000 }

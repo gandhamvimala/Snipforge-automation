@@ -1,38 +1,43 @@
 import { test, expect } from "@playwright/test";
 test.use({ baseURL: "https://snipforge.video", storageState: "/workspaces/Snipforge-automation/src/fixtures/auth-state.json" });
-async function goToTool(page) { await page.goto("/?tool=trim"); await page.waitForLoadState("networkidle"); await page.waitForTimeout(500); }
+
+async function goToTool(page) {
+  await page.goto("/?tool=trim");
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(500);
+}
+
 test.describe("SnipForge - trim new", () => {
-test('trim-009: Trim video with start time greater than end time', async ({ page }) => {
-  
-  
-  await goToTool(page);
-  
-  // Upload video
-  await page.locator('#tr-file').setInputFiles(process.env.TEST_VIDEO_PATH);
-  await page.waitForSelector('#panel-trim', { state: 'visible', timeout: 10000 });
-  
-  // Set start time greater than end time
-  await page.locator('#tr-start').fill('15');
-  await page.locator('#tr-end').fill('5');
-  
-  // Click run button
-  await page.locator('#tr-run').click();
-  
-  // Check for rate limit
-  const btnText = await page.locator('#tr-run').innerText();
-  if (btnText.includes('failed')) {
-    return;
-  }
-  
-  // Verify error handling or validation message
-  // The tool should prevent processing or show validation error
-  const runButton = page.locator('#tr-run');
-  await expect(runButton).toBeVisible();
-  
-  // Wait briefly to see if any error message appears or if button state indicates invalid input
-  await page.waitForTimeout(1000);
-  
-  // Verify the run button is still visible (not processing invalid range)
-  await expect(runButton).toBeVisible();
-});
+
+  test("trim-009: Trim video with start time greater than end time", async ({ page }) => {
+    await goToTool(page);
+    await page.locator("#tr-file").setInputFiles(process.env.TEST_VIDEO_PATH);
+    await page.waitForTimeout(3000);
+
+    // Check rate limit BEFORE clicking
+    const btnText = await page.locator("#tr-run").innerText();
+    if (btnText.includes("failed")) { console.log("⚠️ Rate limit"); return; }
+
+    // Set start > end (invalid range)
+    await page.locator("#tr-start").fill("30");
+    await page.locator("#tr-end").fill("10");
+    await page.waitForTimeout(300);
+
+    // Listen for alert
+    let alertShown = false;
+    let alertMsg = '';
+    page.on("dialog", async dialog => {
+      alertShown = true;
+      alertMsg = dialog.message();
+      await dialog.dismiss();
+    });
+
+    await page.locator("#tr-run").click();
+    await page.waitForTimeout(1000);
+
+    console.log("Alert shown:", alertShown, "Message:", alertMsg);
+    expect(alertShown).toBeTruthy();
+    expect(alertMsg).toContain("End time");
+  });
+
 });
