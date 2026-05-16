@@ -42,6 +42,25 @@ app.post('/api/chat', async (req, res) => {
       }, () => {});
     }
 
+    if (agentId === 'regress' || lastMsg.includes('regression') || lastMsg.includes('regress')) {
+      console.log('🔀 Routing to regression runner');
+      // Run smoke tests across all tools
+      const { execAsync: ea } = { execAsync: promisify(exec) };
+      try {
+        const { stdout } = await ea(
+          'npx playwright test src/tests/generated/scripts/ --project=chromium --reporter=list --timeout=60000 --grep "001"',
+          { cwd: '/workspaces/Snipforge-automation', env: process.env, timeout: 300000 }
+        );
+        const passed = (stdout.match(/✓/g)||[]).length;
+        const failed = (stdout.match(/✘/g)||[]).length;
+        return res.json({ content: [{ type: 'text', text: `✅ Regression Complete!\n\nSmoke tests (001) across all 25 tools:\nPassed: ${passed}\nFailed: ${failed}\n\n${stdout.slice(-500)}` }] });
+      } catch(e) {
+        const out = e.stdout||'';
+        const passed = (out.match(/✓/g)||[]).length;
+        const failed = (out.match(/✘/g)||[]).length;
+        return res.json({ content: [{ type: 'text', text: `Regression Results:\nPassed: ${passed}\nFailed: ${failed}` }] });
+      }
+    }
     if (agentId === 'runner' || lastMsg.includes('run') || lastMsg.includes('test')) {
       const toolId = tool || 'trim';
       console.log('🔀 Routing to test runner for:', toolId);
