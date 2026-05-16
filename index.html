@@ -375,8 +375,21 @@ async function sendMessage(){
       reply=data.output||`✅ Generated ${data.newCount} new scenarios. Total: ${data.totalCount}`;
     }
     if(agentId==='runner'){
-      runHistory.unshift({title:tool.name+' Test Run',time:'just now',passed:data.passed||0,failed:data.failed||0,skipped:data.skipped||0});
+      const toolName = data.tool || tool.name;
+      runHistory.unshift({
+        title: toolName + ' Test Run',
+        time: 'just now',
+        passed: data.passed||0,
+        failed: data.failed||0,
+        skipped: data.skipped||0,
+        duration: data.duration||''
+      });
+      // Update stats bar
+      document.getElementById('stat-passed').textContent = data.passed||0;
+      document.getElementById('stat-failed').textContent = data.failed||0;
+      document.getElementById('stat-skipped').textContent = data.skipped||0;
       if(activeTab==='runs')renderPanel();
+      switchTab('runs', document.querySelector('.panel-tab:nth-child(2)'));
     }
     addAgentMsg(agentId,reply);
     conversationHistory.push({role:'user',content:text},{role:'assistant',content:reply});

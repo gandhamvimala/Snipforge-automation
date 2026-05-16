@@ -315,8 +315,9 @@ app.post('/api/tests/run', async (req, res) => {
     // Parse results
     const passed = (stdout.match(/✓/g) || []).length;
     const failed = (stdout.match(/✘/g) || []).length;
-    const skipped = (stdout.match(/^\s+-/gm) || []).length;
-    res.json({ success: true, output: stdout, passed, failed, skipped });
+    const skipped = (stdout.match(/- /g) || []).length;
+    const duration = stdout.match(/\((\d+\.?\d*[ms]+)\)\s*$/m)?.[1] || '';
+    res.json({ success: true, output: stdout, passed, failed, skipped, duration, tool: activeTools.join('+') });
   } catch (e) {
     const output = e.stdout || e.message;
     const passed = (output.match(/✓/g) || []).length;
