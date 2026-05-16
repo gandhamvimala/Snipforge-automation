@@ -476,7 +476,7 @@ async function saveDashboard() {
     const res = await fetch('/api/save', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenarios:buildScenariosForSave()})});
     const data = await res.json();
     btn.textContent = data.success ? '✅ Saved!' : '❌ Failed';
-    if (data.success) addAgentMsg('scenario', '✅ Saved to GitHub!
+    if (data.success) addAgentMsg('scenario', '✅ Saved to GitHub! ' + data.output);
 
 ' + data.output);
   } catch(e) { btn.textContent = '❌ ' + e.message; }
