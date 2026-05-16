@@ -167,7 +167,7 @@
   </div>
 </div>
 <script>
-const API='https://corsproxy.io/?https://api.anthropic.com/v1/messages',MODEL='claude-sonnet-4-20250514';
+const API='https://api.anthropic.com/v1/messages';const MODEL='claude-sonnet-4-5';
 let activeAgent=null,selectedTool='trim',isProcessing=false,conversationHistory=[],scenarios={},runHistory=[],activeTab='scenarios';
 const TOOLS=[
   {id:'trim',icon:'✂️',name:'Trim',count:8,panel:'trim'},
@@ -247,21 +247,14 @@ function showApiKeyModal() {
 }
 
 function renderWelcome(){
-  document.getElementById('messages').innerHTML=`
-    <div class="welcome" id="welcome">
-      <h2>🤖 Automation Control Center</h2>
-      <p>Chat with your AI agents. Select a tool from the sidebar, activate an agent from the toolbar, then ask it to generate scenarios, write scripts, or run tests.</p>
-      <div class="quick-actions">
-        <button class="quick-btn" onclick="sendQuick('Create 5 more scenarios for the selected tool')">📋 More scenarios</button>
-        <button class="quick-btn" onclick="sendQuick('Write Playwright scripts for the new scenarios')">✍️ Write scripts</button>
-        <button class="quick-btn" onclick="sendQuick('Run all tests for the selected tool')">▶️ Run tests</button>
-        <button class="quick-btn" onclick="sendQuick('Fix any failing tests with self healer')">🩹 Heal failures</button>
-        <button class="quick-btn" onclick="sendQuick('Show full test summary for all 25 tools')">📊 Test summary</button>
-        <button class="quick-btn" onclick="sendQuick('Run smart regression suite')">🔁 Run regression</button>
-      </div>
-    </div>`;
+  const msgs = document.getElementById('messages');
+  const d = document.createElement('div');
+  d.className = 'welcome';
+  d.id = 'welcome';
+  d.innerHTML = '<h2>🤖 Automation Control Center</h2><p>Chat with your AI agents. Select a tool from the sidebar, activate an agent, then ask it to generate scenarios, write scripts, or run tests.</p><div class="quick-actions"><button class="quick-btn" onclick="sendQuick(&quot;Create 5 more scenarios for the selected tool&quot;)">📋 More scenarios</button><button class="quick-btn" onclick="sendQuick(&quot;Write Playwright scripts for the new scenarios&quot;)">✍️ Write scripts</button><button class="quick-btn" onclick="sendQuick(&quot;Run all tests for the selected tool&quot;)">▶️ Run tests</button><button class="quick-btn" onclick="sendQuick(&quot;Show full test summary for all 25 tools&quot;)">📊 Test summary</button><button class="quick-btn" onclick="sendQuick(&quot;Run smart regression suite&quot;)">🔁 Run regression</button></div>';
+  msgs.appendChild(d);
 }
-function init(){renderTools();selectTool('trim');renderPanel()}
+function init(){renderTools();selectTool("trim");renderPanel();renderWelcome();}
 function renderTools(){
   document.getElementById('toolList').innerHTML=TOOLS.map(t=>`
     <div class="tool-item ${t.id===selectedTool?'selected':''}" onclick="selectTool('${t.id}')">
