@@ -167,7 +167,7 @@
   </div>
 </div>
 <script>
-const API='https://api.anthropic.com/v1/messages',MODEL='claude-sonnet-4-20250514';
+const API='https://corsproxy.io/?https://api.anthropic.com/v1/messages',MODEL='claude-sonnet-4-20250514';
 let activeAgent=null,selectedTool='trim',isProcessing=false,conversationHistory=[],scenarios={},runHistory=[],activeTab='scenarios';
 const TOOLS=[
   {id:'trim',icon:'✂️',name:'Trim',count:8,panel:'trim'},
