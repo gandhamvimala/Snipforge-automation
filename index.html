@@ -469,25 +469,19 @@ function buildScenariosForSave() {
   });
   return result;
 }
-
 async function saveDashboard() {
   const btn = document.getElementById('saveBtn');
   btn.textContent = '⏳ Saving...';
   try {
-    const res = await fetch('/api/save', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({scenarios: buildScenariosForSave()})
-    });
+    const res = await fetch('/api/save', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scenarios:buildScenariosForSave()})});
     const data = await res.json();
     btn.textContent = data.success ? '✅ Saved!' : '❌ Failed';
-    if (data.success) addAgentMsg('scenario', '✅ Saved!\n\n' + data.output);
-  } catch(e) {
-    btn.textContent = '❌ ' + e.message;
-  }
+    if (data.success) addAgentMsg('scenario', '✅ Saved to GitHub!
+
+' + data.output);
+  } catch(e) { btn.textContent = '❌ ' + e.message; }
   setTimeout(() => { btn.textContent = '💾 Save'; }, 3000);
 }
-
 </script>
 
 <div id="apiKeyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:999;align-items:center;justify-content:center">
