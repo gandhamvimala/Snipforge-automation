@@ -140,7 +140,7 @@
         "priority": "high",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('0.5×')",
+        "selector": "button:contains('0.5\u00d7')",
         "action": "click preset",
         "value": "0.5",
         "expectedResult": "Speed is set to 0.5x slow motion"
@@ -151,7 +151,7 @@
         "priority": "medium",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('0.75×')",
+        "selector": "button:contains('0.75\u00d7')",
         "action": "click preset",
         "value": "0.75",
         "expectedResult": "Speed is set to 0.75x"
@@ -162,7 +162,7 @@
         "priority": "medium",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('1.5×')",
+        "selector": "button:contains('1.5\u00d7')",
         "action": "click preset",
         "value": "1.5",
         "expectedResult": "Speed is set to 1.5x fast"
@@ -173,7 +173,7 @@
         "priority": "medium",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('2×')",
+        "selector": "button:contains('2\u00d7')",
         "action": "click preset",
         "value": "2.0",
         "expectedResult": "Speed is set to 2x double speed"
@@ -184,7 +184,7 @@
         "priority": "medium",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('3×')",
+        "selector": "button:contains('3\u00d7')",
         "action": "click preset",
         "value": "3.0",
         "expectedResult": "Speed is set to 3x triple speed"
@@ -551,7 +551,7 @@
         "control": "wm-text",
         "selector": "#wm-text",
         "action": "input text",
-        "value": "© MyBrand 2024",
+        "value": "\u00a9 MyBrand 2024",
         "expectedResult": "Text is entered and preview updates"
       },
       {
@@ -847,33 +847,33 @@
       },
       {
         "id": "rotate-flip-003",
-        "title": "Rotate 90° clockwise",
+        "title": "Rotate 90\u00b0 clockwise",
         "priority": "high",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('↻ 90°')",
+        "selector": "button:contains('\u21bb 90\u00b0')",
         "action": "click preset",
         "value": "90",
         "expectedResult": "Transform value set to 90, video rotated clockwise"
       },
       {
         "id": "rotate-flip-004",
-        "title": "Rotate 180° upside down",
+        "title": "Rotate 180\u00b0 upside down",
         "priority": "high",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('↻ 180°')",
+        "selector": "button:contains('\u21bb 180\u00b0')",
         "action": "click preset",
         "value": "180",
         "expectedResult": "Transform value set to 180, video flipped upside down"
       },
       {
         "id": "rotate-flip-005",
-        "title": "Rotate 90° counter-clockwise",
+        "title": "Rotate 90\u00b0 counter-clockwise",
         "priority": "high",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('↺ 90°')",
+        "selector": "button:contains('\u21ba 90\u00b0')",
         "action": "click preset",
         "value": "-90",
         "expectedResult": "Transform value set to -90, video rotated counter-clockwise"
@@ -884,7 +884,7 @@
         "priority": "high",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('↔ Flip')",
+        "selector": "button:contains('\u2194 Flip')",
         "action": "click preset",
         "value": "hflip",
         "expectedResult": "Video flipped horizontally (mirrored)"
@@ -895,7 +895,7 @@
         "priority": "high",
         "category": "functional",
         "control": "preset button",
-        "selector": "button:contains('↕ Flip')",
+        "selector": "button:contains('\u2195 Flip')",
         "action": "click preset",
         "value": "vflip",
         "expectedResult": "Video flipped vertically"
@@ -950,10 +950,10 @@
         "priority": "medium",
         "category": "edge",
         "control": "preset buttons",
-        "selector": "button:contains('↻ 90°')",
+        "selector": "button:contains('\u21bb 90\u00b0')",
         "action": "click multiple presets",
         "value": "90,90,90,90",
-        "expectedResult": "Last selected transformation applied (360° = original)"
+        "expectedResult": "Last selected transformation applied (360\u00b0 = original)"
       }
     ]
   },
@@ -983,7 +983,7 @@
         "selector": ".preset-button:contains('YT')",
         "action": "click",
         "value": "youtube",
-        "expectedResult": "Platform set to YouTube (1920×1080 · 16:9) and cr-platform value updated to 'youtube'"
+        "expectedResult": "Platform set to YouTube (1920\u00d71080 \u00b7 16:9) and cr-platform value updated to 'youtube'"
       },
       {
         "id": "resize-003",
@@ -994,7 +994,7 @@
         "selector": ".preset-button:contains('IG')",
         "action": "click",
         "value": "instagram",
-        "expectedResult": "Platform set to Instagram (1080×1080 · 1:1)"
+        "expectedResult": "Platform set to Instagram (1080\u00d71080 \u00b7 1:1)"
       },
       {
         "id": "resize-004",
@@ -1005,7 +1005,7 @@
         "selector": ".preset-button:contains('TT')",
         "action": "click",
         "value": "tiktok",
-        "expectedResult": "Platform set to TikTok (1080×1920 · 9:16)"
+        "expectedResult": "Platform set to TikTok (1080\u00d71920 \u00b7 9:16)"
       },
       {
         "id": "resize-005",
@@ -1016,7 +1016,7 @@
         "selector": ".preset-button:contains('LI')",
         "action": "click",
         "value": "linkedin",
-        "expectedResult": "Platform set to LinkedIn (1280×720 · 16:9)"
+        "expectedResult": "Platform set to LinkedIn (1280\u00d7720 \u00b7 16:9)"
       },
       {
         "id": "resize-006",
@@ -1027,7 +1027,7 @@
         "selector": ".preset-button:contains('TW')",
         "action": "click",
         "value": "twitter",
-        "expectedResult": "Platform set to Twitter (1280×720 · 16:9)"
+        "expectedResult": "Platform set to Twitter (1280\u00d7720 \u00b7 16:9)"
       },
       {
         "id": "resize-007",
@@ -1038,7 +1038,7 @@
         "selector": ".preset-button:contains('SQ')",
         "action": "click",
         "value": "square",
-        "expectedResult": "Platform set to Square (1080×1080 · 1:1)"
+        "expectedResult": "Platform set to Square (1080\u00d71080 \u00b7 1:1)"
       },
       {
         "id": "resize-008",
@@ -1060,7 +1060,7 @@
         "selector": "#cr-run",
         "action": "click",
         "value": "",
-        "expectedResult": "Video is processed and resized to 1920×1080"
+        "expectedResult": "Video is processed and resized to 1920\u00d71080"
       },
       {
         "id": "resize-010",
@@ -1160,7 +1160,7 @@
       },
       {
         "id": "ai-shorten-005",
-        "title": "Select 1.25× Slight preset",
+        "title": "Select 1.25\u00d7 Slight preset",
         "priority": "medium",
         "category": "functional",
         "control": "preset button",
@@ -1171,7 +1171,7 @@
       },
       {
         "id": "ai-shorten-006",
-        "title": "Select 2× Double preset",
+        "title": "Select 2\u00d7 Double preset",
         "priority": "medium",
         "category": "functional",
         "control": "preset button",

@@ -252,7 +252,7 @@ function renderWelcome(){
 }
 
 // ── Real Agent Functions ──────────────────────────────────────────────────
-async function runRealAgent(agentId, tool) {
+async function runRealAgent(agentId, tool, prompt='') {
   const endpoints = {
     scenario: '/api/scenarios/generate',
     script:   '/api/scripts/write',
@@ -262,18 +262,20 @@ async function runRealAgent(agentId, tool) {
   };
 
   const endpoint = endpoints[agentId];
-  if (!endpoint) return null;
+  if (!endpoints[agentId]) return null;
 
+  console.log('Fetching:', endpoint, 'tool:', tool, 'prompt:', prompt.slice(0,50));
   const res = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tool })
+    body: JSON.stringify({ tool, prompt })
   });
 
+  if (!res.ok) throw new Error('Server error: ' + res.status);
   return await res.json();
 }
 
-function init(){renderTools();selectTool("trim");renderPanel();renderWelcome();}
+function init(){renderTools();selectTool("trim");renderPanel();}
 function renderTools(){
   document.getElementById('toolList').innerHTML=TOOLS.map(t=>`
     <div class="tool-item ${t.id===selectedTool?'selected':''}" onclick="selectTool('${t.id}')">
@@ -328,28 +330,43 @@ async function sendMessage(){
   isProcessing=true;document.getElementById('sendBtn').disabled=true;
   document.getElementById('welcome')?.remove();
   addUserMsg(text);
-  const agentId=detectAgent(text)||activeAgent||'scenario';
+  const agentId=activeAgent||detectAgent(text)||'scenario';
   const typingId=showTyping(agentId);
   const tool=TOOLS.find(t=>t.id===selectedTool);
-  conversationHistory.push({role:'user',content:`Selected tool: ${tool.name} (panel: ${tool.panel}, URL: /?tool=${tool.panel})\nScenario count: ${(scenarios[selectedTool]||SEED[selectedTool]||[]).length}\n\nRequest: ${text}`});
   try{
-    const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','x-api-key':getApiKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:MODEL,max_tokens:1000,system:AGENTS[agentId].system,messages:conversationHistory})});
+    // Always call real backend endpoint
+    const endpoints={scenario:'/api/scenarios/generate',script:'/api/scripts/write',runner:'/api/tests/run',healer:'/api/heal',regress:'/api/tests/run'};
+    const endpoint=endpoints[agentId];
+    console.log('Calling real endpoint:', endpoint, 'agent:', agentId, 'tool:', tool.id);
+    const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({tool:tool.id,prompt:text})});
+    if(!res.ok) throw new Error('Server error '+res.status);
     const data=await res.json();
-    const reply=data.content?.map(c=>c.text||'').join('')||'No response';
-    conversationHistory.push({role:'assistant',content:reply});
     removeTyping(typingId);
-    processReply(agentId,reply);
-  }catch(e){removeTyping(typingId);addAgentMsg(agentId,`❌ Error: ${e.message}`)}
+    // Process real result
+    let reply=data.output||data.error||'Done!';
+    if(agentId==='scenario'&&data.scenarios?.length){
+      scenarios[selectedTool]=data.scenarios.map(s=>({id:s.id,title:s.title,priority:s.priority||'medium',category:s.category||'functional'}));
+      renderPanel();renderTools();
+      reply=data.output||`✅ Generated ${data.newCount} new scenarios. Total: ${data.totalCount}`;
+    }
+    if(agentId==='runner'){
+      runHistory.unshift({title:tool.name+' Test Run',time:'just now',passed:data.passed||0,failed:data.failed||0,skipped:data.skipped||0});
+      if(activeTab==='runs')renderPanel();
+    }
+    addAgentMsg(agentId,reply);
+    conversationHistory.push({role:'user',content:text},{role:'assistant',content:reply});
+  }catch(e){removeTyping(typingId);addAgentMsg(agentId,`❌ Error: ${e.message}`);}
   isProcessing=false;document.getElementById('sendBtn').disabled=false;
 }
 function detectAgent(t){
   t=t.toLowerCase();
-  if(t.includes('scenario')||t.includes('create')||t.includes('generate'))return 'scenario';
+  // Script detection FIRST (before scenario) to catch "write scripts"
   if(t.includes('script')||t.includes('write')||t.includes('playwright'))return 'script';
-  if(t.includes('run')||t.includes('execute')||t.includes('test'))return 'runner';
+  if(t.includes('run')||t.includes('execute'))return 'runner';
   if(t.includes('fix')||t.includes('heal')||t.includes('fail'))return 'healer';
   if(t.includes('regression')||t.includes('regress'))return 'regress';
+  if(t.includes('scenario')||t.includes('create')||t.includes('generate')||t.includes('more'))return 'scenario';
   return null;
 }
 function processReply(agentId,reply){
