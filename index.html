@@ -120,11 +120,7 @@
     <button class="agent-btn" data-agent="healer" onclick="activateAgent('healer',this)"><div class="dot"></div>🩹 Self Healer</button>
     <button class="agent-btn" data-agent="regress" onclick="activateAgent('regress',this)"><div class="dot"></div>🔁 Regression</button>
   </div>
-  <button onclick="localStorage.removeItem('sf_api_key');_apiKey='';alert('API key cleared! Enter it again on next message.')" 
-       style="padding:4px 10px;border-radius:5px;border:1px solid var(--border2);background:var(--bg3);color:var(--muted);font-size:.65rem;cursor:pointer;white-space:nowrap">
-       🔑 Set API Key
-    </button>
-    <div class="stats-bar">
+  <div class="stats-bar">
     <div class="stat green">✅ <strong id="stat-passed">255</strong> passed</div>
     <div class="stat red">❌ <strong id="stat-failed">0</strong> failed</div>
     <div class="stat">⏭️ <strong id="stat-skipped">7</strong> skipped</div>
@@ -167,7 +163,7 @@
   </div>
 </div>
 <script>
-const API='https://api.anthropic.com/v1/messages';const MODEL='claude-sonnet-4-5';
+const API='/api/chat';const MODEL='claude-sonnet-4-5';const BACKEND='http://localhost:3000';
 let activeAgent=null,selectedTool='trim',isProcessing=false,conversationHistory=[],scenarios={},runHistory=[],activeTab='scenarios';
 const TOOLS=[
   {id:'trim',icon:'✂️',name:'Trim',count:8,panel:'trim'},
@@ -254,6 +250,29 @@ function renderWelcome(){
   d.innerHTML = '<h2>🤖 Automation Control Center</h2><p>Chat with your AI agents. Select a tool from the sidebar, activate an agent, then ask it to generate scenarios, write scripts, or run tests.</p><div class="quick-actions"><button class="quick-btn" onclick="sendQuick(&quot;Create 5 more scenarios for the selected tool&quot;)">📋 More scenarios</button><button class="quick-btn" onclick="sendQuick(&quot;Write Playwright scripts for the new scenarios&quot;)">✍️ Write scripts</button><button class="quick-btn" onclick="sendQuick(&quot;Run all tests for the selected tool&quot;)">▶️ Run tests</button><button class="quick-btn" onclick="sendQuick(&quot;Show full test summary for all 25 tools&quot;)">📊 Test summary</button><button class="quick-btn" onclick="sendQuick(&quot;Run smart regression suite&quot;)">🔁 Run regression</button></div>';
   msgs.appendChild(d);
 }
+
+// ── Real Agent Functions ──────────────────────────────────────────────────
+async function runRealAgent(agentId, tool) {
+  const endpoints = {
+    scenario: '/api/scenarios/generate',
+    script:   '/api/scripts/write',
+    runner:   '/api/tests/run',
+    healer:   '/api/heal',
+    regress:  '/api/tests/run'
+  };
+
+  const endpoint = endpoints[agentId];
+  if (!endpoint) return null;
+
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tool })
+  });
+
+  return await res.json();
+}
+
 function init(){renderTools();selectTool("trim");renderPanel();renderWelcome();}
 function renderTools(){
   document.getElementById('toolList').innerHTML=TOOLS.map(t=>`
@@ -305,7 +324,6 @@ async function sendMessage(){
   const input=document.getElementById('chatInput');
   const text=input.value.trim();
   if(!text||isProcessing)return;
-  if(!_apiKey){showApiKeyModal();return;}
   input.value='';input.style.height='auto';
   isProcessing=true;document.getElementById('sendBtn').disabled=true;
   document.getElementById('welcome')?.remove();
