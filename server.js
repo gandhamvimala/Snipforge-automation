@@ -436,6 +436,56 @@ app.get('/api/logs', (req, res) => {
   }
 });
 
+
+// ── Regression Runner ─────────────────────────────────────────────────────
+app.post('/api/regression', async (req, res) => {
+  try {
+    const prompt = req.body.prompt || '';
+    console.log('🔁 Running regression:', prompt);
+
+    const categories = [];
+    if (prompt.includes('smoke')) categories.push('smoke');
+    if (prompt.includes('functional')) categories.push('functional');
+    if (prompt.includes('edge')) categories.push('edge');
+    if (prompt.includes('negative')) categories.push('negative');
+    if (prompt.includes('critical')) categories.push('critical');
+    if (prompt.includes('high')) categories.push('high');
+    if (prompt.includes('regression')) categories.push('regression');
+
+    let grepFlag = '--grep "-001"'; // default smoke
+    if (categories.length > 0) {
+      const allScenarios = JSON.parse(readFileSync('src/tests/generated/tool-scenarios.json', 'utf-8'));
+      const matchingIds = [];
+      Object.values(allScenarios).forEach(toolData => {
+        (toolData.scenarios || []).forEach(s => {
+          if (categories.includes(s.category) || categories.includes(s.priority)) {
+            matchingIds.push(s.id);
+          }
+        });
+      });
+      if (matchingIds.length > 0) {
+        grepFlag = '--grep "' + matchingIds.slice(0,50).join('|') + '"';
+        console.log('   Matched:', matchingIds.length, 'scenarios');
+      }
+    }
+
+    const cmd = 'npx playwright test src/tests/generated/scripts/tool-*.spec.js --project=chromium --reporter=list --timeout=60000 ' + grepFlag;
+    console.log('CMD:', cmd.slice(0,100));
+
+    const { stdout } = await execAsync(cmd, { cwd: '/workspaces/Snipforge-automation', env: process.env, timeout: 300000 });
+    const passed = (stdout.match(/✓/g)||[]).length;
+    const failed = (stdout.match(/✘/g)||[]).length;
+    const skipped = (stdout.match(/- /g)||[]).length;
+
+    res.json({ success: true, output: `🔁 Regression Complete!\n✅ Passed: ${passed}\n❌ Failed: ${failed}\n⏭️ Skipped: ${skipped}\n\n${stdout.slice(-600)}`, passed, failed, skipped });
+  } catch(e) {
+    const out = e.stdout||'';
+    const passed = (out.match(/✓/g)||[]).length;
+    const failed = (out.match(/✘/g)||[]).length;
+    res.json({ success: true, output: `Regression:\n✅ ${passed} passed\n❌ ${failed} failed`, passed, failed, skipped:0 });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`\n🚀 SnipForge Dashboard Server running on port ${PORT}`);
   console.log(`   Open: http://localhost:${PORT}\n`);

@@ -287,7 +287,7 @@ async function runRealAgent(agentId, tool, prompt='') {
     script:   '/api/scripts/write',
     runner:   '/api/tests/run',
     healer:   '/api/heal',
-    regress:  '/api/tests/run'
+    regress:  '/api/regression'
   };
 
   const endpoint = endpoints[agentId];
