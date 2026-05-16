@@ -322,6 +322,71 @@ app.get('/api/scenarios/:tool', (req, res) => {
   }
 });
 
+
+// ── Save to GitHub ────────────────────────────────────────────────────────
+app.post('/api/save', async (req, res) => {
+  try {
+    const { execSync } = await import('child_process');
+    const { writeFileSync } = await import('fs');
+    const cwd = '/workspaces/Snipforge-automation';
+
+    // Save scenarios if provided
+    if (req.body.scenarios) {
+      writeFileSync('src/tests/generated/tool-scenarios.json', JSON.stringify(req.body.scenarios, null, 2));
+      execSync('cp src/tests/generated/tool-scenarios.json tool-scenarios.json', {cwd});
+    }
+
+    // Git add, commit, push
+    execSync('git add .', {cwd});
+    const date = new Date().toISOString().slice(0,16).replace('T',' ');
+    try {
+      execSync(`git commit -m "✅ Dashboard save - ${date}"`, {cwd});
+      execSync('git push', {cwd});
+      res.json({success:true, output:`Saved and pushed at ${date}`});
+    } catch(e) {
+      res.json({success:true, output:'Nothing new to save - already up to date!'});
+    }
+  } catch(e) {
+    res.status(500).json({success:false, error:e.message});
+  }
+});
+
+
+// ── Error Logs ────────────────────────────────────────────────────────────
+const errorLogs = [];
+const originalConsoleError = console.error;
+console.error = (...args) => {
+  errorLogs.push({ time: new Date().toISOString(), msg: args.join(' ') });
+  if (errorLogs.length > 100) errorLogs.shift();
+  originalConsoleError(...args);
+};
+
+app.get('/api/logs', (req, res) => {
+  // Also read playwright test results
+  try {
+    const { readdirSync } = require('fs');
+    const resultsDir = 'test-results';
+    const errorFiles = [];
+    if (existsSync(resultsDir)) {
+      readdirSync(resultsDir, {withFileTypes:true})
+        .filter(d => d.isDirectory())
+        .slice(-10)
+        .forEach(d => {
+          const mdPath = `${resultsDir}/${d.name}/error-context.md`;
+          if (existsSync(mdPath)) {
+            errorFiles.push({
+              test: d.name,
+              error: readFileSync(mdPath, 'utf-8').slice(0, 500)
+            });
+          }
+        });
+    }
+    res.json({ serverErrors: errorLogs, testErrors: errorFiles });
+  } catch(e) {
+    res.json({ serverErrors: errorLogs, testErrors: [] });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`\n🚀 SnipForge Dashboard Server running on port ${PORT}`);
   console.log(`   Open: http://localhost:${PORT}\n`);

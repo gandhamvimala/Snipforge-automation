@@ -158,6 +158,7 @@
     <div class="panel-tabs">
       <div class="panel-tab active" onclick="switchTab('scenarios',this)">Scenarios</div>
       <div class="panel-tab" onclick="switchTab('runs',this)">Run History</div>
+      <div class="panel-tab" onclick="switchTab('logs',this)">⚠️ Errors</div>
     </div>
     <div class="panel-content" id="panelContent"></div>
   </div>
@@ -307,6 +308,21 @@ function renderPanel(){
         <div class="s-title">${s.title}</div>
         <div class="s-meta"><span class="tag ${s.priority}">${s.priority}</span><span class="tag ${s.category}">${s.category}</span></div>
       </div>`).join(''):`<div style="color:var(--muted);font-size:.72rem;text-align:center;padding:20px">No scenarios yet.<br>Ask the Scenario Generator!</div>`;
+  } else if (activeTab === 'logs') {
+    fetch('/api/logs').then(r=>r.json()).then(data => {
+      const errors = data.testErrors || [];
+      if (!errors.length) {
+        el.innerHTML = '<div style="color:var(--green);font-size:.72rem;text-align:center;padding:20px">✅ No errors found!</div>';
+        return;
+      }
+      el.innerHTML = errors.map(e => `
+        <div class="run-item" style="border-color:var(--red)">
+          <div class="run-header"><span class="run-title" style="color:var(--red);font-size:.65rem">${e.test.slice(0,40)}</span></div>
+          <pre style="font-size:.6rem;color:var(--muted);white-space:pre-wrap;margin-top:4px">${e.error.slice(0,200)}</pre>
+        </div>`).join('');
+    }).catch(() => {
+      el.innerHTML = '<div style="color:var(--muted);font-size:.72rem;text-align:center;padding:20px">Start server to see error logs</div>';
+    });
   } else {
     el.innerHTML=runHistory.map(r=>`
       <div class="run-item">
