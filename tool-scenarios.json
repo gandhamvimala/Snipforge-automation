@@ -55,6 +55,12 @@
         "title": "Trim video with start time greater than end time",
         "priority": "high",
         "category": "negative"
+      },
+      {
+        "id": "trim-010",
+        "title": "Trim with start and end points at same timestamp",
+        "priority": "medium",
+        "category": "edge"
       }
     ]
   },
