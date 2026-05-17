@@ -6,8 +6,10 @@ test('trim-009: Trim video with start time greater than end time', async ({ page
   
   
   await goToTool(page);
+  
+  // Upload video
   await page.locator('#tr-file').setInputFiles(process.env.TEST_VIDEO_PATH);
-  await page.waitForSelector('#panel-trim', { state: 'visible' });
+  await page.waitForSelector('#tr-filecard', { state: 'visible', timeout: 10000 });
   
   // Set start time greater than end time
   await page.locator('#tr-start').fill('20');
@@ -16,45 +18,45 @@ test('trim-009: Trim video with start time greater than end time', async ({ page
   // Check rate limit before running
   const btnText = await page.locator('#tr-run').innerText();
   if (btnText.includes('failed')) {
-    console.log('⚠️ Rate limit hit - skipping test');
+    console.log('⚠️ Rate limit detected, skipping test execution');
     return;
   }
   
+  // Click run button
   await page.locator('#tr-run').click();
   
-  // Should show error or validation message
+  // Verify error handling (button should show error or validation message)
   await page.waitForTimeout(2000);
-  
-  // Verify error handling (button should not process invalid input)
-  const finalBtnText = await page.locator('#tr-run').innerText();
-  expect(finalBtnText).not.toContain('Processing');
+  const buttonState = await page.locator('#tr-run').innerText();
+  expect(buttonState.toLowerCase()).toContain('failed');
 });
 
 test('trim-010: Trim with start and end points at same timestamp', async ({ page }) => {
   
   
   await goToTool(page);
-  await page.locator('#tr-file').setInputFiles(process.env.TEST_VIDEO_PATH);
-  await page.waitForSelector('#panel-trim', { state: 'visible' });
   
-  // Set start and end to same timestamp
+  // Upload video
+  await page.locator('#tr-file').setInputFiles(process.env.TEST_VIDEO_PATH);
+  await page.waitForSelector('#tr-filecard', { state: 'visible', timeout: 10000 });
+  
+  // Set start and end time to same value
   await page.locator('#tr-start').fill('10');
   await page.locator('#tr-end').fill('10');
   
   // Check rate limit before running
   const btnText = await page.locator('#tr-run').innerText();
   if (btnText.includes('failed')) {
-    console.log('⚠️ Rate limit hit - skipping test');
+    console.log('⚠️ Rate limit detected, skipping test execution');
     return;
   }
   
+  // Click run button
   await page.locator('#tr-run').click();
   
-  // Should handle edge case (likely show error or produce zero-length clip)
+  // Verify error handling (zero-length trim should fail)
   await page.waitForTimeout(2000);
-  
-  // Verify system handles edge case gracefully
-  const finalBtnText = await page.locator('#tr-run').innerText();
-  expect(finalBtnText).toBeDefined();
+  const buttonState = await page.locator('#tr-run').innerText();
+  expect(buttonState.toLowerCase()).toContain('failed');
 });
 });

@@ -141,7 +141,6 @@
           <button class="quick-btn" onclick="sendQuick('Write Playwright scripts for the new scenarios')">✍️ Write scripts</button>
           <button class="quick-btn" onclick="sendQuick('Run all tests for the selected tool')">▶️ Run tests</button>
           <button class="quick-btn" onclick="sendQuick('Fix any failing tests with self healer')">🩹 Heal failures</button>
-          <button class="quick-btn" onclick="sendQuick('Show full test summary for all 25 tools')">📊 Test summary</button>
           <button class="quick-btn" onclick="sendQuick('Run smart regression suite')">🔁 Run regression</button>
         </div>
       </div>
@@ -244,7 +243,6 @@ function renderWelcome(){
   const d = document.createElement('div');
   d.className = 'welcome';
   d.id = 'welcome';
-  d.innerHTML = '<h2>🤖 Automation Control Center</h2><p>Chat with your AI agents. Select a tool from the sidebar, activate an agent, then ask it to generate scenarios, write scripts, or run tests.</p><div class="quick-actions"><button class="quick-btn" onclick="sendQuick(&quot;Create 5 more scenarios for the selected tool&quot;)">📋 More scenarios</button><button class="quick-btn" onclick="sendQuick(&quot;Write Playwright scripts for the new scenarios&quot;)">✍️ Write scripts</button><button class="quick-btn" onclick="sendQuick(&quot;Run all tests for the selected tool&quot;)">▶️ Run tests</button><button class="quick-btn" onclick="sendQuick(&quot;Show full test summary for all 25 tools&quot;)">📊 Test summary</button><button class="quick-btn" onclick="sendQuick(&quot;Run smart regression suite&quot;)">🔁 Run regression</button></div>';
   msgs.appendChild(d);
 }
 
