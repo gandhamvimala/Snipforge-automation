@@ -1,5 +1,19 @@
 [
   {
+    "title": "trim Tests",
+    "time": "5/17/2026, 3:11 PM",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
+    "title": "trim Tests",
+    "time": "5/17/2026, 3:10 PM",
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
     "title": "Regression Run",
     "time": "5/17/2026, 2:47 PM",
     "passed": 25,
