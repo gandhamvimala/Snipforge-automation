@@ -118,35 +118,7 @@
     <button class="agent-btn" data-agent="script" onclick="activateAgent('script',this)"><div class="dot"></div>✍️ Script Writer</button>
     <button class="agent-btn" data-agent="runner" onclick="activateAgent('runner',this)"><div class="dot"></div>▶️ Test Runner</button>
     <button class="agent-btn" data-agent="healer" onclick="activateAgent('healer',this)"><div class="dot"></div>🩹 Self Healer</button>
-    <button class="agent-btn" data-agent="regress" onclick="activateAgent('regress',this);document.getElementById('testFilters').style.display='block'"><div class="dot"></div>🔁 Regression</button>
-<div id="testFilters" style="display:none;position:fixed;top:56px;right:10px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:12px;z-index:100;font-size:.7rem;min-width:200px">
-  <div style="color:var(--accent);font-weight:600;margin-bottom:8px">🔁 Regression Filters</div>
-  <div style="display:flex;flex-direction:column;gap:6px">
-    <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-      <input type="checkbox" id="f-smoke" checked> <span style="color:var(--accent)">💨 Smoke</span>
-    </label>
-    <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-      <input type="checkbox" id="f-functional"> <span style="color:var(--green)">⚙️ Functional</span>
-    </label>
-    <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-      <input type="checkbox" id="f-edge"> <span style="color:var(--orange)">🔀 Edge</span>
-    </label>
-    <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-      <input type="checkbox" id="f-negative"> <span style="color:var(--red)">❌ Negative</span>
-    </label>
-    <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-      <input type="checkbox" id="f-regression"> <span style="color:var(--accent2)">🔁 Regression</span>
-    </label>
-    <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-      <input type="checkbox" id="f-critical"> <span style="color:var(--red)">🚨 Critical</span>
-    </label>
-    <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
-      <input type="checkbox" id="f-high"> <span style="color:var(--orange)">⚠️ High</span>
-    </label>
-  </div>
-  <button onclick="runWithFilters()" style="margin-top:10px;width:100%;padding:6px;border-radius:6px;border:none;background:var(--accent);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:.7rem;cursor:pointer;font-weight:600">▶️ Run Regression</button>
-  <button onclick="document.getElementById('testFilters').style.display='none'" style="margin-top:4px;width:100%;padding:4px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.65rem;cursor:pointer">Close</button>
-</div>
+    <button class="agent-btn" data-agent="regress" onclick="activateAgent('regress',this)"><div class="dot"></div>🔁 Regression</button>
   </div>
   <button id="saveBtn" onclick="saveDashboard()" style="padding:5px 14px;border-radius:6px;border:1px solid #00e5a0;background:transparent;color:#00e5a0;font-family:'JetBrains Mono',monospace;font-size:.68rem;cursor:pointer;white-space:nowrap">💾 Save</button><div class="stats-bar">
     <div class="stat green">✅ <strong id="stat-passed">255</strong> passed</div>
@@ -287,7 +259,7 @@ async function runRealAgent(agentId, tool, prompt='') {
     script:   '/api/scripts/write',
     runner:   '/api/tests/run',
     healer:   '/api/heal',
-    regress:  '/api/regression'
+    regress:  '/api/tests/run'
   };
 
   const endpoint = endpoints[agentId];
@@ -379,7 +351,7 @@ async function sendMessage(){
   const tool=TOOLS.find(t=>t.id===selectedTool);
   try{
     // Always call real backend endpoint
-    const endpoints={scenario:'/api/scenarios/generate',script:'/api/scripts/write',runner:'/api/tests/run',healer:'/api/heal',regress:'/api/regression'};
+    const endpoints={scenario:'/api/scenarios/generate',script:'/api/scripts/write',runner:'/api/tests/run',healer:'/api/heal',regress:'/api/tests/run'};
     const endpoint=endpoints[agentId];
     console.log('Calling real endpoint:', endpoint, 'agent:', agentId, 'tool:', tool.id);
     const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},
@@ -403,21 +375,8 @@ async function sendMessage(){
       reply=data.output||`✅ Generated ${data.newCount} new scenarios. Total: ${data.totalCount}`;
     }
     if(agentId==='runner'){
-      const toolName = data.tool || tool.name;
-      runHistory.unshift({
-        title: toolName + ' Test Run',
-        time: 'just now',
-        passed: data.passed||0,
-        failed: data.failed||0,
-        skipped: data.skipped||0,
-        duration: data.duration||''
-      });
-      // Update stats bar
-      document.getElementById('stat-passed').textContent = data.passed||0;
-      document.getElementById('stat-failed').textContent = data.failed||0;
-      document.getElementById('stat-skipped').textContent = data.skipped||0;
+      runHistory.unshift({title:tool.name+' Test Run',time:'just now',passed:data.passed||0,failed:data.failed||0,skipped:data.skipped||0});
       if(activeTab==='runs')renderPanel();
-      switchTab('runs', document.querySelector('.panel-tab:nth-child(2)'));
     }
     addAgentMsg(agentId,reply);
     conversationHistory.push({role:'user',content:text},{role:'assistant',content:reply});
@@ -509,29 +468,6 @@ fetch('./tool-scenarios.json')
     console.log('✅ Loaded real scenarios from tool-scenarios.json');
   })
   .catch(e => console.log('Using seed data:', e.message));
-
-
-function getSelectedFilters() {
-  const filters = [];
-  if (document.getElementById('f-smoke')?.checked) filters.push('smoke');
-  if (document.getElementById('f-functional')?.checked) filters.push('functional');
-  if (document.getElementById('f-edge')?.checked) filters.push('edge');
-  if (document.getElementById('f-negative')?.checked) filters.push('negative');
-  if (document.getElementById('f-regression')?.checked) filters.push('regression');
-  if (document.getElementById('f-critical')?.checked) filters.push('critical');
-  if (document.getElementById('f-high')?.checked) filters.push('high');
-  return filters;
-}
-
-async function runWithFilters() {
-  document.getElementById('testFilters').style.display = 'none';
-  const filters = getSelectedFilters();
-  const prompt = filters.length > 0 
-    ? 'Run regression for ' + filters.join(' and ') + ' tests'
-    : 'Run regression suite';
-  document.getElementById('chatInput').value = prompt;
-  sendMessage();
-}
 
 function buildScenariosForSave() {
   const result = {};
