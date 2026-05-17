@@ -23,17 +23,13 @@ test.describe("SnipForge - trim new", () => {
     await page.waitForTimeout(300);
 
     let alertShown = false;
-    let alertMsg = '';
     page.on("dialog", async dialog => {
       alertShown = true;
-      alertMsg = dialog.message();
       await dialog.dismiss();
     });
 
     await page.locator("#tr-run").click();
     await page.waitForTimeout(1000);
-
-    console.log("Alert shown:", alertShown, "Message:", alertMsg);
     expect(alertShown).toBeTruthy();
   });
 
