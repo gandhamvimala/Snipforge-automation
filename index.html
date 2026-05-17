@@ -121,9 +121,9 @@
     <button class="agent-btn" data-agent="regress" onclick="activateAgent('regress',this)"><div class="dot"></div>🔁 Regression</button>
   </div>
   <button id="saveBtn" onclick="saveDashboard()" style="padding:5px 14px;border-radius:6px;border:1px solid #00e5a0;background:transparent;color:#00e5a0;font-family:'JetBrains Mono',monospace;font-size:.68rem;cursor:pointer;white-space:nowrap">💾 Save</button><div class="stats-bar">
-    <div class="stat green">✅ <strong id="stat-passed">255</strong> passed</div>
-    <div class="stat red">❌ <strong id="stat-failed">0</strong> failed</div>
-    <div class="stat">⏭️ <strong id="stat-skipped">7</strong> skipped</div>
+    <div class="stat green">✅ <strong id="stat-passed">-</strong> passed</div>
+    <div class="stat red">❌ <strong id="stat-failed">-</strong> failed</div>
+    <div class="stat">⏭️ <strong id="stat-skipped">-</strong> skipped</div>
   </div>
 </div>
 <div class="main">
@@ -216,10 +216,6 @@ const AGENTS={
     system:`You are the Regression Runner agent. Select the most important tests to run based on recent changes. Focus on smoke tests, bug fix verifications, and high-risk areas. Be smart about what to run.`},
 };
 runHistory=[
-  {title:'All Tools Full Run',time:'28 min ago',passed:255,failed:0,skipped:7},
-  {title:'BUG-007 & BUG-008 Verification',time:'45 min ago',passed:2,failed:0,skipped:0},
-  {title:'Compress Fix',time:'1h ago',passed:10,failed:0,skipped:1},
-  {title:'Initial Full Suite',time:'2h ago',passed:138,failed:118,skipped:6},
 ];
 
 let _apiKey = localStorage.getItem('sf_api_key') || '';
@@ -374,8 +370,14 @@ async function sendMessage(){
       renderPanel();renderTools();
       reply=data.output||`✅ Generated ${data.newCount} new scenarios. Total: ${data.totalCount}`;
     }
+    if(agentId==='runner'||agentId==='regress'){
+      document.getElementById('stat-passed').textContent = data.passed||0;
+      document.getElementById('stat-failed').textContent = data.failed||0;
+      document.getElementById('stat-skipped').textContent = data.skipped||0;
+    }
     if(agentId==='runner'){
-      runHistory.unshift({title:tool.name+' Test Run',time:'just now',passed:data.passed||0,failed:data.failed||0,skipped:data.skipped||0});
+      const runTitle = (data.tool||tool.id).split('+').map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join(' + ');
+      runHistory.unshift({title:runTitle+' Tests',time:new Date().toLocaleString(),passed:data.passed||0,failed:data.failed||0,skipped:data.skipped||0});
       if(activeTab==='runs')renderPanel();
     }
     addAgentMsg(agentId,reply);
@@ -405,7 +407,7 @@ function processReply(agentId,reply){
   }
   if(agentId==='runner'){
     const passed=(scenarios[selectedTool]||SEED[selectedTool]||[]).length;
-    runHistory.unshift({title:`${TOOLS.find(t=>t.id===selectedTool)?.name} Test Run`,time:'just now',passed,failed:0,skipped:0});
+    runHistory.unshift({title:`${TOOLS.find(t=>t.id===selectedTool)?.name} Test Run`,time:new Date().toLocaleString(),passed,failed:0,skipped:0});
   }
   addAgentMsg(agentId,reply);
 }
@@ -448,6 +450,18 @@ function showTyping(agentId){
 }
 function removeTyping(id){document.getElementById(id)?.remove()}
 init();
+
+// Load run history from server on startup
+fetch('/api/run-history')
+  .then(r=>r.json())
+  .then(data=>{ 
+    if(data.history?.length){ 
+      runHistory.length=0; 
+      data.history.forEach(r=>runHistory.push(r)); 
+      renderPanel();
+    }
+  })
+  .catch(e=>console.log('Run history load error:', e));
 
 // Load real scenarios from tool-scenarios.json
 fetch('./tool-scenarios.json')

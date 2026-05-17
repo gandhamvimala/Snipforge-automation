@@ -1,13 +1,27 @@
 import express from 'express';
 import cors from 'cors';
 import { exec } from 'child_process';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { promisify } from 'util';
 import path from 'path';
 
 const execAsync = promisify(exec);
 const app = express();
 const regressionHistory = [];
+const RUN_HISTORY_FILE = 'src/reports/run-history.json';
+let runHistory = [];
+try {
+  if (existsSync(RUN_HISTORY_FILE)) {
+    runHistory = JSON.parse(readFileSync(RUN_HISTORY_FILE, 'utf-8'));
+    console.log('Loaded', runHistory.length, 'run history entries');
+  }
+} catch(e) { runHistory = []; }
+
+function saveRunHistory() {
+  try {
+    writeFileSync(RUN_HISTORY_FILE, JSON.stringify(runHistory.slice(0,50), null, 2));
+  } catch(e) { console.error('Save history error:', e.message); }
+}
 const PORT = 3000;
 
 app.use(cors());
@@ -336,8 +350,11 @@ app.post('/api/tests/run', async (req, res) => {
     // Parse results
     const passed = (stdout.match(/✓/g) || []).length;
     const failed = (stdout.match(/✘/g) || []).length;
-    const skipped = (stdout.match(/- /g) || []).length;
+    const skipped = (stdout.match(/^\s+-\s+\d+/gm)||[]).length;
     const duration = stdout.match(/\((\d+\.?\d*[ms]+)\)\s*$/m)?.[1] || '';
+    runHistory.unshift({ title: activeTools.join('+') + ' Tests', time: new Date().toLocaleString(), passed, failed, skipped });
+    if (runHistory.length > 50) runHistory.pop();
+    saveRunHistory();
     res.json({ success: true, output: stdout, passed, failed, skipped, duration, tool: activeTools.join('+') });
   } catch (e) {
     const output = e.stdout || e.message;
@@ -477,12 +494,18 @@ app.post('/api/regression', async (req, res) => {
     const { stdout } = await execAsync(cmd, { cwd: '/workspaces/Snipforge-automation', env: process.env, timeout: 600000 });
     const passed = (stdout.match(/✓/g)||[]).length;
     const failed = (stdout.match(/✘/g)||[]).length;
-    const skipped = (stdout.match(/- /g)||[]).length;
+    const skipped = (stdout.match(/^\s+-\s+\d+/gm)||[]).length;
     regressionHistory.unshift({ title: 'Regression Run', time: new Date().toLocaleTimeString(), passed, failed, skipped });
     console.log(`🔁 Regression done: ${passed} passed, ${failed} failed`);
   } catch(e) {
     res.json({ success: true, output: 'Regression started! Check terminal for results.', passed:0, failed:0, skipped:0 });
   }
+});
+
+
+// ── Run History ───────────────────────────────────────────────────────────
+app.get('/api/run-history', (req, res) => {
+  res.json({ history: runHistory.slice(0, 50) });
 });
 
 app.listen(PORT, () => {
