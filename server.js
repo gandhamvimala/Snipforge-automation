@@ -406,7 +406,7 @@ app.post('/api/save', async (req, res) => {
 
     // Git add, commit, push
     execSync('git add .', {cwd});
-    const date = new Date().toISOString().slice(0,16).replace('T',' ');
+    const date = new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles', month:'numeric', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit', hour12:true});
     try {
       execSync(`git commit -m "✅ Dashboard save - ${date}"`, {cwd});
       execSync('git push', {cwd});
