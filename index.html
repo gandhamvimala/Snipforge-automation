@@ -118,7 +118,7 @@
     <button class="agent-btn" data-agent="script" onclick="activateAgent('script',this)"><div class="dot"></div>✍️ Script Writer</button>
     <button class="agent-btn" data-agent="runner" onclick="activateAgent('runner',this)"><div class="dot"></div>▶️ Test Runner</button>
     <button class="agent-btn" data-agent="healer" onclick="activateAgent('healer',this)"><div class="dot"></div>🩹 Self Healer</button>
-    <button class="agent-btn" data-agent="regress" onclick="activateAgent('regress',this)"><div class="dot"></div>🔁 Regression</button>
+    <button class="agent-btn" data-agent="regress" onclick="activateAgent('regress',this);showFilters()"><div class="dot"></div>🔁 Regression</button>
   </div>
   <button id="saveBtn" onclick="saveDashboard()" style="padding:5px 14px;border-radius:6px;border:1px solid #00e5a0;background:transparent;color:#00e5a0;font-family:'JetBrains Mono',monospace;font-size:.68rem;cursor:pointer;white-space:nowrap">💾 Save</button><div class="stats-bar">
     <div class="stat green">✅ <strong id="stat-passed">-</strong> passed</div>
@@ -377,7 +377,7 @@ async function sendMessage(){
     }
     if(agentId==='runner'){
       const runTitle = (data.tool||tool.id).split('+').map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join(' + ');
-      runHistory.unshift({title:runTitle+' Tests',time:new Date().toLocaleString(),passed:data.passed||0,failed:data.failed||0,skipped:data.skipped||0});
+      runHistory.unshift({title:runTitle+' Tests',time:new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles',month:'numeric',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}),passed:data.passed||0,failed:data.failed||0,skipped:data.skipped||0});
       if(activeTab==='runs')renderPanel();
     }
     addAgentMsg(agentId,reply);
@@ -407,7 +407,7 @@ function processReply(agentId,reply){
   }
   if(agentId==='runner'){
     const passed=(scenarios[selectedTool]||SEED[selectedTool]||[]).length;
-    runHistory.unshift({title:`${TOOLS.find(t=>t.id===selectedTool)?.name} Test Run`,time:new Date().toLocaleString(),passed,failed:0,skipped:0});
+    runHistory.unshift({title:`${TOOLS.find(t=>t.id===selectedTool)?.name} Test Run`,time:new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles',month:'numeric',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}),passed,failed:0,skipped:0});
   }
   addAgentMsg(agentId,reply);
 }
@@ -483,6 +483,65 @@ fetch('./tool-scenarios.json')
   })
   .catch(e => console.log('Using seed data:', e.message));
 
+
+function showFilters() {
+  const el = document.getElementById('testFilters');
+  el.style.display = el.style.display === 'none' ? 'flex' : 'none';
+  el.style.flexDirection = 'column';
+}
+
+async function runWithFilters() {
+  document.getElementById('testFilters').style.display = 'none';
+  const filters = [];
+  if (document.getElementById('f-all')?.checked) filters.push('all');
+  if (document.getElementById('f-smoke')?.checked) filters.push('smoke');
+  if (document.getElementById('f-critical')?.checked) filters.push('critical');
+  if (document.getElementById('f-high')?.checked) filters.push('high');
+  if (document.getElementById('f-functional')?.checked) filters.push('functional');
+  if (document.getElementById('f-edge')?.checked) filters.push('edge');
+  if (document.getElementById('f-negative')?.checked) filters.push('negative');
+  if (document.getElementById('f-regression')?.checked) filters.push('regression');
+  const prompt = filters.length > 0 ? 'Run regression for ' + filters.join(' and ') + ' tests' : 'Run regression for smoke tests';
+  
+  // Directly call regression endpoint - bypass agent detection
+  const typingId = showTyping('regress');
+  document.getElementById('welcome')?.remove();
+  addUserMsg(prompt);
+  isProcessing = true;
+  document.getElementById('sendBtn').disabled = true;
+  try {
+    // Start regression - poll for results
+    fetch('/api/regression/start', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({tool: selectedTool, prompt})
+    });
+    
+    removeTyping(typingId);
+    addAgentMsg('regress', '🔁 Regression started!\n\nRunning ' + prompt + '\nCheck terminal for progress...\n\nResults will appear in Run History when done.');
+    
+    // Poll for results every 10 seconds
+    const pollInterval = setInterval(async () => {
+      try {
+        const r = await fetch('/api/regression/status');
+        const d = await r.json();
+        if (d.done) {
+          clearInterval(pollInterval);
+          runHistory.unshift({title:'Regression ('+filters.join('+')+') Run', time:new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles',month:'numeric',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}), passed:d.passed||0, failed:d.failed||0, skipped:d.skipped||0});
+          document.getElementById('stat-passed').textContent = d.passed||0;
+          document.getElementById('stat-failed').textContent = d.failed||0;
+          renderPanel();
+          addAgentMsg('regress', '✅ Regression Complete!\n\n✅ Passed: '+d.passed+'\n❌ Failed: '+d.failed+'\n⏭️ Skipped: '+d.skipped);
+        }
+      } catch(e) {}
+    }, 10000);
+  } catch(e) {
+    removeTyping(typingId);
+    addAgentMsg('regress', '❌ Error: ' + e.message);
+  }
+  isProcessing = false;
+  document.getElementById('sendBtn').disabled = false;
+}
 function buildScenariosForSave() {
   const result = {};
   TOOLS.forEach(t => {
@@ -517,6 +576,22 @@ async function saveDashboard() {
       <button onclick="document.getElementById('apiKeyModal').style.display='none'" style="padding:8px 16px;background:var(--bg3);color:var(--muted);border:1px solid var(--border2);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.75rem;cursor:pointer">Cancel</button>
     </div>
   </div>
+</div>
+
+<div id="testFilters" style="display:none;position:fixed;top:56px;right:10px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:16px;z-index:1000;font-size:.72rem;min-width:220px;box-shadow:0 4px 20px rgba(0,0,0,0.5)">
+  <div style="color:var(--accent);font-weight:600;margin-bottom:12px;font-size:.8rem">🔁 Regression Filters</div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="f-smoke" checked> <span style="color:#00d4ff">💨 Smoke</span></label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="f-critical"> <span style="color:#ff4757">🚨 Critical</span></label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="f-high"> <span style="color:#ff8c00">⚠️ High</span></label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="f-functional"> <span style="color:#00e5a0">⚙️ Functional</span></label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="f-edge"> <span style="color:#ff8c00">🔀 Edge</span></label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="f-negative"> <span style="color:#ff4757">❌ Negative</span></label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="f-regression"> <span style="color:#7c3aed">🔁 Regression</span></label>
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="f-all"> <span style="color:var(--text)">📋 All Tests</span></label>
+  </div>
+  <button onclick="runWithFilters()" style="width:100%;padding:8px;border-radius:6px;border:none;background:var(--accent);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:.72rem;cursor:pointer;font-weight:600;margin-bottom:6px">▶️ Run Regression</button>
+  <button onclick="document.getElementById('testFilters').style.display='none'" style="width:100%;padding:6px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.65rem;cursor:pointer">Close</button>
 </div>
 </body>
 </html>

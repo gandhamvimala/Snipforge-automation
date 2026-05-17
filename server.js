@@ -352,7 +352,7 @@ app.post('/api/tests/run', async (req, res) => {
     const failed = (stdout.match(/✘/g) || []).length;
     const skipped = (stdout.match(/^\s+-\s+\d+/gm)||[]).length;
     const duration = stdout.match(/\((\d+\.?\d*[ms]+)\)\s*$/m)?.[1] || '';
-    runHistory.unshift({ title: activeTools.join('+') + ' Tests', time: new Date().toLocaleString(), passed, failed, skipped });
+    runHistory.unshift({ title: activeTools.join('+') + ' Tests', time: new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles', month:'numeric', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit', hour12:true}), passed, failed, skipped });
     if (runHistory.length > 50) runHistory.pop();
     saveRunHistory();
     res.json({ success: true, output: stdout, passed, failed, skipped, duration, tool: activeTools.join('+') });
@@ -506,6 +506,61 @@ app.post('/api/regression', async (req, res) => {
 // ── Run History ───────────────────────────────────────────────────────────
 app.get('/api/run-history', (req, res) => {
   res.json({ history: runHistory.slice(0, 50) });
+});
+
+
+// ── Regression Background Runner ──────────────────────────────────────────
+let regressionStatus = { running: false, done: false, passed: 0, failed: 0, skipped: 0 };
+
+app.post('/api/regression/start', async (req, res) => {
+  const { prompt } = req.body;
+  regressionStatus = { running: true, done: false, passed: 0, failed: 0, skipped: 0 };
+  res.json({ success: true, message: 'Regression started' });
+
+  // Run in background
+  const categories = [];
+  if (prompt.includes('smoke')) categories.push('smoke');
+  if (prompt.includes('critical')) categories.push('critical');
+  if (prompt.includes('high')) categories.push('high');
+  if (prompt.includes('functional')) categories.push('functional');
+  if (prompt.includes('edge')) categories.push('edge');
+  if (prompt.includes('negative')) categories.push('negative');
+  if (prompt.includes('all')) categories.push('all');
+
+  let grepFlag = '--grep "-001"';
+  if (categories.includes('all')) {
+    grepFlag = '';
+  } else if (categories.length > 0) {
+    const allScenarios = JSON.parse(readFileSync('src/tests/generated/tool-scenarios.json', 'utf-8'));
+    const matchingIds = [];
+    Object.values(allScenarios).forEach(toolData => {
+      (toolData.scenarios || []).forEach(s => {
+        if (categories.includes(s.category) || categories.includes(s.priority)) {
+          matchingIds.push(s.id);
+        }
+      });
+    });
+    if (matchingIds.length > 0) grepFlag = '--grep "' + matchingIds.slice(0,50).join('|') + '"';
+  }
+
+  const cmd = 'npx playwright test src/tests/generated/scripts/tool-*.spec.js --project=chromium --reporter=list --timeout=60000 ' + grepFlag;
+  console.log('🔁 Starting regression:', cmd.slice(0,100));
+
+  exec(cmd, { cwd: '/workspaces/Snipforge-automation', env: process.env }, (err, stdout) => {
+    const out = stdout || err?.stdout || '';
+    regressionStatus.passed = (out.match(/✓/g)||[]).length;
+    regressionStatus.failed = (out.match(/✘/g)||[]).length;
+    regressionStatus.skipped = (out.match(/^\s+-\s+\d+/gm)||[]).length;
+    regressionStatus.running = false;
+    regressionStatus.done = true;
+    runHistory.unshift({ title: 'Regression Run', time: new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles', month:'numeric', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit', hour12:true}), passed: regressionStatus.passed, failed: regressionStatus.failed, skipped: regressionStatus.skipped });
+    saveRunHistory();
+    console.log(`🔁 Regression done: ${regressionStatus.passed} passed, ${regressionStatus.failed} failed`);
+  });
+});
+
+app.get('/api/regression/status', (req, res) => {
+  res.json(regressionStatus);
 });
 
 app.listen(PORT, () => {
