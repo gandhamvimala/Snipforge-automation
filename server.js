@@ -224,6 +224,9 @@ app.post('/api/scripts/write', async (req, res) => {
     // Load existing spec file
     const scriptPath = `src/tests/generated/scripts/tool-${tool}.spec.js`;
     const existingScript = existsSync(scriptPath) ? readFileSync(scriptPath, 'utf-8') : '';
+    const newSpecPath2 = scriptPath.replace('.spec.js', '-new.spec.js');
+    const existingNewScript = existsSync(newSpecPath2) ? readFileSync(newSpecPath2, 'utf-8') : '';
+    const combinedScript = existingScript + existingNewScript;
 
     // Find which scenarios don't have tests yet
     const existingIds = [...existingScript.matchAll(new RegExp('["\'](' + tool + '-\\d+)["\']', 'g'))].map(m=>m[1]);
@@ -262,7 +265,13 @@ New scenarios to write:
 ${JSON.stringify(newScenarios, null, 2)}
 
 Return ONLY the new test() functions (no imports, no describe wrapper).
-CRITICAL: NEVER call test.use() inside a test() function. NEVER use page.goto('/') - always use goToTool(page) which is already defined.
+CRITICAL RULES:
+1. NEVER call test.use() inside a test() function
+2. NEVER use page.goto('/') - always use goToTool(page)
+3. ALWAYS check rate limit BEFORE clicking run button:
+   const btnText = await page.locator('#TOOL-run').innerText();
+   if (btnText.includes('failed')) { console.log('⚠️ Rate limit'); return; }
+4. Only THEN click the button: await page.locator('#TOOL-run').click();
 These will be appended inside the existing describe block.
 Use exact IDs provided above.
 
