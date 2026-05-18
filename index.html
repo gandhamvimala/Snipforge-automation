@@ -142,6 +142,7 @@
           <button class="quick-btn" onclick="sendQuick('Run all tests for the selected tool')">▶️ Run tests</button>
           <button class="quick-btn" onclick="sendQuick('Fix any failing tests with self healer')">🩹 Heal failures</button>
           <button class="quick-btn" onclick="sendQuick('Run smart regression suite')">🔁 Run regression</button>
+          <button class="quick-btn" onclick="runFailedTests()">❌ Run Failed Only</button>
         </div>
       </div>
     </div>
@@ -369,6 +370,29 @@ async function sendMessage(){
       reply=data.output||`✅ Generated ${data.newCount} new scenarios. Total: ${data.totalCount}`;
     }
     if(agentId==='runner'||agentId==='regress'){
+      // If background job, poll for results
+      if(data.output === 'running' && data.jobId) {
+        addAgentMsg(agentId, '⏳ Tests running in background... Results will appear here.');
+        const poll = setInterval(async () => {
+          try {
+            const r = await fetch('/api/tests/status/' + data.jobId);
+            const d = await r.json();
+            if(d.status === 'done') {
+              clearInterval(poll);
+              document.getElementById('stat-passed').textContent = d.passed||0;
+              document.getElementById('stat-failed').textContent = d.failed||0;
+              document.getElementById('stat-skipped').textContent = d.skipped||0;
+              const runTitle = (d.tool||tool.id).split('+').map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join(' + ');
+              runHistory.unshift({title:runTitle+' Tests',time:new Date().toLocaleString('en-US',{timeZone:'America/Los_Angeles',month:'numeric',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}),passed:d.passed||0,failed:d.failed||0,skipped:d.skipped||0});
+              renderPanel();
+              addAgentMsg(agentId, '✅ Done!\n\n✅ Passed: '+(d.passed||0)+'\n❌ Failed: '+(d.failed||0)+'\n\n'+d.output.slice(-500));
+            }
+          } catch(e) {}
+        }, 5000);
+        isProcessing = false;
+        document.getElementById('sendBtn').disabled = false;
+        return;
+      }
       document.getElementById('stat-passed').textContent = data.passed||0;
       document.getElementById('stat-failed').textContent = data.failed||0;
       document.getElementById('stat-skipped').textContent = data.skipped||0;
@@ -540,6 +564,35 @@ async function runWithFilters() {
   isProcessing = false;
   document.getElementById('sendBtn').disabled = false;
 }
+
+async function runFailedTests() {
+  document.getElementById('welcome')?.remove();
+  const typingId = showTyping('runner');
+  addUserMsg('Run failed tests only');
+  isProcessing = true;
+  document.getElementById('sendBtn').disabled = true;
+  try {
+    const res = await fetch('/api/tests/run-failed', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({})
+    });
+    const data = await res.json();
+    removeTyping(typingId);
+    const runTitle = 'Failed Tests Re-run';
+    runHistory.unshift({title: runTitle, time: new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles', month:'numeric', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit', hour12:true}), passed: data.passed||0, failed: data.failed||0, skipped: data.skipped||0});
+    document.getElementById('stat-passed').textContent = data.passed||0;
+    document.getElementById('stat-failed').textContent = data.failed||0;
+    renderPanel();
+    addAgentMsg('runner', '❌ Run Failed Only\n\n✅ Passed: ' + (data.passed||0) + '\n❌ Failed: ' + (data.failed||0) + '\n\n' + (data.output||'').slice(-500));
+  } catch(e) {
+    removeTyping(typingId);
+    addAgentMsg('runner', '❌ Error: ' + e.message);
+  }
+  isProcessing = false;
+  document.getElementById('sendBtn').disabled = false;
+}
+
 function buildScenariosForSave() {
   const result = {};
   TOOLS.forEach(t => {

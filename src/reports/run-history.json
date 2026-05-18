@@ -1,5 +1,75 @@
 [
   {
+    "title": "blur-region Tests",
+    "time": "5/17/2026, 9:48 PM",
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
+    "title": "blur-region Tests",
+    "time": "5/17/2026, 9:39 PM",
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
+    "title": "blur-region Tests",
+    "time": "5/17/2026, 9:35 PM",
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
+    "title": "blur-region Tests",
+    "time": "5/17/2026, 9:30 PM",
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
+    "title": "smart-clip Tests",
+    "time": "5/17/2026, 9:16 PM",
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
+    "title": "blur-region Tests",
+    "time": "5/17/2026, 8:56 PM",
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
+    "title": "brightness Tests",
+    "time": "5/17/2026, 8:47 PM",
+    "passed": 13,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
+    "title": "Regression Run",
+    "time": "5/17/2026, 7:58 PM",
+    "passed": 254,
+    "failed": 12,
+    "skipped": 6
+  },
+  {
+    "title": "speed Tests",
+    "time": "5/17/2026, 5:09 PM",
+    "passed": 13,
+    "failed": 0,
+    "skipped": 0
+  },
+  {
+    "title": "Regression Run",
+    "time": "5/17/2026, 3:51 PM",
+    "passed": 255,
+    "failed": 2,
+    "skipped": 10
+  },
+  {
     "title": "trim Tests",
     "time": "5/17/2026, 3:29 PM",
     "passed": 1,

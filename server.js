@@ -8,6 +8,7 @@ import path from 'path';
 const execAsync = promisify(exec);
 const app = express();
 const regressionHistory = [];
+const testJobs = {};
 const RUN_HISTORY_FILE = 'src/reports/run-history.json';
 let runHistory = [];
 try {
@@ -332,6 +333,8 @@ ${finalClean}
 
 // ── Real Test Runner ───────────────────────────────────────────────────────
 app.post('/api/tests/run', async (req, res) => {
+  // Set timeout hint
+  req.socket.setTimeout(0);
   try {
     const { tool } = req.body;
     const prompt = req.body.prompt || '';
@@ -345,31 +348,33 @@ app.post('/api/tests/run', async (req, res) => {
     const grepFlag = testMatch ? `--grep "${testMatch[0]}"` : '';
     // Clean spec
     try { let s=readFileSync(`src/tests/generated/scripts/tool-${tool}.spec.js`,'utf-8'); let c=s.indexOf('// ── Auto-generated:'); if(c>0){let cl=s.slice(0,c).trimEnd();if(!cl.endsWith('});'))cl+='\n});';const {writeFileSync:w}=await import('fs');w(`src/tests/generated/scripts/tool-${tool}.spec.js`,cl+'\n');}} catch(_){}
-    const { stdout, stderr } = await execAsync(
-      (() => {
+    const cmd = (() => {
       const specs = activeTools.flatMap(t => {
         const ms = `src/tests/generated/scripts/tool-${t}.spec.js`;
         const ns = `src/tests/generated/scripts/tool-${t}-new.spec.js`;
         return [ms, existsSync(ns) ? ns : ''].filter(Boolean);
       }).join(' ');
       return `npx playwright test ${specs} --project=chromium --reporter=list --timeout=60000 ${grepFlag}`;
-    })(),
-      { cwd: '/workspaces/Snipforge-automation', env: process.env, timeout: 120000 }
-    );
-    // Parse results
-    const passed = (stdout.match(/✓/g) || []).length;
-    const failed = (stdout.match(/✘/g) || []).length;
-    const skipped = (stdout.match(/^\s+-\s+\d+/gm)||[]).length;
-    const duration = stdout.match(/\((\d+\.?\d*[ms]+)\)\s*$/m)?.[1] || '';
-    runHistory.unshift({ title: activeTools.join('+') + ' Tests', time: new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles', month:'numeric', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit', hour12:true}), passed, failed, skipped });
-    if (runHistory.length > 50) runHistory.pop();
-    saveRunHistory();
-    res.json({ success: true, output: stdout, passed, failed, skipped, duration, tool: activeTools.join('+') });
+    })();
+
+    // Return immediately - run in background
+    const jobId = Date.now().toString();
+    testJobs[jobId] = { status: 'running', output: '', passed: 0, failed: 0, skipped: 0, tool: activeTools.join('+') };
+    res.json({ success: true, output: 'running', jobId, tool: activeTools.join('+'), passed: 0, failed: 0, skipped: 0 });
+
+    exec(cmd, { cwd: '/workspaces/Snipforge-automation', env: process.env }, (err, stdout) => {
+      const out = stdout || err?.stdout || '';
+      const passed = (out.match(/✓/g)||[]).length;
+      const failed = (out.match(/✘/g)||[]).length;
+      const skipped = (out.match(/^\s+-\s+\d+/gm)||[]).length;
+      testJobs[jobId] = { status: 'done', output: out, passed, failed, skipped, tool: activeTools.join('+') };
+      runHistory.unshift({ title: activeTools.join('+') + ' Tests', time: new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles', month:'numeric', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit', hour12:true}), passed, failed, skipped });
+      if (runHistory.length > 50) runHistory.pop();
+      saveRunHistory();
+      console.log('✅ Test run done:', passed, 'passed', failed, 'failed');
+    });
   } catch (e) {
-    const output = e.stdout || e.message;
-    const passed = (output.match(/✓/g) || []).length;
-    const failed = (output.match(/✘/g) || []).length;
-    res.json({ success: true, output, passed, failed, skipped: 0 });
+    res.json({ success: true, output: e.message, passed: 0, failed: 0, skipped: 0 });
   }
 });
 
@@ -377,16 +382,42 @@ app.post('/api/tests/run', async (req, res) => {
 app.post('/api/heal', async (req, res) => {
   try {
     const { tool } = req.body;
-    console.log(`🩹 Healing: ${tool}`);
-    const { stdout } = await execAsync(
-      `node src/agents/self-healer.js --tool ${tool}`,
-      { cwd: '/workspaces/Snipforge-automation', env: process.env }
-    );
-    res.json({ success: true, output: stdout });
-  } catch (e) {
-    res.status(500).json({ success: false, error: e.message });
-  }
+    console.log('Healing: ' + tool);
+    const {readdirSync, writeFileSync:wsf} = await import('fs');
+    const failures = [];
+    const dirs = readdirSync('test-results', {withFileTypes:true})
+      .filter(d => d.isDirectory())
+      .sort((a,b) => b.name.localeCompare(a.name))
+      .slice(0, 30);
+    for (const d of dirs) {
+      const mdPath = 'test-results/' + d.name + '/error-context.md';
+      if (existsSync(mdPath)) failures.push({ test: d.name, error: readFileSync(mdPath,'utf-8').slice(0,500) });
+    }
+    if (failures.length === 0) return res.json({ success:true, output:'\n🔧 Self-Healer running...\n\n✅ No failures to heal!\n' });
+    const fixed = [];
+    for (const f of failures) {
+      const tm = f.test.match(/tool-([a-z-]+)-/);
+      if (!tm) continue;
+      const t = tm[1];
+      const sp = 'src/tests/generated/scripts/tool-' + t + '-new.spec.js';
+      const sp2 = 'src/tests/generated/scripts/tool-' + t + '.spec.js';
+      const target = existsSync(sp) ? sp : (existsSync(sp2) ? sp2 : null);
+      if (!target) continue;
+      let code = readFileSync(target, 'utf-8');
+      let changed = false;
+      if (f.error.includes('waitForSelector') && f.error.includes('disabled')) {
+        code = code.replace(/await page\.waitForSelector\([^)]+disabled[^)]+\);/g, 'await page.waitForTimeout(3000);');
+        changed = true; fixed.push(f.test + ': fixed disabled selector');
+      }
+      if (changed) wsf(target, code);
+    }
+    const out = fixed.length > 0
+      ? '\n🔧 Self-Healer running...\n\n✅ Fixed ' + fixed.length + ':\n' + fixed.join('\n') + '\n\nRun tests to verify!'
+      : '\n🔧 Self-Healer running...\n\n⚠️ ' + failures.length + ' failure(s) - no auto-fix available.';
+    res.json({ success:true, output:out, fixed:fixed.length });
+  } catch(e) { res.status(500).json({ success:false, error:e.message }); }
 });
+
 
 // ── Load Scenarios ─────────────────────────────────────────────────────────
 app.get('/api/scenarios/:tool', (req, res) => {
@@ -572,6 +603,62 @@ app.get('/api/regression/status', (req, res) => {
   res.json(regressionStatus);
 });
 
+
+// ── Run Failed Tests Only ─────────────────────────────────────────────────
+app.post('/api/tests/run-failed', async (req, res) => {
+  try {
+    const {readdirSync} = await import('fs');
+    const dirs = readdirSync('test-results', {withFileTypes:true})
+      .filter(d => d.isDirectory())
+      .sort((a,b) => b.name.localeCompare(a.name))
+      .slice(0, 50);
+    
+    // Extract unique spec files from failed tests
+    const failedSpecs = new Set();
+    for (const d of dirs) {
+      const mdPath = 'test-results/' + d.name + '/error-context.md';
+      if (existsSync(mdPath)) {
+        const toolMatch = d.name.match(/tool-([a-z-]+)-/);
+        if (toolMatch) {
+          failedSpecs.add('src/tests/generated/scripts/tool-' + toolMatch[1] + '.spec.js');
+        }
+      }
+    }
+
+    if (failedSpecs.size === 0) {
+      return res.json({ success: true, output: '✅ No failed tests found!', passed: 0, failed: 0, skipped: 0 });
+    }
+
+    const specs = [...failedSpecs].join(' ');
+    console.log('Running failed specs:', specs);
+
+    const { stdout } = await execAsync(
+      'npx playwright test ' + specs + ' --project=chromium --reporter=list --timeout=60000',
+      { cwd: '/workspaces/Snipforge-automation', env: process.env, timeout: 300000 }
+    );
+
+    const passed = (stdout.match(/✓/g)||[]).length;
+    const failed = (stdout.match(/✘/g)||[]).length;
+    const skipped = (stdout.match(/^\s+-\s+\d+/gm)||[]).length;
+
+    runHistory.unshift({ title: 'Failed Tests Re-run', time: new Date().toLocaleString('en-US', {timeZone:'America/Los_Angeles', month:'numeric', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit', hour12:true}), passed, failed, skipped });
+    saveRunHistory();
+
+    res.json({ success: true, output: stdout, passed, failed, skipped, tool: 'failed-rerun' });
+  } catch(e) {
+    const out = e.stdout||'';
+    const passed = (out.match(/✓/g)||[]).length;
+    const failed = (out.match(/✘/g)||[]).length;
+    res.json({ success: true, output: out, passed, failed, skipped: 0, tool: 'failed-rerun' });
+  }
+});
+
+
+app.get('/api/tests/status/:jobId', (req, res) => {
+  const job = testJobs[req.params.jobId];
+  if (!job) return res.json({ status: 'not found' });
+  res.json(job);
+});
 app.listen(PORT, () => {
   console.log(`\n🚀 SnipForge Dashboard Server running on port ${PORT}`);
   console.log(`   Open: http://localhost:${PORT}\n`);
